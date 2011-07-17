@@ -1,0 +1,108 @@
+#title {
+	height: 30px;
+}
+#title .avatar {
+	padding: 3px;
+}
+#title .avatar img {
+	width: 24px;
+	height: 24px;
+}
+#title .title {
+	line-height: 30px;
+	font-size: 1.4em;
+}
+#title .title span {
+	padding-left: 7px;
+}
+#toolbar {
+	height: 26px;
+}
+#toolbar .pager {
+	font-size: 1.4em;
+	line-height: 26px;
+}
+#toolbar .previous, #toolbar .next, #toolbar .fullscreen, #toolbar .play, #toolbar .pause {
+	width: 16px;
+	height: 16px;
+	top: 5px;
+}
+#toolbar .previous {
+	background: url(../img/previous_small.png);
+	margin-left: -50px;
+}
+#toolbar .next {
+	background: url(../img/next_small.png);
+	margin-left: 34px;
+}
+#toolbar .fullscreen {
+	background: url(../img/fullscreen_small.png);
+	right: 5px;
+}
+#toolbar .play {
+	background: url(../img/play_small.png);
+	left: 5px;
+}
+#toolbar .pause {
+	background: url(../img/pause_small.png);
+	left: 5px;
+}
+#poweredBy {
+	height: 20px;
+	line-height: 20px;
+	font-size: 1em;
+	padding-right: 5px;
+}
+.slideWrapper.textElement p {
+	font-size: 2.4em;
+}
+.slideWrapper.textElement p span {
+	padding: 10px 25px;
+}
+.attribution {
+	font-size: 1.4em;
+}
+.quote {
+	width: 300px;
+}
+.quote p {
+	font-size: 1.5em;
+	height: 92px;
+	background-position: 70px 30px;
+}
+.quote p .arrow {
+	left: 29px;
+	top: 140px;
+}
+.quote aside {
+	height: 30px;
+}
+.quote aside img {
+	width: 24px;
+	height: 24px;
+}
+.quote aside .username_container {
+	padding: 4px 0 0 8px;
+}
+.quote aside .username {
+	font-size: 1.3em;
+}
+.quote aside .name {
+	display: none;
+}
+.quote aside .actions a span {
+	display: none;
+}
+.quote aside .actions a i {
+	margin: 0;
+}
+.quote aside .date {
+	padding: 0 0 2px 0;
+}
+.quoteElement .quote aside .website a {
+	font-size: 1.1em;
+}
+.quoteElement .quote aside .title {
+	font-size: 1.1em;
+	font-weight: bold;
+}

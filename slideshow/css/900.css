@@ -1,0 +1,62 @@
+#title {
+	height: 46px;
+}
+#title .avatar {
+	padding-right: 0;
+}
+#title .avatar img {
+	width: 36px;
+	height: 36px;
+}
+#title .permalink {
+	display: none;
+}
+#title .title {
+	line-height: 46px;
+	font-size: 1.6em;
+	border-left: 0;
+}
+#title .title span {
+	padding: 0 10px;
+}
+.slideWrapper.textElement p {
+	font-size: 3em;
+}
+.slideWrapper.textElement p span {
+	padding: 20px 50px;
+}
+.attribution {
+	font-size: 1.7em;
+}
+.quote {
+	width: 450px;
+}
+.quote p {
+	font-size: 2.2em;
+	height: 122px;
+	background-position: 220px 60px;
+}
+.quote p .arrow {
+	left: 35px;
+	top: 170px;
+}
+.quote aside {
+	height: 42px;
+}
+.quote aside img {
+	width: 36px;
+	height: 36px;
+}
+.quote aside .username_container {
+	padding: 4px 0 0 8px;
+}
+.quote aside .username {
+	font-size: 1.6em;
+}
+.quote aside .name {
+	font-size: 1.2em;
+}
+.quoteElement .quote aside .title {
+	font-size: 1.4em;
+	font-weight: bold;
+}
