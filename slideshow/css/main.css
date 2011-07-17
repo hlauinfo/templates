@@ -419,6 +419,10 @@ a {color:#0074B7;text-decoration:none;}
 	padding: 18px 24px 12px 24px;
 	height: 54px;
 	background: #F3F3F3;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
 }
 .quote aside .avatar_container {
 	padding: 2px;
