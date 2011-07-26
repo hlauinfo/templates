@@ -40,10 +40,22 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="../api.js"></script>
     <script type="text/javascript">
-      STORIFY_JQUERY = jQuery;
-      
-      var storify = new Storify();
-      STORIFY_PERMALINK = storify.getPermalink() || 'http://storify.com/storify/testimonials';
+		function getQueryVariable(variable) {
+		    var query = window.location.search.substring(1);
+		    var vars = query.split("&");
+		    for (var i = 0; i < vars.length; i++) {
+		        var pair = vars[i].split("=");
+		        if (pair[0] == variable) {
+		            return pair[1];
+		        }
+		    }
+		    return false;
+		}
+
+		STORIFY_JQUERY = jQuery;
+		
+      	var storify = new Storify();
+      	STORIFY_PERMALINK = getQueryVariable('url') || 'http://storify.com/storify/testimonials';
     </script>
     <script type="text/javascript" src="http://static.storify.com/js/utils.js"></script>
 
