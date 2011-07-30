@@ -403,7 +403,12 @@ a {color:#0074B7;text-decoration:none;}
 	height: 152px;
 	overflow: auto;
 	padding: 24px;
+}
+.tweetElement .quote p {
 	background: url(../img/twitter_bg.png) 370px 90px no-repeat;
+}
+.fbpostElement .quote p {
+	background: url(../img/facebook_bg.png) 370px 30px no-repeat;
 }
 .quote p .arrow {
 	display: block;
@@ -455,6 +460,12 @@ a {color:#0074B7;text-decoration:none;}
 	font-size: 1.1em;
 	color: #999;
 	padding: 4px 0;
+}
+.quote aside .date a {
+	color: #999;
+}
+.quote aside .date a:hover {
+	color: #666;
 }
 .quote aside .actions {
 	font-size: 1.2em;

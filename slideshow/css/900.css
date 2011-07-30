@@ -34,7 +34,12 @@
 .quote p {
 	font-size: 2.2em;
 	height: 122px;
+}
+.tweetElement .quote p {
 	background-position: 220px 60px;
+}
+.fbpostElement .quote p {
+	background-position: 220px 30px;
 }
 .quote p .arrow {
 	left: 35px;
