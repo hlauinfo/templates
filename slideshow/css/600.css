@@ -68,6 +68,11 @@
 .quote p {
 	font-size: 1.5em;
 	height: 92px;
+}
+.tweetElement .quote p {
+	background-position: 70px 30px;
+}
+.fbpostElement .quote p {
 	background-position: 70px 30px;
 }
 .quote p .arrow {
