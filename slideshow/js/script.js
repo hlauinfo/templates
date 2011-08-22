@@ -224,13 +224,11 @@ function init() {
 
 	$.getJSON(storyurl + '.json?metadata=1&callback=?', function(data) {
 		
-		console.log(data);
-		
 		loading('hide');
 		
 		$('#title').append(getTitle(data.title, data.author));
 
-		total = Object.keys(data.elements).length;
+		total = Object.keys(data.elements).length+1;
 		$('.pager .total').text(total);
 		
 		var hash = parseInt(window.location.hash.substr(1));
@@ -258,6 +256,15 @@ function init() {
 				var html = getStoryElementHTML(element);
 				if (html) $("#twitterShow").append(html);
 			});
+			
+			var last = '<div class="slideWrapper lastElement"><div class="lastElementInner">';
+			last += '<h2>Share this story</h2><div class="buttons"><a href="#" class="facebook"><span>Share on Facebook</span></a><a href="#" class="twitter"><span>Share on Twitter</span></a><a href="#" class="gplus"><span>Share on Google+</span></a></div>';
+			last += '<h2>Embed this slideshow</h2><div class="field"><input type="text" name="script" value=""/><a href="#" class="copy">Copy</a></div>';
+			last += '<h3>Create your own stories at <a href="http://www.storify.com" target="_blank">storify.com</a> &rarr;</h3>';
+			last += '</div></div>';
+			
+			$("#twitterShow").append(last);
+			$('.lastElement .field input').val('<script type="text/javascript" src="test.js"></script>');
 
 			// Create the slideshow again using the new tweets, and fade it back in
 			$("#twitterShow").cycle({

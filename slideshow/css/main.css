@@ -717,3 +717,103 @@ padding-left:65px;}
   margin-top:10px;
   margin-bottom:10px;
 }
+
+.lastElementInner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 600px;
+	height: 320px;
+	margin-left: -300px;
+	margin-top: -160px;
+	text-align: center;
+}
+.lastElementInner h2 {
+	font-family: "Georgia", serif;
+	font-size: 3em;
+	color: #FFF;
+	font-weight: normal;
+	text-shadow: 0 -1px #000;
+	margin-bottom: 20px;
+}
+.lastElementInner .buttons {
+	height: 96px;
+	margin-bottom: 30px;
+	padding-left: 132px;
+}
+
+.lastElementInner .buttons a, .lastElementInner .buttons a span {
+	display: block;
+	width: 96px;
+	height: 96px;
+}
+.lastElementInner .buttons a {
+	float: left;
+	padding-right: 24px;
+}
+.lastElementInner .buttons a span {
+	text-indent: -9999px;
+}
+.lastElementInner .buttons a.facebook span {
+	background-image: url(../img/facebook96.png);
+}
+.lastElementInner .buttons a.twitter span {
+	background-image: url(../img/twitter96.png);
+}
+.lastElementInner .buttons a.gplus span {
+	background-image: url(../img/gplus96.png);
+}
+.lastElementInner .field {
+	margin-bottom: 30px;
+	height: 25px;
+	padding-left: 60px;
+}
+.lastElementInner .field input {
+	display: block;
+	height: 30px;
+	width: 395px;
+	border: 0;
+	line-height: 30px;
+	font-family: "Monaco", "Courier", monospace;
+	font-size: 1.4em;
+	float: left;
+	padding: 0 0 0 5px;
+	outline: none;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	-webkit-border-radius: 10px 0px 0px 10px;
+	border-radius: 10px 0px 0px 10px;
+}
+.lastElementInner .field a {
+	display: block;
+	float: left;
+	text-transform: uppercase;
+	font-size: 1.6em;
+	width: 80px;
+	height: 30px;
+	line-height: 30px;
+	font-weight: bold;
+	background: #CCC;
+	color: #333;
+	-moz-border-radius-topright: 10px;
+	-moz-border-radius-bottomright: 10px;
+	-webkit-border-radius: 0px 10px 10px 0px;
+	border-radius: 0px 10px 10px 0px;
+}
+.lastElementInner .field a:hover {
+	background: #999;
+}
+.lastElementInner h3 {
+	font-family: "Georgia", serif;
+	font-size: 2em;
+	color: #FFF;
+	font-weight: normal;
+	text-shadow: 0 -1px #000;
+}
+.lastElementInner h3 a {
+	color: #EEE;
+	text-decoration: underline;
+}
+.lastElementInner h3 a:hover {
+	text-decoration: none;
+}
