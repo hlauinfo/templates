@@ -35,7 +35,7 @@ function shareOnFacebook(url) {
 	window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(url),'sharer','toolbar=0,status=0,resizable=1,width=626,height=436');
 }
 function shareOnTwitter(url, status) {
-	window.open('http://twitter.com/intent/tweet?original_referer='+encodeURIComponent(url)+'&text='+encodeURIComponent(status)+'&url='+encodeURIComponent(url)+'&via=storify','sharer','toolbar=0,status=0,resizable=1,width=626,height=436');
+	window.open('http://twitter.com/intent/tweet?original_referer='+encodeURIComponent(url)+'&text='+encodeURIComponent(status)+'&url='+encodeURIComponent(url),'sharer','toolbar=0,status=0,resizable=1,width=626,height=436');
 }
 
 /* FUNCTIONS */
@@ -56,7 +56,7 @@ function centerItem(item, type) {
 
 function onbefore(curr, next, opts) {
 	$(next).show();
-	centerItem($(next).children('.quote, .photoSlide'), 'both');
+	centerItem($(next).children('.quote'), 'both');
 	centerItem($(next).children('.textP'), 'verticalOnly');
 }
 
@@ -163,7 +163,7 @@ function getStoryElementHTML(element) {
 		var image_url = (imageShortURL) ? Storify.utils.getImage(imageShortURL) : null;
 
 		if (image_url) {									
-			template = '<img class="photoSlide" src="' + image_url + '" /><aside class="attribution"><p class="' + element.source + '">' + element.description.parseTweet() + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.author.username + '</a></span></p></aside>'
+			template = '<img class="photoSlide" src="' + image_url + '" /><aside class="attribution"><a href="http://twitter.com/' + element.author.username + '" target="_blank" class="avatar"><img src="' + element.author.avatar + '" /></a><p class="' + element.source + '">' + element.description.parseTweet() + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.author.username + '</a></span></p></aside>'
 		}
 
 		layout += template + '</div>';
@@ -286,17 +286,20 @@ function init() {
 			last += '</div></div>';
 			
 			$("#twitterShow").append(last);
-			$('.lastElement .field input').val('<iframe src="'+storyurl+'/slideshow" width="600" height="400" frameborder="0"></iframe>');
+			
+			$('.lastElement .field input').val('<script src="'+storyurl+'.js?template=slideshow"></script><noscript><a href="'+storyurl+'" target="_blank">View "'+data.title+'" on Storify</a></noscript>');
 			$('.lastElement .field input').focus(function() {
 				$(this).select();
 			});
 			
 			$('.lastElement .facebook').click(function() {
+				storyurl = (window != window.top) ? window.top.location.href : storyurl;
 				shareOnFacebook(storyurl);
 				return false;
 			});
 			$('.lastElement .twitter').click(function() {
-				shareOnTwitter(storyurl, data.title);
+				storyurl = (window != window.top) ? window.top.location.href : storyurl;
+				shareOnTwitter(storyurl, data.title+', the @storify slideshow by @'+data.author.username);
 				return false;
 			});
 			$('.slideWrapper.textElement p span a').click(function() {
@@ -332,7 +335,6 @@ $(document).ready(init);
 $(window).resize(function() {
 	resizeShow();
 	resizeTitle();
-	centerItem($('.photoSlide:visible'), 'both');
 	centerItem($('.quote:visible'), 'both');
 	centerItem($('.textP:visible'), 'verticalOnly');
 });
