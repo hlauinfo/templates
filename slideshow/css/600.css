@@ -104,10 +104,10 @@
 .quote aside .date {
 	padding: 0 0 2px 0;
 }
-.quoteElement .quote aside .website a {
+.quoteElement .quote aside .website a, .websiteElement .quote aside .website a {
 	font-size: 1.1em;
 }
-.quoteElement .quote aside .title {
+.quoteElement .quote aside .title, .websiteElement .quote aside .title {
 	font-size: 1.1em;
 	font-weight: bold;
 }

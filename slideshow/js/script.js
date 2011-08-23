@@ -137,8 +137,9 @@ function getStoryElementHTML(element) {
 	case "text":
 	  layout += '<p class="textP"><span>'+element.description.sanitizeTags('<a>')+'</span></p>';		  
 	  break;
+	case "website":
 	case "quote":
-		var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.author.href + '">' + element.author.name + '</a></div><div class="title">' + element.title + '</div></aside><br style="clear:both;"/></div>';
+		var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.author.href + '">' + element.author.name + '</a></div><div class="title">' + element.title + '</div></aside></div>';
 		layout += template + '</div>';
 		break;
 	case "fbpost":
@@ -296,6 +297,10 @@ function init() {
 			});
 			$('.lastElement .twitter').click(function() {
 				shareOnTwitter(storyurl, data.title);
+				return false;
+			});
+			$('.slideWrapper.textElement p span a').click(function() {
+				window.open($(this).attr('href'));
 				return false;
 			});
 			

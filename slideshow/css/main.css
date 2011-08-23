@@ -421,7 +421,7 @@ a {color:#0074B7;text-decoration:none;}
 }
 .quote aside {
 	border-top: 1px solid #D5D5D5;
-	padding: 18px 24px 12px 24px;
+	padding: 18px 24px;
 	height: 54px;
 	background: #F3F3F3;
 	-moz-border-radius-bottomright: 5px;
@@ -503,24 +503,24 @@ a {color:#0074B7;text-decoration:none;}
 	background-position: -48px 0;
 }
 
-.quoteElement .quote p {
+.quoteElement .quote p, .websiteElement .quote p {
 	background: none;
 }
-.quoteElement .quote aside .website {
+.quoteElement .quote aside .website, .websiteElement .quote aside .website {
 	height: 16px;
 	margin-bottom: 5px;
 }
-.quoteElement .quote aside .website img {
+.quoteElement .quote aside .website img, .websiteElement .quote aside .website img {
 	width: 16px;
 	height: 16px;
 	float: left;
 }
-.quoteElement .quote aside .website a {
+.quoteElement .quote aside .website a, .websiteElement .quote aside .website a {
 	padding-left: 5px;
 	font-size: 1.4em;
 	line-height: 16px;
 }
-.quoteElement .quote aside .title {
+.quoteElement .quote aside .title, .websiteElement .quote aside .title {
 	font-size: 1.6em;
 	font-weight: bold;
 }
@@ -713,6 +713,13 @@ padding-left:65px;}
 	display: block;
 	padding: 40px 100px;
 }
+.slideWrapper.textElement p span a {
+	color: #CCC;
+	text-decoration: underline;
+}
+.slideWrapper.textElement p span a:hover {
+	text-decoration: none;
+}
 .slideWrapper.textElement div {
   margin-top:10px;
   margin-bottom:10px;
@@ -816,7 +823,7 @@ padding-left:65px;}
 	text-shadow: 0 -1px #000;
 }
 .lastElementInner h3 a {
-	color: #EEE;
+	color: #CCC;
 	text-decoration: underline;
 }
 .lastElementInner h3 a:hover {

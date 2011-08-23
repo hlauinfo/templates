@@ -61,7 +61,7 @@
 .quote aside .name {
 	font-size: 1.2em;
 }
-.quoteElement .quote aside .title {
+.quoteElement .quote aside .title, .websiteElement .quote aside .title {
 	font-size: 1.4em;
 	font-weight: bold;
 }
