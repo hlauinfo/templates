@@ -65,3 +65,55 @@
 	font-size: 1.4em;
 	font-weight: bold;
 }
+.lastElementInner {
+	width: 400px;
+	height: 220px;
+	margin-left: -200px;
+	margin-top: -110px;
+}
+.lastElementInner h2 {
+	font-size: 2em;
+	margin-bottom: 15px;
+}
+.lastElementInner h3 {
+	font-size: 1.6em;
+}
+.lastElementInner .buttons {
+	margin-bottom: 20px;
+	height: 72px;
+	padding-left: 119px;
+}
+.lastElementInner .buttons a {
+	padding-right: 18px;
+}
+.lastElementInner .buttons a, .lastElementInner .buttons a span {
+	width: 72px;
+	height: 72px;
+}
+.lastElementInner .buttons a.facebook span {
+	background-image: url(../img/facebook72.png);
+}
+.lastElementInner .buttons a.twitter span {
+	background-image: url(../img/twitter72.png);
+}
+.lastElementInner .field {
+	margin-bottom: 20px;
+	height: 20px;
+	padding-left: 70px;
+}
+.lastElementInner .field input {
+	width: 195px;
+	height: 20px;
+	line-height: 20px;
+	font-size: 1.2em;
+}
+.lastElementInner .field a {
+	height: 20px;
+	line-height: 20px;
+	font-size: 1.3em;
+	width: 60px;
+}
+.lastElementInner .field .copied {
+	font-size: 1.1em;
+	line-height: 20px;
+}

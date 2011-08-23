@@ -739,7 +739,7 @@ padding-left:65px;}
 .lastElementInner .buttons {
 	height: 96px;
 	margin-bottom: 30px;
-	padding-left: 132px;
+	padding-left: 192px;
 }
 
 .lastElementInner .buttons a, .lastElementInner .buttons a span {
@@ -760,12 +760,9 @@ padding-left:65px;}
 .lastElementInner .buttons a.twitter span {
 	background-image: url(../img/twitter96.png);
 }
-.lastElementInner .buttons a.gplus span {
-	background-image: url(../img/gplus96.png);
-}
 .lastElementInner .field {
 	margin-bottom: 30px;
-	height: 25px;
+	height: 30px;
 	padding-left: 60px;
 }
 .lastElementInner .field input {
@@ -800,9 +797,17 @@ padding-left:65px;}
 	-webkit-border-radius: 0px 10px 10px 0px;
 	border-radius: 0px 10px 10px 0px;
 }
-.lastElementInner .field a:hover {
+.lastElementInner .field a.hover {
 	background: #999;
 }
+.lastElementInner .field .copied {
+	display: none;
+	font-size: 1.2em;
+	float: left;
+	padding-left: 8px;
+	line-height: 30px;
+	color: #CCC;
+} 
 .lastElementInner h3 {
 	font-family: "Georgia", serif;
 	font-size: 2em;
