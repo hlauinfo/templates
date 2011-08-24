@@ -317,15 +317,15 @@ a {color:#0074B7;text-decoration:none;}
 	left: 16px;
 }
 #toolbar .previous {
-	background: url(../img/previous.png);
+	background: url(../img/sprites.png) 0 -487px;
 	margin-left: -60px;
 }
 #toolbar .next {
-	background: url(../img/next.png);
+	background: url(../img/sprites.png) 0 -355px;;
 	margin-left: 40px;
 }
 #toolbar .fullscreen {
-	background: url(../img/fullscreen.png);
+	background: url(../img/sprites.png) 0 -305px;
 	width: 24px;
 	height: 24px;
 	top: 8px;
@@ -333,10 +333,10 @@ a {color:#0074B7;text-decoration:none;}
 	display: none;
 }
 #toolbar .play {
-	background: url(../img/play.png);
+	background: url(../img/sprites.png) 0 -443px;
 }
 #toolbar .pause {
-	background: url(../img/pause.png);
+	background: url(../img/sprites.png) 0 -399px;
 	display: none;
 }
 
@@ -537,14 +537,17 @@ a {color:#0074B7;text-decoration:none;}
 }
 .attribution p {
 	padding: 10px 10px 10px 52px;
-	background: url(../img/camera.png) 10px 10px no-repeat;
 }
-.attribution p.twitter {
-	/*background-image: url(../img/twitter_logo.png);*/
-	background: none;
+.attribution p i {
+	display: block;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 32px;
+	height: 32px;
 }
-.attribution p.flickr {
-	background-image: url(../img/flickr_logo.png);
+.attribution p.flickr i {
+	background: url(../img/sprites.png) 0 -268px;
 }
 .attribution p span {
 	font-size: 0.8em;
@@ -770,12 +773,13 @@ padding-left:65px;}
 }
 .lastElementInner .buttons a span {
 	text-indent: -9999px;
+	background-image: url(../img/sprites.png);
 }
 .lastElementInner .buttons a.facebook span {
-	background-image: url(../img/facebook96.png);
+	background-position: 0 -167px;
 }
 .lastElementInner .buttons a.twitter span {
-	background-image: url(../img/twitter96.png);
+	background-position: 0 -661px;
 }
 .lastElementInner .field {
 	margin-bottom: 30px;

@@ -28,23 +28,23 @@
 	top: 5px;
 }
 #toolbar .previous {
-	background: url(../img/previous_small.png);
+	background: url(../img/sprites.png) 0 -510px;
 	margin-left: -50px;
 }
 #toolbar .next {
-	background: url(../img/next_small.png);
+	background: url(../img/sprites.png) 0 -378px;
 	margin-left: 34px;
 }
 #toolbar .fullscreen {
-	background: url(../img/fullscreen_small.png);
+	background: url(../img/sprites.png) 0 -334px;
 	right: 5px;
 }
 #toolbar .play {
-	background: url(../img/play_small.png);
+	background: url(../img/sprites.png) 0 -466px;
 	left: 5px;
 }
 #toolbar .pause {
-	background: url(../img/pause_small.png);
+	background: url(../img/sprites.png) 0 -422px;
 	left: 5px;
 }
 #poweredBy {
@@ -138,8 +138,8 @@
 	height: 48px;
 }
 .lastElementInner .buttons a.facebook span {
-	background-image: url(../img/facebook48.png);
+	background-position: 0 -37px;
 }
 .lastElementInner .buttons a.twitter span {
-	background-image: url(../img/twitter48.png);
+	background-position: 0 -531px;
 }
