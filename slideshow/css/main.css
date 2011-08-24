@@ -225,9 +225,7 @@ a {color:#0074B7;text-decoration:none;}
 	background: -ms-linear-gradient(top, #333 0%,#000 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#000',GradientType=0 );
 	background: linear-gradient(top, #333 0%,#000 100%);
-	-webkit-box-shadow: 0px 0px 30px 0px #000;
-	-moz-box-shadow: 0px 0px 30px 0px #000;
-	box-shadow: 0px 0px 30px 0px #000;
+	border-bottom:1px solid #393939;
 }
 
 #title .user {
@@ -275,22 +273,14 @@ a {color:#0074B7;text-decoration:none;}
 }
 
 #bottom {
-	-webkit-box-shadow: 0px 0px 30px 0px #000;
-	-moz-box-shadow: 0px 0px 30px 0px #000;
-	box-shadow: 0px 0px 30px 0px #000;
+  border-top:1px solid #393939;
 }
 
 #toolbar {
 	height: 40px;
 	position: relative;
 	background: #000;
-	background: -moz-linear-gradient(top, #333 0%, #000 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333), color-stop(100%,#000));
-	background: -webkit-linear-gradient(top, #333 0%,#000 100%);
-	background: -o-linear-gradient(top, #333 0%,#000 100%);
-	background: -ms-linear-gradient(top, #333 0%,#000 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#000',GradientType=0 );
-	background: linear-gradient(top, #333 0%,#000 100%);
+	background: #161616;
 }
 #toolbar .pager {
 	font-size: 1.6em;
@@ -526,7 +516,7 @@ a {color:#0074B7;text-decoration:none;}
 }
 
 .attribution {		
-	background: rgba(0, 0, 0, 0.75);
+	background: rgba(0, 0, 0, 0.55);
 	position: absolute;
 	bottom: 0;
 	width: 100%;
