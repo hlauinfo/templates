@@ -11,9 +11,25 @@ Storify.prototype = {
     return permalink;
   },
   
-  loadStory: function(storyPermalink, callback) {
+  loadStory: function(storyPermalink, options, callback) {
+    if(!callback && options) {
+      callback = options;
+      options = {};
+    }
+
+    var slug = storyPermalink.substr(storyPermalink.lastIndexOf('/') + 1);
     
-    $.getJSON(storyPermalink+'.json?callback=?',callback);
+    jQuery.ajax({
+      url: storyPermalink+'.json',
+      data: options,
+      cache:true,
+      success: callback,
+      scriptCharset: "utf-8",
+      contentType: "application/json; charset=utf-8",
+      dataType: "jsonp",
+      jsonpCallback: "cbtemplate" + slug.replace(/\-/g, ''),
+      type: "GET"
+    });
     
   },
   

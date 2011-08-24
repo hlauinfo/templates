@@ -243,8 +243,7 @@ function init() {
 	resizeShow();
 	
 	loading('show');
-
-	$.getJSON(storyurl + '.json?metadata=1&callback=?', function(data) {
+	storify.loadStory(storyurl,{metadata:1}, function(data) {
 		
 		loading('hide');
 		
