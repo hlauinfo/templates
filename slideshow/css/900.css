@@ -91,10 +91,10 @@
 	height: 72px;
 }
 .lastElementInner .buttons a.facebook span {
-	background-image: url(../img/facebook72.png);
+	background-position: 0 -90px;
 }
 .lastElementInner .buttons a.twitter span {
-	background-image: url(../img/twitter72.png);
+	background-position: 0 -584px;
 }
 .lastElementInner .field {
 	margin-bottom: 20px;
