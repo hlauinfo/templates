@@ -104,10 +104,42 @@
 .quote aside .date {
 	padding: 0 0 2px 0;
 }
-.quoteElement .quote aside .website a {
+.quoteElement .quote aside .website a, .websiteElement .quote aside .website a {
 	font-size: 1.1em;
 }
-.quoteElement .quote aside .title {
+.quoteElement .quote aside .title, .websiteElement .quote aside .title {
 	font-size: 1.1em;
 	font-weight: bold;
+}
+.lastElementInner {
+	height: 180px;
+	margin-top: -90px;
+}
+.lastElementInner h2 {
+	font-size: 1.6em;
+	margin-bottom: 10px;
+}
+.lastElementInner h3 {
+	font-size: 1.3em;
+}
+.lastElementInner .buttons {
+	margin-bottom: 15px;
+	height: 48px;
+	padding-left: 146px;
+}
+.lastElementInner .buttons a {
+	padding-right: 12px;
+}
+.lastElementInner .field {
+	margin-bottom: 15px
+}
+.lastElementInner .buttons a, .lastElementInner .buttons a span {
+	width: 48px;
+	height: 48px;
+}
+.lastElementInner .buttons a.facebook span {
+	background-image: url(../img/facebook48.png);
+}
+.lastElementInner .buttons a.twitter span {
+	background-image: url(../img/twitter48.png);
 }

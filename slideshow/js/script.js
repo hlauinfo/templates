@@ -5,21 +5,21 @@ http://www.simonwhatley.co.uk/parsing-twitter-usernames-hashtags-and-urls-with-j
 
 String.prototype.parseURL = function() {
 	return this.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(url) {
-		return url.link(url);
+		return '<a href="'+url+'" target="_blank">'+url+'</a>';
 	});
 };
 
 String.prototype.parseUsername = function() {
 	return this.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
 		var username = u.replace("@","")
-		return u.link("http://twitter.com/"+username);
+		return '<a href="http://twitter.com/'+username+'" target="_blank">@'+username+'</a>';
 	});
 };
 
 String.prototype.parseHashtag = function() {
 	return this.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
-		var tag = t.replace("#","%23")
-		return t.link("http://search.twitter.com/search?q="+tag);
+		var tag = t.replace("#","")
+		return '<a href="http://search.twitter.com/search?q=%23'+tag+'" target="_blank">#'+tag+'</a>';
 	});
 };
 
@@ -27,6 +27,15 @@ String.prototype.parseHashtag = function() {
 
 String.prototype.parseTweet = function() {
 	return this.parseURL().parseUsername().parseHashtag();
+}
+
+/* SHARING */
+
+function shareOnFacebook(url) {
+	window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(url),'sharer','toolbar=0,status=0,resizable=1,width=626,height=436');
+}
+function shareOnTwitter(url, status) {
+	window.open('http://twitter.com/intent/tweet?original_referer='+encodeURIComponent(url)+'&text='+encodeURIComponent(status)+'&url='+encodeURIComponent(url),'sharer','toolbar=0,status=0,resizable=1,width=626,height=436');
 }
 
 /* FUNCTIONS */
@@ -47,7 +56,7 @@ function centerItem(item, type) {
 
 function onbefore(curr, next, opts) {
 	$(next).show();
-	centerItem($(next).children('.quote, .photoSlide'), 'both');
+	centerItem($(next).children('.quote'), 'both');
 	centerItem($(next).children('.textP'), 'verticalOnly');
 }
 
@@ -128,8 +137,9 @@ function getStoryElementHTML(element) {
 	case "text":
 	  layout += '<p class="textP"><span>'+element.description.sanitizeTags('<a>')+'</span></p>';		  
 	  break;
+	case "website":
 	case "quote":
-		var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.author.href + '">' + element.author.name + '</a></div><div class="title">' + element.title + '</div></aside><br style="clear:both;"/></div>';
+		var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.author.href + '">' + element.author.name + '</a></div><div class="title">' + element.title + '</div></aside></div>';
 		layout += template + '</div>';
 		break;
 	case "fbpost":
@@ -153,7 +163,7 @@ function getStoryElementHTML(element) {
 		var image_url = (imageShortURL) ? Storify.utils.getImage(imageShortURL) : null;
 
 		if (image_url) {									
-			template = '<img class="photoSlide" src="' + image_url + '" /><aside class="attribution"><p class="' + element.source + '">' + element.description.parseTweet() + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.author.username + '</a></span></p></aside>'
+			template = '<img class="photoSlide" src="' + image_url + '" /><aside class="attribution"><a href="http://twitter.com/' + element.author.username + '" target="_blank" class="avatar"><img src="' + element.author.avatar + '" /></a><p class="' + element.source + '">' + element.description.parseTweet() + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.author.username + '</a></span></p></aside>'
 		}
 
 		layout += template + '</div>';
@@ -209,14 +219,26 @@ function updateStep(step) {
 	}
 	if (step == total) {
 		$('.next').hide();
+		$('.lastElement .field a').zclip({
+			path: 'swf/ZeroClipboard.swf',
+			copy: $('.lastElement .field input').val(),
+			afterCopy: function() {
+				$('.lastElement .field .copied').show();
+				setTimeout(function() {
+					$('.lastElement .field .copied').fadeOut(500);
+				}, 1000);
+			}
+		});
 	}
 	$('.pager .current').text(step);
 	window.location.hash = step;
 }
 
+var storyurl;
+
 function init() {
 
-	var storyurl = STORIFY_PERMALINK;
+	storyurl = STORIFY_PERMALINK;
 	
 	resizeShow();
 	
@@ -224,13 +246,11 @@ function init() {
 
 	$.getJSON(storyurl + '.json?metadata=1&callback=?', function(data) {
 		
-		console.log(data);
-		
 		loading('hide');
 		
 		$('#title').append(getTitle(data.title, data.author));
 
-		total = Object.keys(data.elements).length;
+		total = Object.keys(data.elements).length+1;
 		$('.pager .total').text(total);
 		
 		var hash = parseInt(window.location.hash.substr(1));
@@ -258,7 +278,35 @@ function init() {
 				var html = getStoryElementHTML(element);
 				if (html) $("#twitterShow").append(html);
 			});
-
+			
+			var last = '<div class="slideWrapper lastElement"><div class="lastElementInner">';
+			last += '<h2>Share this story</h2><div class="buttons"><a href="#" class="facebook"><span>Share on Facebook</span></a><a href="#" class="twitter"><span>Share on Twitter</span></a></div>';
+			last += '<h2>Embed this slideshow</h2><div class="field"><input type="text" name="script" value="" readonly="readonly"/><a href="#" class="copy">Copy</a><div class="copied">Copied!</div></div>';
+			last += '<h3>Create your own stories at <a href="http://www.storify.com" target="_blank">storify.com</a> &rarr;</h3>';
+			last += '</div></div>';
+			
+			$("#twitterShow").append(last);
+			
+			$('.lastElement .field input').val('<script src="'+storyurl+'.js?template=slideshow"></script><noscript><a href="'+storyurl+'" target="_blank">View "'+data.title+'" on Storify</a></noscript>');
+			$('.lastElement .field input').focus(function() {
+				$(this).select();
+			});
+			
+			$('.lastElement .facebook').click(function() {
+				storyurl = (window != window.top) ? window.top.location.href : storyurl;
+				shareOnFacebook(storyurl);
+				return false;
+			});
+			$('.lastElement .twitter').click(function() {
+				storyurl = (window != window.top) ? window.top.location.href : storyurl;
+				shareOnTwitter(storyurl, data.title+', the @storify slideshow by @'+data.author.username);
+				return false;
+			});
+			$('.slideWrapper.textElement p span a').click(function() {
+				window.open($(this).attr('href'));
+				return false;
+			});
+			
 			// Create the slideshow again using the new tweets, and fade it back in
 			$("#twitterShow").cycle({
 				fx: 'scrollHorz',
@@ -287,7 +335,6 @@ $(document).ready(init);
 $(window).resize(function() {
 	resizeShow();
 	resizeTitle();
-	centerItem($('.photoSlide:visible'), 'both');
 	centerItem($('.quote:visible'), 'both');
 	centerItem($('.textP:visible'), 'verticalOnly');
 });
