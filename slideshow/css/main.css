@@ -545,6 +545,7 @@ a {color:#0074B7;text-decoration:none;}
 	left: 10px;
 	width: 32px;
 	height: 32px;
+	background: url(../img/sprites.png) 0 0;
 }
 .attribution p.flickr i {
 	background: url(../img/sprites.png) 0 -268px;
