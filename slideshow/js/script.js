@@ -3,6 +3,14 @@ PARSE URL, USERNAMES AND HASHTAGS FROM A TWEET
 http://www.simonwhatley.co.uk/parsing-twitter-usernames-hashtags-and-urls-with-javascript	
 */
 
+if(!Object.keys) Object.keys = function(o){
+ if (o !== Object(o))
+      throw new TypeError('Object.keys called on non-object');
+ var ret=[],p;
+ for(p in o) if(Object.prototype.hasOwnProperty.call(o,p)) ret.push(p);
+ return ret;
+}
+
 String.prototype.parseURL = function() {
 	return this.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(url) {
 		return '<a href="'+url+'" target="_blank">'+url+'</a>';
