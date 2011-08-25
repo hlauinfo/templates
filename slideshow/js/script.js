@@ -292,13 +292,25 @@ function init() {
 			});
 			
 			$('.lastElement .facebook').click(function() {
-				storyurl = (window != window.top) ? window.top.location.href : storyurl;
-				shareOnFacebook(storyurl);
+				var shareurl = '';
+				try {
+					shareurl = window.top.location.href;
+				}
+				catch(e) {
+					shareurl = storyurl;
+				}
+				shareOnFacebook(shareurl);
 				return false;
 			});
 			$('.lastElement .twitter').click(function() {
-				storyurl = (window != window.top) ? window.top.location.href : storyurl;
-				shareOnTwitter(storyurl, data.title+', the @storify slideshow by @'+data.author.username);
+				var shareurl = '';
+				try {
+					shareurl = window.top.location.href;
+				}
+				catch(e) {
+					shareurl = storyurl;
+				}
+				shareOnTwitter(shareurl, data.title+', the @storify slideshow by @'+data.author.username);
 				return false;
 			});
 			$('.slideWrapper.textElement p span a').click(function() {
