@@ -185,8 +185,8 @@ function getStoryElementHTML(element) {
 
 function getTitle(title, author) {
 	var html = '<div><div class="user">';
-	html += '<a class="avatar" href="' + author.permalink + '"><img src="' + author.avatar + '" /></a>';
-	html += '<a class="permalink" href="' + author.permalink + '">' + author.username + '</a></div>';
+	html += '<a class="avatar" href="' + author.permalink + '" target="_blank"><img src="' + author.avatar + '" /></a>';
+	html += '<a class="permalink" href="' + author.permalink + '" target="_blank">' + author.username + '</a></div>';
 	html += '<h1 class="title"><span>' + title + '</span></h1>';
 	html += '</div>';
 
