@@ -297,9 +297,9 @@ function init() {
 					shareurl = window.top.location.href;
 				}
 				catch(e) {
-					shareurl = storyurl;
+					shareurl = storyurl + '/slideshow';
 				}
-				shareurl = shareurl || storyurl;
+				shareurl = shareurl || storyurl + '/slideshow';
 				shareOnFacebook(shareurl);
 				return false;
 			});
@@ -309,9 +309,9 @@ function init() {
 					shareurl = window.top.location.href;
 				}
 				catch(e) {
-					shareurl = storyurl;
+					shareurl = storyurl + '/slideshow';
 				}
-				shareurl = shareurl || storyurl;
+				shareurl = shareurl || storyurl + '/slideshow';
 				shareOnTwitter(shareurl, data.title+', the @storify slideshow by @'+data.author.username);
 				return false;
 			});
