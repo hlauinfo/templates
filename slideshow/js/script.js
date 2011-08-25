@@ -299,6 +299,7 @@ function init() {
 				catch(e) {
 					shareurl = storyurl;
 				}
+				shareurl = shareurl || storyurl;
 				shareOnFacebook(shareurl);
 				return false;
 			});
@@ -310,6 +311,7 @@ function init() {
 				catch(e) {
 					shareurl = storyurl;
 				}
+				shareurl = shareurl || storyurl;
 				shareOnTwitter(shareurl, data.title+', the @storify slideshow by @'+data.author.username);
 				return false;
 			});
