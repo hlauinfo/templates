@@ -62,7 +62,7 @@ function centerItem(item, type) {
 	item.css(css);
 }
 
-function onbefore(curr, next, opts) {
+function onbefore(curr, next, opts, fwd) {
 	$(next).show();
 	centerItem($(next).children('.quote'), 'both');
 	centerItem($(next).children('.textP'), 'verticalOnly');
@@ -70,6 +70,11 @@ function onbefore(curr, next, opts) {
 
 function onafter(curr, next, opts) {
 	updateStep($(next).index()+1);
+}
+
+function onPrevNextEvent(fwd, index) {
+  if(index==0) return;
+	(fwd) ? storify.record("next") : storify.record("prev");  
 }
 
 function checkKey(e) {
@@ -337,6 +342,7 @@ function init() {
 				fit: 1,
 				before: onbefore,
 				after: onafter,
+        onPrevNextEvent: onPrevNextEvent,
 				startingSlide: start-1
 			});
 		}
