@@ -130,7 +130,7 @@ function getStoryElementHTML(element) {
        <param name="movie" value="http://www.youtube.com/v/'+youtubeVideoID+'?fs=1&autoplay=1&controls=0"</param>\n\
        <param name="allowFullScreen" value="true"></param>\n\
        <param name="allowScriptAccess" value="always"></param>\n\
-       <embed src="http://www.youtube.com/v/'+youtubeVideoID+'?fs=1&autoplay=0&controls=0"\n\
+       <embed src="http://www.youtube.com/v/'+youtubeVideoID+'?fs=1&autoplay=1&controls=0"\n\
          type="application/x-shockwave-flash"\n\
          allowfullscreen="true"\n\
          allowscriptaccess="always"\n\
