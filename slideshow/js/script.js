@@ -76,12 +76,29 @@ function onbefore(curr, next, opts, fwd) {
 }
 
 function onafter(curr, next, opts) {
-	updateStep($(next).index()+1);
+	var step = $(next).index()+1;
+	updateStep(step);
 }
 
 function onPrevNextEvent(fwd, index) {
   if(index==0) return;
 	(fwd) ? storify.record("next") : storify.record("prev");  
+}
+
+function replaySlideshow() {
+	$("#twitterShow").cycle(0);
+}
+
+function resumeSlideshow() {
+	$('#toolbar .pause').show();
+	$('#toolbar .play').hide();
+	$("#twitterShow").cycle("resume");
+}
+
+function pauseSlideshow() {
+	$('#toolbar .pause').hide();
+	$('#toolbar .play').show();
+	$("#twitterShow").cycle("pause");
 }
 
 function checkKey(e) {
@@ -249,6 +266,7 @@ function loading(action) {
 }
 
 function updateStep(step) {
+	$('.replay').hide();
 	$('.previous, .next').show();
 	if (step == 1) {
 		$('.previous').hide();
@@ -265,6 +283,8 @@ function updateStep(step) {
 				}, 1000);
 			}
 		});
+		$('#toolbar .replay').show();
+		pauseSlideshow();
 	}
 	$('.pager .current').text(step);
 	window.location.hash = step;
@@ -398,14 +418,14 @@ $('#toolbar .next').click(function() {
 	return false;
 });
 $('#toolbar .play').click(function() {
-	$(this).hide();
-	$('#toolbar .pause').show();
-	$("#twitterShow").cycle("resume");
+	resumeSlideshow()
 	return false;
 });
 $('#toolbar .pause').click(function() {
-	$(this).hide();
-	$('#toolbar .play').show();
-	$("#twitterShow").cycle("pause");
+	pauseSlideshow()
+	return false;
+});
+$('#toolbar .replay').click(function() {
+	replaySlideshow()
 	return false;
 });

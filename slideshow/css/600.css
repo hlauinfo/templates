@@ -22,7 +22,7 @@
 	font-size: 1.4em;
 	line-height: 26px;
 }
-#toolbar .previous, #toolbar .next, #toolbar .fullscreen, #toolbar .play, #toolbar .pause {
+#toolbar .previous, #toolbar .next, #toolbar .fullscreen, #toolbar .play, #toolbar .pause, #toolbar .replay {
 	width: 16px;
 	height: 16px;
 	top: 5px;
@@ -46,6 +46,10 @@
 #toolbar .pause {
 	background: url(../img/sprites.png) 0 -422px;
 	left: 5px;
+}
+#toolbar .replay {
+	background: url(../img/sprites.png) 0 -812px;
+	right: 5px;
 }
 #poweredBy {
 	height: 20px;

@@ -288,7 +288,7 @@ a {color:#0074B7;text-decoration:none;}
 	color: #CCC;
 	text-align: center;
 }
-#toolbar .previous, #toolbar .next, #toolbar .fullscreen, #toolbar .play, #toolbar .pause {
+#toolbar .previous, #toolbar .next, #toolbar .fullscreen, #toolbar .play, #toolbar .pause, #toolbar .replay {
 	display: block;
 	text-indent: -9999px;
 	position: absolute;
@@ -328,6 +328,15 @@ a {color:#0074B7;text-decoration:none;}
 #toolbar .pause {
 	background: url(../img/sprites.png) 0 -399px;
 	display: none;
+}
+
+#toolbar .replay {
+	width: 18px;
+	height: 18px;
+	top: 11px;
+	right: 16px;
+	display: none;
+	background: url(../img/sprites.png) 0 -794px;
 }
 
 #poweredBy {
