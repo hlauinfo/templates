@@ -3,12 +3,19 @@ PARSE URL, USERNAMES AND HASHTAGS FROM A TWEET
 http://www.simonwhatley.co.uk/parsing-twitter-usernames-hashtags-and-urls-with-javascript	
 */
 
-if(!Object.keys) Object.keys = function(o){
- if (o !== Object(o))
-      throw new TypeError('Object.keys called on non-object');
- var ret=[],p;
- for(p in o) if(Object.prototype.hasOwnProperty.call(o,p)) ret.push(p);
- return ret;
+if (!Object.keys) {
+	Object.keys = function(o) {
+		if (o !== Object(o)) {
+			throw new TypeError('Object.keys called on non-object');
+		}
+		var ret=[], p;
+		for (p in o) {
+			if (Object.prototype.hasOwnProperty.call(o,p)) {
+				ret.push(p);
+			}
+		}
+		return ret;
+	}
 }
 
 String.prototype.parseURL = function() {
@@ -64,8 +71,8 @@ function centerItem(item, type) {
 
 function onbefore(curr, next, opts, fwd) {
 	$(next).show();
-	centerItem($(next).children('.quote'), 'both');
-	centerItem($(next).children('.textP'), 'verticalOnly');
+	centerItem($(next).find('.quote'), 'both');
+	centerItem($(next).find('.textP'), 'verticalOnly');
 }
 
 function onafter(curr, next, opts) {
@@ -120,71 +127,87 @@ var previous_id = '';
 var previous_length = 0;
 
 function getStoryElementHTML(element) {	  
-  var layout = '<div class="slideWrapper '+element.elementClass+'Element">';
+	var layout = '<div class="slideWrapper '+element.elementClass+'Element">';
   	  
 	switch (element.elementClass) {
-	case "video":
-	  if(element.source == "youtube") {
-	    var youtubeVideoID = element.permalink.replace("http://www.youtube.com/watch?v=",'');
-	    layout += '<object width="100%" height="100%">\n\
-       <param name="movie" value="http://www.youtube.com/v/'+youtubeVideoID+'?fs=1&autoplay=1&controls=0"</param>\n\
-       <param name="allowFullScreen" value="true"></param>\n\
-       <param name="allowScriptAccess" value="always"></param>\n\
-       <embed src="http://www.youtube.com/v/'+youtubeVideoID+'?fs=1&autoplay=1&controls=0"\n\
-         type="application/x-shockwave-flash"\n\
-         allowfullscreen="true"\n\
-         allowscriptaccess="always"\n\
-         width="100%" height="100%">\n\
-       </embed>\n\
-       </object>';
-     
-       layout += '<iframe id="player" type="text/html" width="100%" height="100%"\n\
-         src="http://www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1&origin=storify.com"\n\
-         frameborder="0">';
-	  }
-	  break;
-	case "photo":
-		var imgUrl = element.image.src;
-		layout += '<img class="photoSlide" src="' + imgUrl + '" /><aside class="attribution"><p class="' + element.source + '"><i></i>' + element.title + '<br /><span>Photo by <a href="' + imgUrl + '" target="_blank">' + element.author.name + '</a></span></p></aside>';
-		break;
-	case "text":
-	  layout += '<p class="textP"><span>'+element.description.sanitizeTags('<a>')+'</span></p>';		  
-	  break;
-	case "website":
-	case "quote":
-		var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.author.href + '">' + element.author.name + '</a></div><div class="title">' + element.title + '</div></aside></div>';
-		layout += template + '</div>';
-		break;
-	case "fbpost":
-		var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="avatar_container"><a href="#"><img src="' + element.author.avatar + '" /></a></div><div class="username_container"><div class="username"><a href="' + element.permalink + '" target="_blank">' + element.author.name + '</a></div></div>';
-		template += '<div class="date_actions"><div class="date"><a href="' + element.permalink + '" target="_blank">' + Storify.utils.displayDate(element.created_at) + '</a></aside></div></div>';
-		layout += template + '</div>';
-		break;
-	case "tweet":
-		element.metadata = element.metadata || {};
-		element.metadata.user = element.metadata.user || {};
+		
+		case "video":
+			if (element.source == "youtube") {
+				var youtubeVideoID = element.permalink.replace("http://www.youtube.com/watch?v=",'');
+				layout += '<object width="100%" height="100%">\n\
+				<param name="movie" value="http://www.youtube.com/v/'+youtubeVideoID+'?fs=1&autoplay=1&controls=0"</param>\n\
+				<param name="allowFullScreen" value="true"></param>\n\
+				<param name="allowScriptAccess" value="always"></param>\n\
+				<embed src="http://www.youtube.com/v/'+youtubeVideoID+'?fs=1&autoplay=1&controls=0"\n\
+					type="application/x-shockwave-flash"\n\
+					allowfullscreen="true"\n\
+					allowscriptaccess="always"\n\
+					width="100%" height="100%">\n\
+				</embed>\n\
+				</object>';
 
-		element.metadata.user.name = element.metadata.user.name || '';
+				layout += '<iframe id="player" type="text/html" width="100%" height="100%"\n\
+				src="http://www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1&origin=storify.com"\n\
+				frameborder="0">';
+			}
+			break;
+			
+		case "photo":
+			var imgUrl = element.image.src;
+			layout += '<img class="photoSlide" src="' + imgUrl + '" /><aside class="attribution"><p class="' + element.source + '"><i></i>' + element.title + '<br /><span>Photo by <a href="' + imgUrl + '" target="_blank">' + element.author.name + '</a></span></p></aside>';
+			break;
+			
+		case "text":
+			layout += '<p class="textP"><span>'+element.description.sanitizeTags('<a>')+'</span></p>';		  
+			break;
+			
+		case "website":
+		case "quote":
+			var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.author.href + '">' + element.author.name + '</a></div><div class="title">' + element.title + '</div></aside></div>';
+			layout += template + '</div>';
+			break;
+			
+		case "fbpost":
+			var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="avatar_container"><a href="#"><img src="' + element.author.avatar + '" /></a></div><div class="username_container"><div class="username"><a href="' + element.permalink + '" target="_blank">' + element.author.name + '</a></div></div>';
+			template += '<div class="date_actions"><div class="date"><a href="' + element.permalink + '" target="_blank">' + Storify.utils.displayDate(element.created_at) + '</a></aside></div></div>';
+			layout += template + '</div>';
+			break;
+			
+		case "tweet":
+			element.metadata = element.metadata || {};
+			element.metadata.user = element.metadata.user || {};
+			element.metadata.user.name = element.metadata.user.name || '';
 
-		var tweet_id = element.permalink.substr(element.permalink.lastIndexOf('/')+1);
+			var tweet_id = element.permalink.substr(element.permalink.lastIndexOf('/')+1);
+			
+			var urls, image_url;
+			var imageShortURL = Storify.utils.parseFirstURL(element.description);
+			var image_url = (imageShortURL) ? Storify.utils.getImage(imageShortURL) : null;
 
-		var template = '<div class="quote"><p>' + element.description.parseTweet() + '<span class="arrow"></span></p><aside><div class="avatar_container"><a href="http://twitter.com/' + element.author.username + '" target="_blank"><img src="' + element.author.avatar + '" /></a></div><div class="username_container"><div class="username"><a href="http://twitter.com/' + element.author.username + '" target="_blank">' + element.author.username + '</a></div><div class="name">' + element.metadata.user.name + '</div></div>';
-		template += '<div class="date_actions"><div class="date"><a href="' + element.permalink + '" target="_blank">' + Storify.utils.displayDate(element.created_at) + '</a></div><div class="actions"><a href="http://twitter.com/intent/tweet?in_reply_to=' + tweet_id + '&related=' + element.author.username + '" class="reply" target="_blank"><i></i><span>Reply</span></a><a href="http://twitter.com/intent/retweet?tweet_id=' + tweet_id + '&related=' + element.author.username + '" class="retweet" target="_blank"><i></i><span>Retweet</span></a><a href="http://twitter.com/intent/favorite?tweet_id=' + tweet_id + '&related=' + element.author.username + '" class="favorite" target="_blank"><i></i><span>Favorite</span></a></div></div></aside></div>';
+			var repeat = (element.metadata.user.profile_background_tile === "true") ? 'repeat' : 'no-repeat';
+			var bg_image =  (element.metadata.user.profile_background_image_url) ? ' url('+element.metadata.user.profile_background_image_url+') '+repeat : '';
+			var bg_color = (element.metadata.user.profile_background_color) ? '#'+element.metadata.user.profile_background_color : '#000';
+			
+			var background = 'background:'+bg_color+bg_image+';';
+			var template = '<div class="quote_container" style="'+background+'"><div class="quote_container_inner">';
+			
+			if (image_url) {									
+				template += '<img class="photoSlide" src="' + image_url + '" /><aside class="attribution"><a href="http://twitter.com/' + element.author.username + '" target="_blank" class="avatar"><img src="' + element.author.avatar + '" /></a><p class="' + element.source + '">' + element.description.parseTweet() + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.author.username + '</a></span></p></aside>'
+			}
+			else {
+				template += '<div class="quote"><p>' + element.description.parseTweet() + '<span class="arrow"></span></p><aside><div class="avatar_container"><a href="http://twitter.com/' + element.author.username + '" target="_blank"><img src="' + element.author.avatar + '" /></a></div><div class="username_container"><div class="username"><a href="http://twitter.com/' + element.author.username + '" target="_blank">' + element.author.username + '</a></div><div class="name">' + element.metadata.user.name + '</div></div>';
+				template += '<div class="date_actions"><div class="date"><a href="' + element.permalink + '" target="_blank">' + Storify.utils.displayDate(element.created_at) + '</a></div><div class="actions"><a href="http://twitter.com/intent/tweet?in_reply_to=' + tweet_id + '&related=' + element.author.username + '" class="reply" target="_blank"><i></i><span>Reply</span></a><a href="http://twitter.com/intent/retweet?tweet_id=' + tweet_id + '&related=' + element.author.username + '" class="retweet" target="_blank"><i></i><span>Retweet</span></a><a href="http://twitter.com/intent/favorite?tweet_id=' + tweet_id + '&related=' + element.author.username + '" class="favorite" target="_blank"><i></i><span>Favorite</span></a></div></div></aside></div>';
+			}
+			
+			template += '</div></div>';
 
-		var urls, image_url;
-		var imageShortURL = Storify.utils.parseFirstURL(element.description);
-		var image_url = (imageShortURL) ? Storify.utils.getImage(imageShortURL) : null;
-
-		if (image_url) {									
-			template = '<img class="photoSlide" src="' + image_url + '" /><aside class="attribution"><a href="http://twitter.com/' + element.author.username + '" target="_blank" class="avatar"><img src="' + element.author.avatar + '" /></a><p class="' + element.source + '">' + element.description.parseTweet() + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.author.username + '</a></span></p></aside>'
-		}
-
-		layout += template + '</div>';
-		break;
-	default:
-		return false;
-}
-
+			layout += template + '</div>';
+			break;
+			
+		default:
+			return false;
+	}
+	
 	return layout+'</div>';
 }
 

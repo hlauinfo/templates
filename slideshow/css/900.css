@@ -20,7 +20,7 @@
 	padding: 0 10px;
 }
 .slideWrapper.textElement p {
-	font-size: 3em;
+	font-size: 2.25em;
 }
 .slideWrapper.textElement p span {
 	padding: 20px 50px;
@@ -64,6 +64,10 @@
 .quoteElement .quote aside .title, .websiteElement .quote aside .title {
 	font-size: 1.4em;
 	font-weight: bold;
+}
+.quoteElement .quote p, .websiteElement .quote p {
+	background: none;
+	font-size: 1.8em;
 }
 .lastElementInner {
 	width: 400px;
