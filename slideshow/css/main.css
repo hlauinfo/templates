@@ -288,7 +288,7 @@ a {color:#0074B7;text-decoration:none;}
 	color: #CCC;
 	text-align: center;
 }
-#toolbar .previous, #toolbar .next, #toolbar .fullscreen, #toolbar .play, #toolbar .pause, #toolbar .replay {
+#toolbar .previous, #toolbar .next, #toolbar .fullscreen, #toolbar .play, #toolbar .pause, #toolbar .replay, #toolbar .loop {
 	display: block;
 	text-indent: -9999px;
 	position: absolute;
@@ -337,6 +337,14 @@ a {color:#0074B7;text-decoration:none;}
 	right: 16px;
 	display: none;
 	background: url(../img/sprites.png) 0 -794px;
+}
+#toolbar .loop {
+	width: 34px;
+	height: 18px;
+	top: 11px;
+	left: 16px;
+	display: none;
+	background: url(../img/sprites.png) 0 -828px;
 }
 
 #poweredBy {

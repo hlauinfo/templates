@@ -51,6 +51,13 @@
 	background: url(../img/sprites.png) 0 -812px;
 	right: 5px;
 }
+#toolbar .loop {
+	width: 26px;
+	height: 16px;
+	top: 5px;
+	background: url(../img/sprites.png) 0 -846px;
+	left: 5px;
+}
 #poweredBy {
 	height: 20px;
 	line-height: 20px;

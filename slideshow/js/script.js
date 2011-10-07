@@ -86,6 +86,8 @@ function onPrevNextEvent(fwd, index) {
 }
 
 function replaySlideshow() {
+	$('#toolbar .pause').hide();
+	$('#toolbar .play').show();
 	$("#twitterShow").cycle(0);
 }
 
@@ -101,22 +103,76 @@ function pauseSlideshow() {
 	$("#twitterShow").cycle("pause");
 }
 
+function toggleSlideshow() {
+	$('#toolbar .pause').toggle();
+	$('#toolbar .play').toggle();
+	$("#twitterShow").cycle("toggle");
+}
+
+var loop = false, back;
+
+function showLoop() {
+	$('.pager .total').text(total-1);
+	$('#toolbar .pause, #toolbar .play, #toolbar .previous, #toolbar .next').hide();
+	$('#toolbar .loop').show();
+	$("#twitterShow").cycle("resume");
+}
+
+function hideLoop() {
+	$('.pager .total').text(total);
+	pauseSlideshow();
+	$('#toolbar .loop').hide();
+	$('#toolbar .previous, #toolbar .next').show();
+	clearTimeout(back);
+}
+
+function penultimateLoop() {
+	$('#twitterShow').cycle("pause");
+	back = setTimeout(function() {
+		$('#twitterShow').cycle(0);
+		$('#twitterShow').cycle("resume");
+	}, 5000);
+}
+
+function toggleLoop() {
+	var step = parseInt($('.current').text());
+	if (loop) {
+		hideLoop();
+		if (step == 1) {
+			$('#toolbar .previous').hide();
+		}
+	}
+	else {
+		if (step < total) {
+			showLoop();
+			if (step == total-1) {
+				penultimateLoop();
+			}
+		}
+	}
+	loop = !loop;
+}
+
 function checkKey(e) {
-	switch (e.keyCode) {
-	case 37:
-		// Left
-		$("#twitterShow").cycle("prev");
-		break;
-	case 39:
-		// Right
-		$("#twitterShow").cycle("next");
-		break;
-	case 17:
-		$('#help').fadeIn(10).delay(3000).fadeOut('fast');
-	case 80:
-		$("#twitterShow").cycle("toggle");
-	default:
-		// Do nothing  
+	var key = e.keyCode || e.which;
+	if (loop && key != 108) {
+		hideLoop();
+		loop = !loop;
+	}
+	switch (key) {
+		case 37: // left
+			$("#twitterShow").cycle("prev");
+			break;
+		case 39: // right
+			$("#twitterShow").cycle("next");
+			break;
+		case 108: // l
+			toggleLoop();
+			break;
+		case 112: // p
+			toggleSlideshow();
+			break;
+		
 	}
 }
 
@@ -180,7 +236,7 @@ function getStoryElementHTML(element) {
 			
 		case "website":
 		case "quote":
-			var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.author.href + '">' + element.author.name + '</a></div><div class="title">' + element.title + '</div></aside></div>';
+			var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.author.href + '" target="_blank">' + element.author.name + '</a></div><div class="title">' + element.title + '</div></aside></div>';
 			layout += template + '</div>';
 			break;
 			
@@ -267,9 +323,14 @@ function loading(action) {
 
 function updateStep(step) {
 	$('.replay').hide();
-	$('.previous, .next').show();
+	if (!loop) {
+		$('.previous, .next').show();
+	}
 	if (step == 1) {
 		$('.previous').hide();
+	}
+	if (loop && step == total-1) {
+		penultimateLoop();
 	}
 	if (step == total) {
 		$('.next').hide();
@@ -385,7 +446,7 @@ function init() {
 				fit: 1,
 				before: onbefore,
 				after: onafter,
-        onPrevNextEvent: onPrevNextEvent,
+        		onPrevNextEvent: onPrevNextEvent,
 				startingSlide: start-1
 			});
 		}
@@ -418,14 +479,18 @@ $('#toolbar .next').click(function() {
 	return false;
 });
 $('#toolbar .play').click(function() {
-	resumeSlideshow()
+	resumeSlideshow();
 	return false;
 });
 $('#toolbar .pause').click(function() {
-	pauseSlideshow()
+	pauseSlideshow();
 	return false;
 });
 $('#toolbar .replay').click(function() {
-	replaySlideshow()
+	replaySlideshow();
+	return false;
+});
+$('#toolbar .loop').click(function() {
+	hideLoop();
 	return false;
 });
