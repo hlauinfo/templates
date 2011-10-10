@@ -109,8 +109,6 @@ function toggleSlideshow() {
 	$("#twitterShow").cycle("toggle");
 }
 
-var loop = false, back;
-
 function showLoop() {
 	$('.pager .total').text(total-1);
 	$('#toolbar .pause, #toolbar .play, #toolbar .previous, #toolbar .next').hide();
@@ -134,6 +132,8 @@ function penultimateLoop() {
 	}, 5000);
 }
 
+var loop = false, back;
+
 function toggleLoop() {
 	var step = parseInt($('.current').text());
 	if (loop) {
@@ -154,8 +154,9 @@ function toggleLoop() {
 }
 
 function checkKey(e) {
-	var key = e.keyCode || e.which;
-	if (loop && key != 108) {
+	var key = (e.keyCode ? e.keyCode : e.which);
+
+	if (loop && key != 76) {
 		hideLoop();
 		loop = !loop;
 	}
@@ -166,21 +167,17 @@ function checkKey(e) {
 		case 39: // right
 			$("#twitterShow").cycle("next");
 			break;
-		case 108: // l
+		case 76: // l
 			toggleLoop();
 			break;
-		case 112: // p
+		case 80: // p
 			toggleSlideshow();
 			break;
 		
 	}
 }
 
-if ($.browser.mozilla) {
-	$(document).keypress(checkKey);
-} else {
-	$(document).keydown(checkKey);
-}
+$(document).keydown(checkKey);
 
 $("#twitterShow").touchwipe({
 	wipeLeft: function() {
