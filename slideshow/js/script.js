@@ -222,9 +222,9 @@ function getStoryElementHTML(element) {
 			}
 			break;
 			
-		case "photo":
+		case "image":
 			var imgUrl = element.image.src;
-			layout += '<img class="photoSlide" src="' + imgUrl + '" /><aside class="attribution"><p class="' + element.source + '"><i></i>' + element.title + '<br /><span>Photo by <a href="' + imgUrl + '" target="_blank">' + element.author.name + '</a></span></p></aside>';
+			layout += '<img class="photoSlide" src="' + imgUrl + '" /><aside class="attribution"><p class="' + element.source + '"><i></i>' + element.description + '<br /><span>Photo by <a href="' + imgUrl + '" target="_blank">' + element.author.name + '</a></span></p></aside>';
 			break;
 			
 		case "text":
@@ -233,7 +233,7 @@ function getStoryElementHTML(element) {
 			
 		case "website":
 		case "quote":
-			var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.author.href + '" target="_blank">' + element.author.name + '</a></div><div class="title">' + element.title + '</div></aside></div>';
+			var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.permalink + '" target="_blank">' + element.author.name + '</a></div></aside></div>';
 			layout += template + '</div>';
 			break;
 			
@@ -379,6 +379,7 @@ function init() {
 		
 		if (window != window.top) { // in iframe?
 			$('#toolbar .fullscreen').attr('href', storyurl + '/slideshow').show();
+			$('#toolbar .replay').addClass('replay_embed');
 		}
 
 		if (previous_id != data.elements[0].permalink || previous_length != data.elements.length) {

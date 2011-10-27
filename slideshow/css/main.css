@@ -338,6 +338,9 @@ a {color:#0074B7;text-decoration:none;}
 	display: none;
 	background: url(../img/sprites.png) 0 -794px;
 }
+#toolbar .replay_embed {
+	right: 56px;
+}
 #toolbar .loop {
 	width: 34px;
 	height: 18px;

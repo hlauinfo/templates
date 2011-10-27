@@ -51,6 +51,9 @@
 	background: url(../img/sprites.png) 0 -812px;
 	right: 5px;
 }
+#toolbar .replay_embed {
+	right: 26px;
+}
 #toolbar .loop {
 	width: 26px;
 	height: 16px;
