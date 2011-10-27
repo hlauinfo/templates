@@ -233,7 +233,8 @@ function getStoryElementHTML(element) {
 			
 		case "website":
 		case "quote":
-			var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.permalink + '" target="_blank">' + element.author.name + '</a></div></aside></div>';
+			var title = (element.author.name) ? element.author.name : element.title;
+			var template = '<div class="quote"><p>' + element.description + '</p><aside><div class="website"><img src="' + element.favicon + '" /><a href="' + element.permalink + '" target="_blank">' + title + '</a></div></aside></div>';
 			layout += template + '</div>';
 			break;
 			
