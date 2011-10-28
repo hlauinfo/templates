@@ -18,10 +18,11 @@ Storify.prototype = {
     }
 
     var slug = storyPermalink.substr(storyPermalink.lastIndexOf('/') + 1);
+	var identifier = storyPermalink.substr(19);
     
     jQuery.ajax({
-      url: storyPermalink+'.json',
-      data: options,
+      url: 'http://api.storify.com/v1/stories/'+identifier+'?per_page=1000',
+	  data: options,
       cache:true,
       success: callback,
       scriptCharset: "utf-8",

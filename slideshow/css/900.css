@@ -35,10 +35,10 @@
 	font-size: 2.2em;
 	height: 122px;
 }
-.tweetElement .quote p {
+.twitterElement .quote p {
 	background-position: 220px 60px;
 }
-.fbpostElement .quote p {
+.facebookElement .quote p {
 	background-position: 220px 30px;
 }
 .quote p .arrow {
@@ -61,11 +61,11 @@
 .quote aside .name {
 	font-size: 1.2em;
 }
-.quoteElement .quote aside .title, .websiteElement .quote aside .title {
+.quoteElement .quote aside .title, .linkElement .quote aside .title {
 	font-size: 1.4em;
 	font-weight: bold;
 }
-.quoteElement .quote p, .websiteElement .quote p {
+.quoteElement .quote p, .linkElement .quote p {
 	background: none;
 	font-size: 1.8em;
 }

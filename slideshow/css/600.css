@@ -83,10 +83,10 @@
 	font-size: 1.5em;
 	height: 92px;
 }
-.tweetElement .quote p {
+.twitterElement .quote p {
 	background-position: 70px 30px;
 }
-.fbpostElement .quote p {
+.facebookElement .quote p {
 	background-position: 70px 30px;
 }
 .quote p .arrow {
@@ -118,14 +118,14 @@
 .quote aside .date {
 	padding: 0 0 2px 0;
 }
-.quoteElement .quote aside .website a, .websiteElement .quote aside .website a {
+.quoteElement .quote aside .website a, .linkElement .quote aside .website a {
 	font-size: 1.1em;
 }
-.quoteElement .quote aside .title, .websiteElement .quote aside .title {
+.quoteElement .quote aside .title, .linkElement .quote aside .title {
 	font-size: 1.1em;
 	font-weight: bold;
 }
-.quoteElement .quote p, .websiteElement .quote p {
+.quoteElement .quote p, .linkElement .quote p {
 	background: none;
 	font-size: 1.4em;
 }
