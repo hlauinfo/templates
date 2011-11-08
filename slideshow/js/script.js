@@ -284,6 +284,7 @@ function getStoryElementHTML(element) {
 					layout += template + '</div>';
 					break;
 				
+				case 'facebook':
 				case 'other':
 					var timestamp = Date.parse(element.posted_at)/1000;
 					var template = '<div class="quote"><p>' + element.data.quote.text + '</p><aside><div class="username_container"><div class="username"><a href="' + element.permalink + '" target="_blank">' + element.attribution.name + '</a></div></div>';

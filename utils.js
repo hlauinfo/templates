@@ -91,9 +91,12 @@
 
     result = result.replace(commentsAndPhpTags, '').replace(tags, function($0, $1){
       if ($0.toLowerCase().substring(0,2) == '<a'){
-        var href=$0.match(/href=[\'"]?([^\'" >]+)/i)[1];
-        $0 = $0.indexOf(' ') > -1 ? $0.substr(0,$0.indexOf(' '))+'>' : $0;
-        $0 = $0.substring(0, $0.length-1) + ' href="' + href + '">';        
+        var match = $0.match(/href=[\'"]?([^\'" >]+)/i);
+        if (match) {
+          var href= match[1];
+          $0 = $0.indexOf(' ') > -1 ? $0.substr(0,$0.indexOf(' '))+'>' : $0;
+          $0 = $0.substring(0, $0.length-1) + ' href="' + href + '">'; 
+        }       
       } else {
         $0 = $0.indexOf(' ') > -1 ? $0.substr(0,$0.indexOf(' '))+'>' : $0;
       }
