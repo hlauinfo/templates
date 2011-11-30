@@ -19,8 +19,10 @@ if (!Object.keys) {
 }
 
 String.prototype.parseURL = function() {
-	return this.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(url) {
-		return '<a href="'+url+'" target="_blank">'+url+'</a>';
+	return this.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(originalurl) {
+		var urlstr = originalurl.replace(/https?:\/\/(www.)?/i,'');
+		if(urlstr.length>30) urlstr = urlstr.substr(0,27)+'...';
+		return '<a href="'+originalurl+'" target="_blank">'+urlstr+'</a>';
 	});
 };
 

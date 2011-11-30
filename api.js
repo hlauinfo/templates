@@ -74,7 +74,16 @@ Storify.prototype = {
       }
 
       return thumbnail_url;
-    }
+    },
+
+		linkify: function(string) {
+			var exp = /[^(href=")](\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+			return string.replace(exp,function(originalurl) {
+				var urlstr = originalurl.replace(/https?:\/\/(www.)?/i,'');
+				if(urlstr.length>30) urlstr = urlstr.substr(0,27)+'...';
+				return " <a href='"+originalurl+"' target='_blank' rel='external'>"+urlstr+"</a>";
+			});
+		}
     
   }
   
