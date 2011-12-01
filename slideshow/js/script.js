@@ -236,7 +236,7 @@ function getStoryElementHTML(element) {
 			break;
 		
 		case "link":
-			var timestamp = Date.parse(element.posted_at)/1000;
+			var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
 			var template = '<div class="quote"><p>' + element.data.link.description + '</p><aside><div class="username_container"><div class="username"><a href="' + element.permalink + '" target="_blank">' + element.attribution.name + '</a></div></div>';
 			template += '<div class="date_actions"><div class="date"><a href="' + element.permalink + '" target="_blank">' + Storify.utils.displayDate(timestamp) + '</a></aside></div></div>';
 			layout += template + '</div>';
@@ -260,7 +260,7 @@ function getStoryElementHTML(element) {
 					var image_url = (imageShortURL) ? Storify.utils.getImage(imageShortURL) : null;
 					
 					if (element.meta.user != null) {
-						var repeat = (element.meta.user.profile_background_tile === "true") ? 'repeat' : 'no-repeat';
+						var repeat = (element.meta.user.profile_background_tile == true) ? 'repeat' : 'no-repeat';
 						var bg_image =  (element.meta.user.profile_background_image_url) ? ' url('+element.meta.user.profile_background_image_url+') '+repeat : '';
 						var bg_color = (element.meta.user.profile_background_color) ? '#'+element.meta.user.profile_background_color : '#000';
 
@@ -276,7 +276,7 @@ function getStoryElementHTML(element) {
 						template += '<img class="photoSlide" src="' + image_url + '" /><aside class="attribution"><a href="http://twitter.com/' + element.attribution.username + '" target="_blank" class="avatar"><img src="' + element.attribution.thumbnail + '" /></a><p class="' + element.source.name + '">' + element.data.quote.text.parseTweet() + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.attribution.username + '</a></span></p></aside>'
 					}
 					else {
-						var timestamp = Date.parse(element.posted_at)/1000;
+						var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
 						template += '<div class="quote"><p>' + element.data.quote.text.parseTweet() + '<span class="arrow"></span></p><aside><div class="avatar_container"><a href="http://twitter.com/' + element.attribution.username + '" target="_blank"><img src="' + element.attribution.thumbnail + '" /></a></div><div class="username_container"><div class="username"><a href="http://twitter.com/' + element.attribution.username + '" target="_blank">' + element.attribution.username + '</a></div><div class="name">' + element.attribution.name + '</div></div>';
 						template += '<div class="date_actions"><div class="date"><a href="' + element.permalink + '" target="_blank">' + Storify.utils.displayDate(timestamp) + '</a></div><div class="actions"><a href="http://twitter.com/intent/tweet?in_reply_to=' + tweet_id + '&related=' + element.attribution.username + '" class="reply" target="_blank"><i></i><span>Reply</span></a><a href="http://twitter.com/intent/retweet?tweet_id=' + tweet_id + '&related=' + element.attribution.username + '" class="retweet" target="_blank"><i></i><span>Retweet</span></a><a href="http://twitter.com/intent/favorite?tweet_id=' + tweet_id + '&related=' + element.attribution.username + '" class="favorite" target="_blank"><i></i><span>Favorite</span></a></div></div></aside></div>';
 					}
@@ -288,7 +288,7 @@ function getStoryElementHTML(element) {
 				
 				case 'facebook':
 				case 'other':
-					var timestamp = Date.parse(element.posted_at)/1000;
+					var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
 					var template = '<div class="quote"><p>' + element.data.quote.text + '</p><aside><div class="username_container"><div class="username"><a href="' + element.permalink + '" target="_blank">' + element.attribution.name + '</a></div></div>';
 					template += '<div class="date_actions"><div class="date"><a href="' + element.permalink + '" target="_blank">' + Storify.utils.displayDate(timestamp) + '</a></aside></div></div>';
 					layout += template + '</div>';
@@ -382,6 +382,8 @@ function init() {
 	
 	loading('show');
 	storify.loadStory(storyurl,{metadata:1}, function(data) {
+		
+		console.log(data);
 		
 		loading('hide');
 		
