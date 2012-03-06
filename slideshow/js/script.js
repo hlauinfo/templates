@@ -383,8 +383,6 @@ function init() {
 	loading('show');
 	storify.loadStory(storyurl,{metadata:1}, function(data) {
 		
-		console.log(data);
-		
 		loading('hide');
 		
 		$('#title').append(getTitle(data.content.title, data.content.author));
