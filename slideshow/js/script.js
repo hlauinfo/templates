@@ -206,24 +206,12 @@ function getStoryElementHTML(element) {
 	switch (element.type) {
 		
 		case "video":
-			if (element.source.name == "youtube") {
-				var youtubeVideoID = element.permalink.replace("http://www.youtube.com/watch?v=",'');
-				layout += '<object width="100%" height="100%">\n\
-				<param name="movie" value="http://www.youtube.com/v/'+youtubeVideoID+'?fs=1&autoplay=1&controls=0"</param>\n\
-				<param name="allowFullScreen" value="true"></param>\n\
-				<param name="allowScriptAccess" value="always"></param>\n\
-				<embed src="http://www.youtube.com/v/'+youtubeVideoID+'?fs=1&autoplay=1&controls=0"\n\
-					type="application/x-shockwave-flash"\n\
-					allowfullscreen="true"\n\
-					allowscriptaccess="always"\n\
-					width="100%" height="100%">\n\
-				</embed>\n\
-				</object>';
-
-				layout += '<iframe id="player" type="text/html" width="100%" height="100%"\n\
-				src="http://www.youtube.com/embed/u1zgFlCw8Aw?enablejsapi=1&origin=storify.com"\n\
-				frameborder="0">';
-			}
+      if (element.data.video.src) {
+        layout += '<iframe id="player" width="100%" height="100%" src="' + element.data.video.src + '" frameborder="0"></iframe>';
+      }
+      else {
+        layout += element.data.html;
+      }
 			break;
 			
 		case "image":
