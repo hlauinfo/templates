@@ -216,7 +216,7 @@ function getStoryElementHTML(element) {
 			
 		case "image":
 			var imgUrl = element.data.image.src;
-			layout += '<img class="photoSlide" src="' + imgUrl + '" /><aside class="attribution"><p class="' + element.source.name + '"><i></i>' + element.data.image.caption + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.attribution.name + '</a></span></p></aside>';
+			layout += '<img class="photoSlide" src="' + imgUrl + '" /><aside class="attribution"><p class="' + element.source.name + '"><i></i>' + (element.data.image.caption || '') + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.attribution.name + '</a></span></p></aside>';
 			break;
 			
 		case "text":
