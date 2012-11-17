@@ -4,8 +4,9 @@ Storify.prototype = {
   getPermalink: function() {
     var permalink = null;
     
-    if (window.location.hash.match(/http\:\/\/.*storify\.com/)) {
+    if (window.location.hash.match(/.{0,15}storify\.com/)) {
       permalink = window.location.hash.substr(1);
+      if(permalink.substr(0,2)=='//') permalink = 'http:'+permalink;
     }
     
     return permalink;
