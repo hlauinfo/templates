@@ -293,11 +293,11 @@ function getStoryElementHTML(element) {
 	return layout+'</div>';
 }
 
-function getTitle(title, author) {
+function getTitle(story) {
 	var html = '<div><div class="user">';
-	html += '<a class="avatar" href="http://storify.com/' + author.username + '" target="_blank"><img src="' + author.avatar + '" /></a>';
-	html += '<a class="permalink" href="http://storify.com/' + author.username + '" target="_blank">' + author.username + '</a></div>';
-	html += '<h1 class="title"><span>' + title + '</span></h1>';
+	html += '<a class="avatar" href="http://storify.com/' + story.author.username + '" target="_blank"><img src="' + story.author.avatar + '" /></a>';
+	html += '<a class="permalink" href="http://storify.com/' + story.author.username + '" target="_blank">' + story.author.username + '</a></div>';
+	html += '<h1 class="title"><a href="'+story.permalink+'" target="_blank" title="View the story on Storify">' + story.title + '</a></h1>';
 	html += '</div>';
 
 	return $(html);
@@ -373,7 +373,7 @@ function init() {
 		
 		loading('hide');
 		
-		$('#title').append(getTitle(data.content.title, data.content.author));
+		$('#title').append(getTitle(data.content));
 
 		total = Object.keys(data.content.elements).length+1;
 		$('.pager .total').text(total);

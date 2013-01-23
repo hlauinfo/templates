@@ -267,9 +267,14 @@ a {color:#0074B7;text-decoration:none;}
 	overflow: hidden;
 	border-left: 1px solid #333;
 }
-#title .title span {
+#title .title a {
 	display: block;
+  color: #CCC;
 	padding: 0 15px;
+}
+
+#title a:hover {
+  color: #FFF;
 }
 
 #bottom {
