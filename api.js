@@ -22,7 +22,7 @@ Storify.prototype = {
 	var identifier = storyPermalink.substr(19);
     
     jQuery.ajax({
-      url: 'http://api.storify.com/v1/stories/'+identifier+'?per_page=1000',
+      url: 'http://api.storify.com/v1/stories/'+identifier+'?per_page=1000&meta=true',
 	  data: options,
       cache:true,
       success: callback,
