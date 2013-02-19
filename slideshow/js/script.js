@@ -293,11 +293,11 @@ function getStoryElementHTML(element) {
 	return layout+'</div>';
 }
 
-function getTitle(title, author) {
+function getTitle(story) {
 	var html = '<div><div class="user">';
-	html += '<a class="avatar" href="http://storify.com/' + author.username + '" target="_blank"><img src="' + author.avatar + '" /></a>';
-	html += '<a class="permalink" href="http://storify.com/' + author.username + '" target="_blank">' + author.username + '</a></div>';
-	html += '<h1 class="title"><span>' + title + '</span></h1>';
+	html += '<a class="avatar" href="http://storify.com/' + story.author.username + '" target="_blank"><img src="' + story.author.avatar + '" /></a>';
+	html += '<a class="permalink" href="http://storify.com/' + story.author.username + '" target="_blank">' + story.author.username + '</a></div>';
+	html += '<h1 class="title"><a href="'+story.permalink+'" target="_blank" title="View the story on Storify">' + story.title + '</a></h1>';
 	html += '</div>';
 
 	return $(html);
@@ -373,9 +373,10 @@ function init() {
 		
 		loading('hide');
 		
-		$('#title').append(getTitle(data.content.title, data.content.author));
-
-		total = Object.keys(data.content.elements).length+1;
+    var story = data.content;
+    var recordViewHTML = '<img src="//stats.storify.com/record/view.gif?sid='+story.sid+'&referer='+encodeURIComponent(window.document.referrer)+'" width="1" height="1" style="display:none;" />';
+		$('#title').append(getTitle(story)).append(recordViewHTML);
+		total = Object.keys(story.elements).length+1;
 		$('.pager .total').text(total);
 		
 		var hash = parseInt(window.location.hash.substr(1));
@@ -387,20 +388,20 @@ function init() {
 		
 		resizeTitle();
 
-		document.title = data.content.title + ' — Storify [Slideshow]';
+		document.title = story.title + ' — Storify [Slideshow]';
 		
 		if (window != window.top) { // in iframe?
 			$('#toolbar .fullscreen').attr('href', storyurl + '/slideshow').show();
 			$('#toolbar .replay').addClass('replay_embed');
 		}
 
-		if (previous_id != data.content.elements[0].permalink || previous_length != data.content.elements.length) {
-			$("a.user").attr("href", "http://storify.com/" + data.content.author.username);
-			$("a.user").text(data.content.author.username);
+		if (previous_id != story.elements[0].permalink || previous_length != story.elements.length) {
+			$("a.user").attr("href", "http://storify.com/" + story.author.username);
+			$("a.user").text(story.author.username);
 			$("#branding .userImage").remove();
-			$("#branding h2").before("<img src=" + data.content.author.avatar + ' class="userImage" width="32" style="float: right;max-height:32px"/>');
+			$("#branding h2").before("<img src=" + story.author.avatar + ' class="userImage" width="32" style="float: right;max-height:32px"/>');
 
-			$.each(data.content.elements, function(index, element) {
+			$.each(story.elements, function(index, element) {
 				var html = getStoryElementHTML(element);
 				if (html) $("#twitterShow").append(html);
 			});
@@ -439,7 +440,7 @@ function init() {
 					shareurl = storyurl + '/slideshow';
 				}
 				shareurl = shareurl || storyurl + '/slideshow';
-				shareOnTwitter(shareurl, data.content.title+', the @storify slideshow by @'+data.content.author.username);
+				shareOnTwitter(shareurl, story.title+', the @storify slideshow by @'+story.author.username);
 				return false;
 			});
 			$('.slideWrapper.textElement p span a').click(function() {
