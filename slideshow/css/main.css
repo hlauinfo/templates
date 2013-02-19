@@ -351,7 +351,7 @@ a {color:#0074B7;text-decoration:none;}
 }
 
 #poweredBy {
-	height: 24px;
+	height: 26px;
 	line-height: 24px;
 	background: #EEE;
 	text-align: right;
@@ -359,7 +359,17 @@ a {color:#0074B7;text-decoration:none;}
 	font-size: 1.1em;
 	color: #999;
 }
-
+#poweredBy a {
+	display: block;
+	float: right;
+	width: 82px;
+	height: 24px;
+	margin-left: 4px;
+	background: url(../img/logo.png) 0px 2px no-repeat;
+}
+#poweredBy a:hover {
+	background: url(../img/logo.png) 0px -22px no-repeat;
+}
 #loading {
 	display: block;
 	width: 58px;
