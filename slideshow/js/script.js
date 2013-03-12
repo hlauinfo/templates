@@ -74,6 +74,7 @@ function centerItem(item, type) {
 function onbefore(curr, next, opts, fwd) {
 	$(next).show();
 	centerItem($(next).find('.quote'), 'both');
+	centerItem($(next).find('.link'), 'both');
 	centerItem($(next).find('.textP'), 'verticalOnly');
 }
 
@@ -235,6 +236,7 @@ function getStoryElementHTML(element) {
 				type: type, 
 				linkDesc: element.data.link.description,
 				permalink: element.permalink,
+				linkThumb: element.data.link.thumbnail,
 				attrName: element.attribution.name,
 				timestamp: Storify.utils.displayDate(timestamp)
 			});
@@ -501,6 +503,7 @@ $(window).resize(function() {
 	resizeShow();
 	resizeTitle();
 	centerItem($('.quote:visible'), 'both');
+	centerItem($('.link:visible'), 'both');
 	centerItem($('.textP:visible'), 'verticalOnly');
 });
 
