@@ -36,7 +36,7 @@ String.prototype.parseUsername = function() {
 String.prototype.parseHashtag = function() {
 	return this.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
 		var tag = t.replace("#","")
-		return '<a href="http://search.twitter.com/search?q=%23'+tag+'" target="_blank">#'+tag+'</a>';
+		return '<a href="http://twitter.com/search?q=%23'+tag+'" target="_blank">#'+tag+'</a>';
 	});
 };
 
@@ -74,6 +74,7 @@ function centerItem(item, type) {
 function onbefore(curr, next, opts, fwd) {
 	$(next).show();
 	centerItem($(next).find('.quote'), 'both');
+	centerItem($(next).find('.link'), 'both');
 	centerItem($(next).find('.textP'), 'verticalOnly');
 }
 
@@ -199,35 +200,46 @@ var previous_id = '';
 var previous_length = 0;
 
 function getStoryElementHTML(element) {
-	
 	var type = (element.type == 'quote' && element.source.name != null) ? element.source.name : element.type;
-	var layout = '<div class="slideWrapper '+type+'Element">';
+	var layout;
   	  
 	switch (element.type) {
 		
 		case "video":
       if (element.data.video.src) {
-        layout += '<iframe id="player" width="100%" height="100%" src="' + element.data.video.src + '" frameborder="0"></iframe>';
+				layout = Templates.videoWithSource({type: type, videoSrc: element.data.video.src});
       }
       else {
-        layout += element.data.html;
+				layout = Templates.videoNoSource({type: type, videoHTML: element.data.html});
       }
 			break;
 			
 		case "image":
-			var imgUrl = element.data.image.src;
-			layout += '<img class="photoSlide" src="' + imgUrl + '" /><aside class="attribution"><p class="' + element.source.name + '"><i></i>' + (element.data.image.caption || '') + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.attribution.name + '</a></span></p></aside>';
+			var data = {
+				type: type, 
+			  imgUrl: element.data.image.src,
+				srcName: element.source.name,
+				caption: (element.data.image.caption || ''),
+			 	permalink: element.permalink,
+			 	attrName: element.attribution.name
+			};
+			layout = Templates.image(data);
 			break;
 			
 		case "text":
-			layout += '<p class="textP"><span>'+element.data.text.sanitizeTags('<a>')+'</span></p>';		  
+			layout = Templates.text({type: type, text: element.data.text.sanitizeTags('<a>')});
 			break;
 		
 		case "link":
 			var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
-			var template = '<div class="quote"><p>' + element.data.link.description + '</p><aside><div class="username_container"><div class="username"><a href="' + element.permalink + '" target="_blank">' + element.attribution.name + '</a></div></div>';
-			template += '<div class="date_actions"><div class="date"><a href="' + element.permalink + '" target="_blank">' + Storify.utils.displayDate(timestamp) + '</a></aside></div></div>';
-			layout += template + '</div>';
+			layout = Templates.link({
+				type: type, 
+				linkDesc: element.data.link.description,
+				permalink: element.permalink,
+				linkThumb: element.data.link.thumbnail,
+				attrName: element.attribution.name,
+				timestamp: Storify.utils.displayDate(timestamp)
+			});
 			break;
 		
 		case "quote":
@@ -258,28 +270,44 @@ function getStoryElementHTML(element) {
 						var background = 'background:#000;';
 					}
 
-					var template = '<div class="quote_container" style="'+background+'"><div class="quote_container_inner">';
-
 					if (image_url) {									
-						template += '<img class="photoSlide" src="' + image_url + '" /><aside class="attribution"><a href="http://twitter.com/' + element.attribution.username + '" target="_blank" class="avatar"><img src="' + element.attribution.thumbnail + '" /></a><p class="' + element.source.name + '">' + element.data.quote.text.parseTweet() + '<br /><span>Photo by <a href="' + element.permalink + '" target="_blank">' + element.attribution.username + '</a></span></p></aside>'
+						layout = Templates.quote.twitterImage({
+							type: type, 
+							background: background,
+							imageUrl: image_url,
+							text: element.data.quote.text.parseTweet(),
+							username: element.attribution.username,
+							thumbnail: element.attribution.thumbnail,
+							name: element.source.name,
+							permalink: element.permalink,
+						});
 					}
 					else {
 						var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
-						template += '<div class="quote"><p>' + element.data.quote.text.parseTweet() + '<span class="arrow"></span></p><aside><div class="avatar_container"><a href="http://twitter.com/' + element.attribution.username + '" target="_blank"><img src="' + element.attribution.thumbnail + '" /></a></div><div class="username_container"><div class="username"><a href="http://twitter.com/' + element.attribution.username + '" target="_blank">' + element.attribution.username + '</a></div><div class="name">' + element.attribution.name + '</div></div>';
-						template += '<div class="date_actions"><div class="date"><a href="' + element.permalink + '" target="_blank">' + Storify.utils.displayDate(timestamp) + '</a></div><div class="actions"><a href="http://twitter.com/intent/tweet?in_reply_to=' + tweet_id + '&related=' + element.attribution.username + '" class="reply" target="_blank"><i></i><span>Reply</span></a><a href="http://twitter.com/intent/retweet?tweet_id=' + tweet_id + '&related=' + element.attribution.username + '" class="retweet" target="_blank"><i></i><span>Retweet</span></a><a href="http://twitter.com/intent/favorite?tweet_id=' + tweet_id + '&related=' + element.attribution.username + '" class="favorite" target="_blank"><i></i><span>Favorite</span></a></div></div></aside></div>';
+						layout = Templates.quote.twitter({
+							type: type, 
+							background: background,
+							text: element.data.quote.text.parseTweet(),
+							username: element.attribution.username,
+							thumbnail: element.attribution.thumbnail,
+							name: element.attribution.name,
+							permalink: element.permalink,
+							timestamp: Storify.utils.displayDate(timestamp),
+							tweet_id: tweet_id
+						});
 					}
-
-					template += '</div></div>';
-
-					layout += template + '</div>';
 					break;
 				
 				case 'facebook':
 				case 'other':
 					var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
-					var template = '<div class="quote"><p>' + element.data.quote.text + '</p><aside><div class="username_container"><div class="username"><a href="' + element.permalink + '" target="_blank">' + element.attribution.name + '</a></div></div>';
-					template += '<div class="date_actions"><div class="date"><a href="' + element.permalink + '" target="_blank">' + Storify.utils.displayDate(timestamp) + '</a></aside></div></div>';
-					layout += template + '</div>';
+					layout = Templates.quote.other({
+						type: type, 
+						text: element.data.quote.text,
+						permalink: element.permalink,
+						name: element.attribution.name,
+						timestamp: Storify.utils.displayDate(timestamp),
+					});
 					break;
 					
 			} 
@@ -290,16 +318,11 @@ function getStoryElementHTML(element) {
 			return false;
 	}
 	
-	return layout+'</div>';
+	return layout;
 }
 
 function getTitle(story) {
-	var html = '<div><div class="user">';
-	html += '<a class="avatar" href="http://storify.com/' + story.author.username + '" target="_blank"><img src="' + story.author.avatar + '" /></a>';
-	html += '<a class="permalink" href="http://storify.com/' + story.author.username + '" target="_blank">' + story.author.username + '</a></div>';
-	html += '<h1 class="title"><a href="'+story.permalink+'" target="_blank" title="View the story on Storify">' + story.title + '</a></h1>';
-	html += '</div>';
-
+	var html = Templates.title({story : story})
 	return $(html);
 }
 
@@ -406,6 +429,8 @@ function init() {
 				if (html) $("#twitterShow").append(html);
 			});
 			
+			// var last = Templates.lastSlide({ storyurl: storyurl, title: data.title });
+
 			var last = '<div class="slideWrapper lastElement"><div class="lastElementInner">';
 			last += '<h2>Share this story</h2><div class="buttons"><a href="#" class="facebook"><span>Share on Facebook</span></a><a href="#" class="twitter"><span>Share on Twitter</span></a></div>';
 			last += '<h2>Embed this slideshow</h2><div class="field"><input type="text" name="script" value="" readonly="readonly"/><a href="#" class="copy">Copy</a><div class="copied">Copied!</div></div>';
@@ -478,6 +503,7 @@ $(window).resize(function() {
 	resizeShow();
 	resizeTitle();
 	centerItem($('.quote:visible'), 'both');
+	centerItem($('.link:visible'), 'both');
 	centerItem($('.textP:visible'), 'verticalOnly');
 });
 
