@@ -752,18 +752,20 @@ a {color:#0074B7;text-decoration:none;}
 .twitter-image .content a {
 	color: #0094ff;
 }
+
 .twitter-image .attribution .meta {
-	background: url('../img/twitter-hi.png') 0px 5px no-repeat;
-	background-size: 19px 15px;
-	padding: 5px 0px 0px 30px;
-}
-.no-backgroundsize .twitter-image .attribution .meta {
-	background: url('../img/twitter.png') 0px 5px no-repeat;
+	padding-left: 0px;
 }
 
 .twitter-image .attribution .meta a {
 	color: #aaa;
 	font-size: 0.88em;
+	background: url('../img/twitter-hi.png') 0px 5px no-repeat;
+	background-size: 19px 15px;
+	padding: 5px 0px 0px 28px;
+}
+.no-backgroundsize .twitter-image .attribution .meta a {
+	background: url('../img/twitter.png') 0px 5px no-repeat;
 }
 .photoSlide {
 	display: block;
