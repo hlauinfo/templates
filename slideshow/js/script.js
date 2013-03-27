@@ -18,12 +18,28 @@ if (!Object.keys) {
 	}
 }
 
-String.prototype.parseURL = function() {
-	return this.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(originalurl) {
-		var urlstr = originalurl.replace(/https?:\/\/(www.)?/i,'');
-		if(urlstr.length>30) urlstr = urlstr.substr(0,27)+'...';
-		return '<a href="'+originalurl+'" target="_blank">'+urlstr+'</a>';
-	});
+String.prototype.parseURL = function(elementData) {
+	var str = this;
+  var elementUrls = [];
+  if (elementData.urls) elementUrls = elementUrls.concat(elementData.urls);
+  if (elementData.media) elementUrls = elementUrls.concat(elementData.media);
+
+  if (elementUrls.length > 0) {
+    for (var i=0; i < elementUrls.length; i++) {
+    	var re = new RegExp(elementUrls[i].display_url + '|' + elementUrls[i].url + '|' + elementUrls[i].expanded_url);
+      str = str.replace(re, function (originalurl) {
+        return '<a href="' + elementUrls[i].url + '" target="_blank" rel="external nofollow" title="Open this link in a new window">' + elementUrls[i].display_url + '</a>';
+      })
+    }
+  }
+
+  return str;
+
+	// return this.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(originalurl) {
+	// 	var urlstr = originalurl.replace(/https?:\/\/(www.)?/i,'');
+	// 	if(urlstr.length>30) urlstr = urlstr.substr(0,27)+'...';
+	// 	return '<a href="'+originalurl+'" target="_blank">'+urlstr+'</a>';
+	// });
 };
 
 String.prototype.parseUsername = function() {
@@ -42,8 +58,8 @@ String.prototype.parseHashtag = function() {
 
 /* Avoid cascading */
 
-String.prototype.parseTweet = function() {
-	return this.parseURL().parseUsername().parseHashtag();
+String.prototype.parseTweet = function(elementData) {
+	return this.parseURL(elementData).parseUsername().parseHashtag();
 }
 
 /* SHARING */
@@ -273,7 +289,7 @@ function getStoryElementHTML(element) {
 							type: type, 
 							background: background,
 							imageUrl: image_url,
-							text: element.data.quote.text.parseTweet(),
+							text: element.data.quote.text.parseTweet(element.meta.entities),
 							username: element.attribution.username,
 							thumbnail: element.attribution.thumbnail,
 							name: element.source.name,
@@ -285,7 +301,7 @@ function getStoryElementHTML(element) {
 						layout = Templates.quote.twitter({
 							type: type, 
 							background: background,
-							text: element.data.quote.text.parseTweet(),
+							text: element.data.quote.text.parseTweet(element.meta.entities),
 							username: element.attribution.username,
 							thumbnail: element.attribution.thumbnail,
 							name: element.attribution.name,
