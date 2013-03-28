@@ -90,6 +90,7 @@ function centerItem(item, type) {
 function onbefore(curr, next, opts, fwd) {
 	$(next).show();
 	centerItem($(next).find('.quote'), 'both');
+	centerItem($(next).find('.link'), 'both');
 	centerItem($(next).find('.textP'), 'verticalOnly');
 }
 
@@ -217,7 +218,7 @@ var previous_length = 0;
 function getStoryElementHTML(element) {
 	var type = (element.type == 'quote' && element.source.name != null) ? element.source.name : element.type;
 	var layout;
-  	  
+  	
 	switch (element.type) {
 		
 		case "video":
@@ -230,16 +231,36 @@ function getStoryElementHTML(element) {
 			break;
 			
 		case "image":
-			var caption = element.data.image.caption || '';
-			var data = {
-				type: type, 
-			  imgUrl: element.data.image.src,
-				srcName: element.source.name,
-				caption: element.source.name === 'twitter' ? caption.parseTweet(element.meta.entities) : caption,
-			 	permalink: element.permalink,
-			 	attrName: element.attribution.name
-			};
-			layout = Templates.image(data);
+			if (element.source.name == 'twitter')
+			{
+				var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
+				layout = Templates.quote.twitterImage({
+					type: type, 
+					background: background,
+					imageUrl: element.data.image.src,
+					text: element.data.quote.text.parseTweet(element.meta.entities),
+					username: element.attribution.username,
+					name: element.attribution.name,
+					thumbnail: element.attribution.thumbnail,
+					name: element.attribution.name,
+					timestamp: Storify.utils.displayDate(timestamp),
+					permalink: element.permalink
+				});
+			}
+			else
+			{
+				var data = {
+					type: type, 
+				  	imgUrl: element.data.image.src,
+					srcName: element.source.name,
+					caption: (element.data.image.caption || ''),
+				 	permalink: element.permalink,
+				 	attrName: element.attribution.name
+				};
+
+				layout = Templates.image(data);
+			}
+
 			break;
 			
 		case "text":
@@ -252,6 +273,7 @@ function getStoryElementHTML(element) {
 				type: type, 
 				linkDesc: element.data.link.description,
 				permalink: element.permalink,
+				linkThumb: element.data.link.thumbnail,
 				attrName: element.attribution.name,
 				timestamp: Storify.utils.displayDate(timestamp)
 			});
@@ -517,6 +539,7 @@ $(window).resize(function() {
 	resizeShow();
 	resizeTitle();
 	centerItem($('.quote:visible'), 'both');
+	centerItem($('.link:visible'), 'both');
 	centerItem($('.textP:visible'), 'verticalOnly');
 });
 

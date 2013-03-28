@@ -204,7 +204,7 @@ button {  width: auto; overflow: visible; }
  */
 
 body {
-  font-family: "Helvetica", "Arial", "Geneva", sans-serif;
+  font-family: "Museo Sans", "Helvetica", sans-serif;
   font-size: 62.5%;
   background: #000 url(../img/bg.gif);
   overflow: hidden;
@@ -280,6 +280,7 @@ a {color:#0074B7;text-decoration:none;}
 
 #bottom {
   border-top:1px solid #393939;
+  height: 66px;
 }
 
 #toolbar {
@@ -359,7 +360,7 @@ a {color:#0074B7;text-decoration:none;}
 #poweredBy {
 	height: 26px;
 	line-height: 24px;
-	background: #EEE;
+	background: #333;
 	text-align: right;
 	padding-right: 10px;
 	font-size: 1.1em;
@@ -414,13 +415,20 @@ a {color:#0074B7;text-decoration:none;}
 	background: #fff;
 	overflow:hidden;
 	width:600px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	border-radius: 9px;
 	clear: both;
 	-webkit-box-shadow: 10px 10px 30px 0px #000;
 	-moz-box-shadow: 10px 10px 30px 0px #000;
 	box-shadow: 10px 10px 30px 0px #000;
+	background: -moz-linear-gradient(top, #fff 0%, #e4e4e4 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff), color-stop(100%,#e4e4e4));
+	background: -webkit-linear-gradient(top, #fff 0%,#e4e4e4 100%);
+	background: -o-linear-gradient(top, #fff 0%,#e4e4e4 100%);
+	background: -ms-linear-gradient(top, #fff 0%,#e4e4e4 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e4e4e4',GradientType=0 );
+	background: linear-gradient(top, #fff 0%,#e4e4e4 100%);
 }
 .quote_container, .quote_container_inner {
 	width: 100%;
@@ -438,7 +446,7 @@ a {color:#0074B7;text-decoration:none;}
 	padding: 24px;
 }
 .twitterElement .quote p {
-	background: url(../img/twitter_bg.png) 370px 90px no-repeat;
+	/*background: url(../img/twitter_bg.png) 370px 90px no-repeat;*/
 }
 .facebookElement .quote p {
 	background: url(../img/facebook_bg.png) 370px 30px no-repeat;
@@ -453,10 +461,8 @@ a {color:#0074B7;text-decoration:none;}
 	height: 11px;
 }
 .quote aside {
-	border-top: 1px solid #D5D5D5;
-	padding: 18px 24px;
+	padding: 18px 24px 0px 24px;
 	height: 54px;
-	background: #F3F3F3;
 	-moz-border-radius-bottomright: 5px;
 	-moz-border-radius-bottomleft: 5px;
 	-webkit-border-radius: 0px 0px 5px 5px;
@@ -488,30 +494,42 @@ a {color:#0074B7;text-decoration:none;}
 	font-size: 1.3em;
 	color: #999;
 }
-.quote aside .date_actions {
-	float: right;
-	text-align: right;
+.quote .date_actions {
+	padding: 0px 24px 18px 24px;
 }
-.quote aside .date {
-	font-size: 1.1em;
+.quote .date {
+	font-size: 1.2em;
 	color: #999;
 	padding: 4px 0;
+	display: inline-block;
 }
-.quote aside .date a {
+.quote .date a {
 	color: #999;
+	padding-left: 24px;
+	background: url('../img/twitter-hi.png') no-repeat -1px 0px;
+	background-size: 19px 15px;
+	display: inline-block;
+	height: 1.3em;
+	text-shadow: 0px 1px 0px white;
 }
-.quote aside .date a:hover {
+.no-backgroundsize .quote .date a {
+	background: url('../img/twitter.png') no-repeat -1px 0px;
+}
+.quote .date a:hover {
 	color: #666;
 }
-.quote aside .actions {
+.quote .actions {
 	font-size: 1.2em;
+	display: inline-block;
+	float: right;
 }
-.quote aside .actions a {
+.quote .actions a {
 	display: inline-block;
 	padding-left: 5px;
 	line-height: 15px;
+	text-shadow: 0px 1px 0px white;
 }
-.quote aside .actions a i {
+.quote .actions a i {
 	display: block;
 	float: left;
 	width: 15px;
@@ -520,22 +538,22 @@ a {color:#0074B7;text-decoration:none;}
 	margin: -1px 3px 0 0;
 	background: url(../img/sprite-icons.png);
 }
-.quote aside .actions a.reply i {
+.quote .actions a.reply i {
 	background-position: 0 0;
 }
-.quote aside .actions a.retweet i {
+.quote .actions a.retweet i {
 	background-position: -176px 0;	
 }
-.quote aside .actions a.favorite i {
+.quote .actions a.favorite i {
 	background-position: -32px 0;
 }
-.quote aside .actions a.reply:hover i {
+.quote .actions a.reply:hover i {
 	background-position: -16px 0;
 }
-.quote aside .actions a.retweet:hover i {
+.quote .actions a.retweet:hover i {
 	background-position: -192px 0;	
 }
-.quote aside .actions a.favorite:hover i {
+.quote .actions a.favorite:hover i {
 	background-position: -48px 0;
 }
 
@@ -560,6 +578,110 @@ a {color:#0074B7;text-decoration:none;}
 .quoteElement .quote aside .title, .linkElement .quote aside .title {
 	font-size: 1.6em;
 	font-weight: bold;
+}
+
+
+.link {
+	position: absolute;
+	background: #fff;
+	overflow:hidden;
+	width:600px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	border-radius: 9px;
+	clear: both;
+	-webkit-box-shadow: 10px 10px 30px 0px #000;
+	-moz-box-shadow: 10px 10px 30px 0px #000;
+	box-shadow: 10px 10px 30px 0px #000;
+	background: -moz-linear-gradient(top, #fff 0%, #e4e4e4 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff), color-stop(100%,#e4e4e4));
+	background: -webkit-linear-gradient(top, #fff 0%,#e4e4e4 100%);
+	background: -o-linear-gradient(top, #fff 0%,#e4e4e4 100%);
+	background: -ms-linear-gradient(top, #fff 0%,#e4e4e4 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e4e4e4',GradientType=0 );
+	background: linear-gradient(top, #fff 0%,#e4e4e4 100%);
+}
+.link_container, .link_container_inner {
+	width: 100%;
+	height: 100%;
+}
+.link_container_inner {
+	background: url(../img/bg.png);
+}
+.link p {
+	font-family: "Georgia", serif;
+	font-size: 3em;
+	line-height: 1.2em;
+	height: 152px;
+	overflow: auto;
+	padding: 24px;
+}
+
+.link > img {
+	margin: 18px 0px 0px 24px;
+}
+.link aside {
+	padding: 18px 24px 0px 24px;
+	height: 54px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
+}
+.link aside .avatar_container {
+	padding: 2px;
+	border: 1px solid #9E9E9E;
+	float: left;
+	background: #FFF;
+}
+.link aside img {
+	display: block;
+	width: 48px;
+	height: 48px;
+}
+.link aside .username_container {
+	float: left;
+	padding: 0px 10px 0 0px;
+}
+.linkElement .quote aside .username_container {
+	padding: 0;
+}
+.link aside .username {
+	font-size: 1.8em;
+	line-height: 1em;
+}
+.link aside .name {
+	font-size: 1.3em;
+	color: #999;
+}
+.link .date_actions {
+	padding: 0px 24px 18px 24px;
+}
+.link .date {
+	font-size: 1.2em;
+	color: #999;
+	padding: 4px 0;
+	display: inline-block;
+}
+.link .date a {
+	color: #999;
+	display: inline-block;
+	height: 1.3em;
+	text-shadow: 0px 1px 0px white;
+}
+.link .date a:hover {
+	color: #666;
+}
+.link .actions {
+	font-size: 1.2em;
+	display: inline-block;
+	float: right;
+}
+.link .actions a {
+	display: inline-block;
+	padding-left: 5px;
+	line-height: 15px;
+	text-shadow: 0px 1px 0px white;
 }
 
 .attribution {		
@@ -598,7 +720,52 @@ a {color:#0074B7;text-decoration:none;}
 .attribution .avatar {
 	position: absolute;
 	top: 10px;
-	left: 10px;
+	left: 15px;
+}
+.twitter-image .attribution {
+	font-size: 1.6em;
+	padding-bottom: 10px;
+}
+.twitter-image .user-block {
+	margin: 10px 0px 10px 15px;
+}
+.twitter-image .attribution .avatar img {
+	position: absolute;
+	top:5px;
+	left:8px;
+}
+.twitter-image .attribution .full-name {
+	display: block;
+	margin: 14px 0px 0px 55px;
+	color: #999;
+}
+.twitter-image .attribution .handle {
+	display: block;
+	margin: 0px 0px 0px 55px;
+	font-size: 0.88em;
+	color: #0094ff;
+}
+.twitter-image .content {
+	margin: 0px 20px 5px 20px;
+	color: #ccc;
+}
+.twitter-image .content a {
+	color: #0094ff;
+}
+
+.twitter-image .attribution .meta {
+	padding-left: 0px;
+}
+
+.twitter-image .attribution .meta a {
+	color: #aaa;
+	font-size: 0.88em;
+	background: url('../img/twitter-hi.png') 0px 5px no-repeat;
+	background-size: 19px 15px;
+	padding: 5px 0px 0px 28px;
+}
+.no-backgroundsize .twitter-image .attribution .meta a {
+	background: url('../img/twitter.png') 0px 5px no-repeat;
 }
 .photoSlide {
 	display: block;
