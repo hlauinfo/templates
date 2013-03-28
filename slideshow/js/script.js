@@ -21,8 +21,8 @@ if (!Object.keys) {
 String.prototype.parseURL = function(elementData) {
 	var str = this;
   var elementUrls = [];
-  if (elementData.urls) elementUrls = elementUrls.concat(elementData.urls);
-  if (elementData.media) elementUrls = elementUrls.concat(elementData.media);
+  if (typeof elementData.urls !== 'undefined') elementUrls = elementUrls.concat(elementData.urls);
+  if (typeof elementData.media !== 'undefined') elementUrls = elementUrls.concat(elementData.media);
 
   if (elementUrls.length > 0) {
     for (var i=0; i < elementUrls.length; i++) {
@@ -238,7 +238,7 @@ function getStoryElementHTML(element) {
 					type: type, 
 					background: background,
 					imageUrl: element.data.image.src,
-					text: element.data.quote.text.parseTweet(),
+					text: element.data.quote.text.parseTweet(element.meta.entities),
 					username: element.attribution.username,
 					name: element.attribution.name,
 					thumbnail: element.attribution.thumbnail,
@@ -280,7 +280,6 @@ function getStoryElementHTML(element) {
 			break;
 		
 		case "quote":
-		
 			var source = (element.source.name != null) ? element.source.name : 'other';
 			
 			switch (source) {
@@ -307,7 +306,7 @@ function getStoryElementHTML(element) {
 						var background = 'background:#000;';
 					}
 
-					if (image_url) {									
+					if (image_url) {				
 						layout = Templates.quote.twitterImage({
 							type: type, 
 							background: background,
