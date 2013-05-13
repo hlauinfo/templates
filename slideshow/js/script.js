@@ -21,8 +21,10 @@ if (!Object.keys) {
 String.prototype.parseURL = function(elementData) {
 	var str = this;
   var elementUrls = [];
-  if (typeof elementData.urls !== 'undefined') elementUrls = elementUrls.concat(elementData.urls);
-  if (typeof elementData.media !== 'undefined') elementUrls = elementUrls.concat(elementData.media);
+  if(elementData) {
+    if (typeof elementData.urls !== 'undefined') elementUrls = elementUrls.concat(elementData.urls);
+    if (typeof elementData.media !== 'undefined') elementUrls = elementUrls.concat(elementData.media);
+  }
 
   if (elementUrls.length > 0) {
     for (var i=0; i < elementUrls.length; i++) {
