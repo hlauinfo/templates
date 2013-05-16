@@ -225,7 +225,7 @@ function getStoryElementHTML(element) {
 		
 		case "video":
       if (element.data.video.src) {
-				layout = Templates.videoWithSource({type: type, videoSrc: element.data.video.src});
+				layout = Templates.videoWithSource({type: type, videoSrc: element.data.video.src.replace('http://','//')});
       }
       else {
 				layout = Templates.videoNoSource({type: type, videoHTML: element.data.html});
