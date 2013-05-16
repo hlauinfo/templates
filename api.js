@@ -22,7 +22,7 @@ Storify.prototype = {
 	var identifier = storyPermalink.substr(19);
     
     jQuery.ajax({
-      url: 'http://api.storify.com/v1/stories/'+identifier+'?per_page=1000&meta=true',
+      url: '//api.storify.com/v1/stories/'+identifier+'?per_page=1000&meta=true',
 	  data: options,
       cache:true,
       success: callback,
@@ -43,34 +43,44 @@ Storify.prototype = {
   
   utils: {
     
-    getImage: function(u) {
-      if(!u) return false;
-      domain = u.replace(/^(http:\/\/)(www\.)?/i,'');
+    getImage: function(urlstr) {
+      if(!urlstr) return false;
+      domain = urlstr.replace(/^(https?:\/\/)(www\.)?/i,'');
       domain = domain.replace(/\/.*/g,'').toLowerCase();
-      u = u.replace(/\/$/,'');
+      urlstr = urlstr.replace(/\/$/,'');
       var thumbnail_url=null;
 
       switch(domain) {
         case 'twitpic.com':
-          hash = u.substr(u.lastIndexOf('/')+1);
-          thumbnail_url = 'http://twitpic.com/show/large/'+hash;
+          hash = urlstr.substr(urlstr.lastIndexOf('/')+1);
+          thumbnail_url = '//twitpic.com/show/large/'+hash;
           break;
 
         case 'instagr.am':
-          thumbnail_url = u+'/media';
+        case 'instagram.com':
+          thumbnail_url = urlstr.replace('http://','//')+'/media';
           break;
 
         case 'yfrog.com':
-          thumbnail_url = u+':iphone';
+          thumbnail_url = urlstr.replace('http://','//')+':iphone';
           break;
 
         case 'moby.to':
-        thumbnail_url = u+':view';
+        thumbnail_url = urlstr+':view';
+          break;
+
+        case 'p.twimg.com':
+          thumbnail_url = urlstr.replace('http://','//');
           break;
 
         case 'plixi.com': case 'tweetphoto.com': case 'pic.gd': case 'lockerz.com':
           // thumbnail_url = 'http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=medium&url=' + u;
-          thumbnail_url = 'http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url='+u;
+          thumbnail_url = '//api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url='+urlstr;
+          break;
+
+        default:
+          if(urlstr.match(/\.(jpg|png|gif)(\?.*)?$/))
+            thumbnail_url = urlstr;
           break;
       }
 

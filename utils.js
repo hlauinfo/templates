@@ -348,43 +348,79 @@
      return u.substr(u.lastIndexOf('.')+1).toLowerCase();
    };
 
-  Storify.utils.getImage = function(u) {
-    domain = u.replace(/^(https?:\/\/)(www\.)?/i,'');
+  Storify.utils.getImage = function(urlstr) {
+    if(!urlstr) return false;
+    domain = urlstr.replace(/^(https?:\/\/)(www\.)?/i,'');
     domain = domain.replace(/\/.*/g,'').toLowerCase();
-    u = u.replace(/\/$/,'');
+    urlstr = urlstr.replace(/\/$/,'');
     var thumbnail_url=null;
 
     switch(domain) {
       case 'twitpic.com':
-        hash = u.substr(u.lastIndexOf('/')+1);
-        thumbnail_url = 'http://twitpic.com/show/large/'+hash;
+        hash = urlstr.substr(urlstr.lastIndexOf('/')+1);
+        thumbnail_url = '//twitpic.com/show/large/'+hash;
         break;
-        
+
       case 'instagr.am':
-        thumbnail_url = u+'/media';
+      case 'instagram.com':
+        thumbnail_url = urlstr.replace('http://','//')+'/media';
         break;
-        
+
       case 'yfrog.com':
-        thumbnail_url = u+':iphone';
+        thumbnail_url = urlstr.replace('http://','//')+':iphone';
         break;
-        
+
       case 'moby.to':
-      thumbnail_url = u+':view';
+      thumbnail_url = urlstr+':view';
         break;
-      
+
       case 'p.twimg.com':
-        thumbnail_url = u;
+        thumbnail_url = urlstr.replace('http://','//');
         break;
-        
+
       case 'plixi.com': case 'tweetphoto.com': case 'pic.gd': case 'lockerz.com':
         // thumbnail_url = 'http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=medium&url=' + u;
-        thumbnail_url = 'http://api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url='+u;
+        thumbnail_url = '//api.plixi.com/api/tpapi.svc/imagefromurl?size=medium&url='+urlstr;
+        break;
+
+      default:
+        if(urlstr.match(/\.(jpg|png|gif)(\?.*)?$/))
+          thumbnail_url = urlstr;
         break;
     }
 
     return thumbnail_url;
   };
   
+  Storify.utils.proxy_image = function(urlstr, maxWidth, maxHeight) {
+    var resize, proxy_url;
+
+    if(typeof urlstr != 'string') return '';
+
+    if(maxWidth || maxHeight) resize = true;
+
+    // We only resize Twitter images if we need less than 320px wide
+    if(urlstr.match(/twimg\.com\//) && maxWidth > 320) 
+      resize = false;
+
+    if(!resize && urlstr.substr(0,8)=='https://') return urlstr;
+    if(!resize && urlstr.substr(0,2)=='//') return urlstr;
+
+    // If we are in http mode and if we don't use the resize feature, we don't need the proxy
+    if(!resize && typeof window != 'undefined' && window.location && window.location.href && window.location.href.substr(0,7)=='http://' && !urlstr.match(/resize=/))
+      return urlstr;  
+
+    proxy_url = '//proxy.storify.com/?url='+encodeURIComponent(urlstr);
+
+    if(resize) {
+      proxy_url += '&resize=1';
+      if(maxWidth) proxy_url += '&w='+maxWidth;
+      if(maxHeight) proxy_url += '&h='+maxHeight;
+    }
+
+    return proxy_url;
+  };
+
   Storify.utils.parseFirstURL = function(str) {
     var urlexp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
 

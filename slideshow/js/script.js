@@ -239,11 +239,11 @@ function getStoryElementHTML(element) {
 				layout = Templates.quote.twitterImage({
 					type: type, 
 					background: background,
-					imageUrl: element.data.image.src,
+					imageUrl: Storify.utils.proxy_image(element.data.image.src),
 					text: element.data.quote.text.parseTweet(element.meta.entities),
 					username: element.attribution.username,
 					name: element.attribution.name,
-					thumbnail: element.attribution.thumbnail,
+					thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
 					name: element.attribution.name,
 					timestamp: Storify.utils.displayDate(timestamp),
 					permalink: element.permalink
@@ -253,7 +253,7 @@ function getStoryElementHTML(element) {
 			{
 				var data = {
 					type: type, 
-				  	imgUrl: element.data.image.src,
+          imgUrl: Storify.utils.proxy_image(element.data.image.src),
 					srcName: element.source.name,
 					caption: (element.data.image.caption || ''),
 				 	permalink: element.permalink,
@@ -275,7 +275,7 @@ function getStoryElementHTML(element) {
 				type: type, 
 				linkDesc: element.data.link.description,
 				permalink: element.permalink,
-				linkThumb: element.data.link.thumbnail,
+				linkThumb: Storify.utils.proxy_image(element.data.link.thumbnail),
 				attrName: element.attribution.name,
 				timestamp: Storify.utils.displayDate(timestamp)
 			});
@@ -299,7 +299,7 @@ function getStoryElementHTML(element) {
 					
 					if (element.meta.user != null) {
 						var repeat = (element.meta.user.profile_background_tile == true) ? 'repeat' : 'no-repeat';
-						var bg_image =  (element.meta.user.profile_background_image_url) ? ' url('+element.meta.user.profile_background_image_url+') '+repeat : '';
+						var bg_image =  (element.meta.user.profile_background_image_url) ? ' url('+Storify.utils.proxy_image(element.meta.user.profile_background_image_url)+') '+repeat : '';
 						var bg_color = (element.meta.user.profile_background_color) ? '#'+element.meta.user.profile_background_color : '#000';
 
 						var background = 'background:'+bg_color+bg_image+';';
@@ -312,10 +312,10 @@ function getStoryElementHTML(element) {
 						layout = Templates.quote.twitterImage({
 							type: type, 
 							background: background,
-							imageUrl: image_url,
+							imageUrl: Storify.utils.proxy_image(image_url),
 							text: element.data.quote.text.parseTweet(element.meta.entities),
 							username: element.attribution.username,
-							thumbnail: element.attribution.thumbnail,
+							thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
 							name: element.source.name,
 							permalink: element.permalink,
 						});
@@ -327,7 +327,7 @@ function getStoryElementHTML(element) {
 							background: background,
 							text: element.data.quote.text.parseTweet(element.meta.entities),
 							username: element.attribution.username,
-							thumbnail: element.attribution.thumbnail,
+							thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
 							name: element.attribution.name,
 							permalink: element.permalink,
 							timestamp: Storify.utils.displayDate(timestamp),
@@ -460,7 +460,7 @@ function init() {
 			$("a.user").attr("href", "http://storify.com/" + story.author.username);
 			$("a.user").text(story.author.username);
 			$("#branding .userImage").remove();
-			$("#branding h2").before("<img src=" + story.author.avatar + ' class="userImage" width="32" style="float: right;max-height:32px"/>');
+			$("#branding h2").before("<img src=" + Storify.utils.proxy_image(story.author.avatar,32) + ' class="userImage" width="32" style="float: right;max-height:32px"/>');
 
 			$.each(story.elements, function(index, element) {
 				var html = getStoryElementHTML(element);
