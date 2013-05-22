@@ -476,6 +476,12 @@ function init() {
 			last += '</div></div>';
 			
 			$("#twitterShow").append(last);
+
+      // xdamman: We can't have the share to facebook button in twitter cards
+      if(window.location.href.match(/^https:\/\//)) {
+        $('.buttons .facebook').hide();
+        $('.buttons .twitter').css('margin-left','13%');
+      }
 			
 			$('.lastElement .field input').val('<script src="'+storyurl+'.js?template=slideshow"></script><noscript><a href="'+storyurl+'" target="_blank">View "'+data.title+'" on Storify</a></noscript>');
 			$('.lastElement .field input').focus(function() {
