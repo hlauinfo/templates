@@ -478,7 +478,7 @@ function init() {
 			$("#twitterShow").append(last);
 
       // xdamman: We can't have the share to facebook button in twitter cards
-      if(window.location.href.match(/^https:\/\//)) {
+      if(window.location.protocol == 'https:') {
         $('.buttons .facebook').hide();
         $('.buttons .twitter').css('margin-left','13%');
       }
