@@ -236,16 +236,23 @@ function getStoryElementHTML(element) {
 			if (element.source.name == 'twitter')
 			{
 				var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
+        var text = element.data.quote.text;
+        var tweet_id = element.permalink.substr(element.permalink.lastIndexOf('/')+1);
+
+        if(element.meta && element.meta.entities) 
+          text = text.parseTweet(element.meta.entities);
+          
 				layout = Templates.quote.twitterImage({
 					type: type, 
 					background: background,
 					imageUrl: Storify.utils.proxy_image(element.data.image.src),
-					text: element.data.quote.text.parseTweet(element.meta.entities),
+					text: text, 
 					username: element.attribution.username,
 					name: element.attribution.name,
 					thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
 					name: element.attribution.name,
 					timestamp: Storify.utils.displayDate(timestamp),
+          tweet_id: tweet_id,
 					permalink: element.permalink
 				});
 			}

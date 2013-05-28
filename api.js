@@ -12,18 +12,52 @@ Storify.prototype = {
     return permalink;
   },
   
+  loadElements: function(query, options, callback) {
+    if(!callback && options) {
+      callback = options;
+      options = {};
+    }
+
+    query = query.replace('http://storify.com/search?q=','');
+    options.filter = options.filter || 'image';
+
+    jQuery.ajax({
+      url: '//api.storify.com/v1/elements/search?q='+query,
+      data: options,
+      cache:true,
+      success: function(res) { 
+        res.content.title = res.content.elements.length+" best "+options.filter+"s about "+query; 
+        res.content.author = {
+            name: 'Storify'
+          , username: 'Storify'
+          , avatar: 'https://si0.twimg.com/profile_images/1609922828/96x96-Storify-Square-Avatar_bigger.png'
+        };
+        return callback(res); 
+      },
+      scriptCharset: "utf-8",
+      contentType: "application/json; charset=utf-8",
+      dataType: "jsonp",
+      jsonpCallback: "cbtemplate",
+      type: "GET"
+    });
+  },
+
   loadStory: function(storyPermalink, options, callback) {
     if(!callback && options) {
       callback = options;
       options = {};
     }
 
+    if(!storyPermalink) { return console.error("No story permalink provided"); }
+    if(storyPermalink.match(/^http:\/\/storify\.com\/search\?q=/))
+      return this.loadElements(storyPermalink, options, callback);
+
     var slug = storyPermalink.substr(storyPermalink.lastIndexOf('/') + 1);
-	var identifier = storyPermalink.substr(19);
+    var identifier = storyPermalink.substr(19);
     
     jQuery.ajax({
       url: '//api.storify.com/v1/stories/'+identifier+'?per_page=1000&meta=true',
-	  data: options,
+      data: options,
       cache:true,
       success: callback,
       scriptCharset: "utf-8",

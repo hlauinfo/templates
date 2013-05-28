@@ -518,18 +518,18 @@ a {color:#0074B7;text-decoration:none;}
 .quote .date a:hover {
 	color: #666;
 }
-.quote .actions {
+.actions {
 	font-size: 1.2em;
 	display: inline-block;
 	float: right;
 }
-.quote .actions a {
+.actions a {
 	display: inline-block;
 	padding-left: 5px;
 	line-height: 15px;
 	text-shadow: 0px 1px 0px white;
 }
-.quote .actions a i {
+.actions a i {
 	display: block;
 	float: left;
 	width: 15px;
@@ -538,22 +538,22 @@ a {color:#0074B7;text-decoration:none;}
 	margin: -1px 3px 0 0;
 	background: url(../img/sprite-icons.png);
 }
-.quote .actions a.reply i {
+.actions a.reply i {
 	background-position: 0 0;
 }
-.quote .actions a.retweet i {
+.actions a.retweet i {
 	background-position: -176px 0;	
 }
-.quote .actions a.favorite i {
+.actions a.favorite i {
 	background-position: -32px 0;
 }
-.quote .actions a.reply:hover i {
+.actions a.reply:hover i {
 	background-position: -16px 0;
 }
-.quote .actions a.retweet:hover i {
+.actions a.retweet:hover i {
 	background-position: -192px 0;	
 }
-.quote .actions a.favorite:hover i {
+.actions a.favorite:hover i {
 	background-position: -48px 0;
 }
 
@@ -729,24 +729,24 @@ a {color:#0074B7;text-decoration:none;}
 	top: 10px;
 	left: 15px;
 }
-.twitter-image .attribution {
+.twitter-image aside {
 	font-size: 1.6em;
 //xd:	padding-bottom: 10px;
 }
 .twitter-image .user-block {
 	margin: 10px 0px 10px 15px;
 }
-.twitter-image .attribution .avatar img {
+.twitter-image aside .avatar img {
 	position: absolute;
 	top:5px;
 	left:8px;
 }
-.twitter-image .attribution .full-name {
+.twitter-image aside .full-name {
 	display: block;
 	margin: 14px 0px 0px 55px;
 	color: #999;
 }
-.twitter-image .attribution .handle {
+.twitter-image aside .handle {
 	display: block;
 	margin: 0px 0px 0px 55px;
 	font-size: 0.88em;
@@ -760,20 +760,32 @@ a {color:#0074B7;text-decoration:none;}
 	color: #0094ff;
 }
 
-.twitter-image .attribution .meta {
+.twitter-image .attribution {
 	padding-left: 0px;
 }
 
-.twitter-image .attribution .meta a {
+.twitter-image .attribution .meta {
 	color: #aaa;
-	font-size: 0.88em;
+	font-size: 0.8em;
 	background: url('../img/twitter-hi.png') 0px 5px no-repeat;
 	background-size: 19px 15px;
-	padding: 5px 0px 0px 28px;
+	padding: 1px 0px 0px 28px;
+  margin-top: 4px;
 }
-.no-backgroundsize .twitter-image .attribution .meta a {
+.twitter-image .actions {
+  margin-left: 5px;
+  float: none;
+}
+.twitter-image .actions a {
+  color: #ccc;
+	font-size: 0.8em;
+  text-shadow: none;
+}
+.no-backgroundsize .twitter-image .attribution .meta {
 	background: url('../img/twitter.png') 0px 5px no-repeat;
 }
+
+
 .photoSlide {
 	display: block;
 	height: 100%;
