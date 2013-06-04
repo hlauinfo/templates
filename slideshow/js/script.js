@@ -18,52 +18,6 @@ if (!Object.keys) {
 	}
 }
 
-String.prototype.parseURL = function(elementData) {
-	var str = this;
-  var elementUrls = [];
-  if(elementData) {
-    if (typeof elementData.urls !== 'undefined') elementUrls = elementUrls.concat(elementData.urls);
-    if (typeof elementData.media !== 'undefined') elementUrls = elementUrls.concat(elementData.media);
-  }
-
-  if (elementUrls.length > 0) {
-    for (var i=0; i < elementUrls.length; i++) {
-    	var re = new RegExp(elementUrls[i].display_url + '|' + elementUrls[i].url + '|' + elementUrls[i].expanded_url);
-      str = str.replace(re, function (originalurl) {
-        return '<a href="' + elementUrls[i].url + '" target="_blank" rel="external nofollow" title="Open this link in a new window">' + elementUrls[i].display_url + '</a>';
-      })
-    }
-  }
-
-  return str;
-
-	// return this.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(originalurl) {
-	// 	var urlstr = originalurl.replace(/https?:\/\/(www.)?/i,'');
-	// 	if(urlstr.length>30) urlstr = urlstr.substr(0,27)+'...';
-	// 	return '<a href="'+originalurl+'" target="_blank">'+urlstr+'</a>';
-	// });
-};
-
-String.prototype.parseUsername = function() {
-	return this.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
-		var username = u.replace("@","")
-		return '<a href="http://twitter.com/'+username+'" target="_blank">@'+username+'</a>';
-	});
-};
-
-String.prototype.parseHashtag = function() {
-	return this.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
-		var tag = t.replace("#","")
-		return '<a href="http://twitter.com/search?q=%23'+tag+'" target="_blank">#'+tag+'</a>';
-	});
-};
-
-/* Avoid cascading */
-
-String.prototype.parseTweet = function(elementData) {
-	return this.parseURL(elementData).parseUsername().parseHashtag();
-}
-
 /* SHARING */
 
 function shareOnFacebook(url) {
@@ -241,6 +195,8 @@ function getStoryElementHTML(element) {
 
         if(element.meta && element.meta.entities) 
           text = text.parseTweet(element.meta.entities);
+        else 
+          element.meta = {};
           
 				layout = Templates.quote.twitterImage({
 					type: type, 
@@ -295,6 +251,7 @@ function getStoryElementHTML(element) {
 					
 				case 'twitter':
 					element.metadata = element.metadata || {};
+					element.meta = element.meta || {};
 					element.metadata.user = element.metadata.user || {};
 					element.metadata.user.name = element.metadata.user.name || '';
 
@@ -304,7 +261,7 @@ function getStoryElementHTML(element) {
 					var imageShortURL = Storify.utils.parseFirstURL(element.data.quote.text);
 					var image_url = (imageShortURL) ? Storify.utils.getImage(imageShortURL) : null;
 					
-					if (element.meta.user != null) {
+					if (element.meta && element.meta.user != null) {
 						var repeat = (element.meta.user.profile_background_tile == true) ? 'repeat' : 'no-repeat';
 						var bg_image =  (element.meta.user.profile_background_image_url) ? ' url('+Storify.utils.proxy_image(element.meta.user.profile_background_image_url)+') '+repeat : '';
 						var bg_color = (element.meta.user.profile_background_color) ? '#'+element.meta.user.profile_background_color : '#000';

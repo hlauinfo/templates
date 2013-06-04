@@ -19,14 +19,15 @@ Storify.prototype = {
     }
 
     query = query.replace('http://storify.com/search?q=','');
-    options.filter = options.filter || 'image';
+    options.filter = options.filter || 'image,quote,video';
 
     jQuery.ajax({
       url: '//api.storify.com/v1/elements/search?q='+query,
       data: options,
       cache:true,
       success: function(res) { 
-        res.content.title = res.content.elements.length+" best "+options.filter+"s about "+query; 
+        var filter_str = options.filter.replace(/,/g,'s, ').replace(/, ,/g,',');
+        res.content.title = res.content.elements.length+" best "+filter_str+"s about "+query; 
         res.content.author = {
             name: 'Storify'
           , username: 'Storify'

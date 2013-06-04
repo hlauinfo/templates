@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Storify [grid]</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link href="//fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="//storify.com/public/embed.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
+  	<link rel="stylesheet" type="text/css" media="screen and (max-width: 900px)" href="css/900.css">
+  	<link rel="stylesheet" type="text/css" media="screen and (max-width: 600px)" href="css/600.css">
+  </head>
+  <body>
+  
+    <div id="grid">
+      <div id="header">
+        <h1 id="title"></h1>
+        <span id="byline"></span>
+        <p id="description"></p>
+      </div>
+      <ul id="content">
+        <li class="vignette">
+          <div class="thumbnail" /><a target="_blank"></a></div>
+          <div class="attribution">
+            <img class="avatar" />
+            <div class="author_info">
+              <div class="author"><a target="_blank"></a></div>
+              <div class="timestamp"><a target="_blank"></a></div>
+            </div>
+          </div>
+          <div class="caption"></div>
+        </li>
+      </ul>
+      <div id="footer">
+        <div id="poweredBy">powered by <a href="http://storify.com" target="_blank">Storify</a></div>
+      </div>
+  	</div>
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../api.js"></script>
+    <script type="text/javascript">
+      STORIFY_JQUERY = jQuery;
+      
+      var storify = new Storify();
+      STORIFY_PERMALINK = storify.getPermalink() || "http://storify.com/search?q=tornado";
+
+      storify.loadStory(STORIFY_PERMALINK, {filter: 'image,video'}, function(data) {
+        var story = data.content;
+        
+        var templateMapping = {
+            '#title': story.title
+          , '#description': story.description
+          , '#byline' : (story.author.name) ? 'Storify by <a href="//storify.com/'+story.author.username+'" target="_blank">'+story.author.name+'</a>' : ''
+        };
+
+        $.each(templateMapping, function(dom) {
+          $(dom).html(templateMapping[dom]);
+        });
+
+        var list = $('<ul id="content">')
+          , vignette = $('li.vignette')
+          , caption = ''
+          , thumbnailsrc = ''
+          ;
+
+        for(var i=0; i<story.elements.length; i++) {
+          var e = story.elements[i];
+          if(['image','video'].indexOf(e.type) == -1) continue;
+
+          var author = e.attribution.name;
+          if(e.attribution.username && e.source.name == 'twitter') {
+            author += ' (@'+e.attribution.username+')';
+          }
+          var v = vignette.clone();
+  
+          switch(e.type) {
+            case 'image': 
+              thumbnailsrc = e.data.image.src;
+              caption = e.data.image.caption || '';
+              v.find('.thumbnail a').attr('href',e.permalink).html('<div style="background: url(\''+Storify.utils.proxy_image(thumbnailsrc, 300, 300)+'&bypassRefererCheck=1\') no-repeat center center"></div>');
+            break;
+
+            case 'video':
+              console.log("Video: ",e);
+              var videohtml = (e.data.video.src) ? '<iframe src="'+e.data.video.src+'" frameborder=0 />' : e.data.video.html;
+              v.find('.thumbnail').html(videohtml);
+              caption = '<b>'+e.data.video.title + '</b> ' + (e.data.video.description || '');
+            break;
+          }
+
+          v.find('.caption').html(caption.parseTweet());
+          v.find('img.avatar').attr('src', e.attribution.thumbnail);
+          v.find('.author a').attr('href',e.attribution.href).html(author);
+          v.find('.timestamp a').attr('href',e.permalink).html(Storify.utils.displayDate(new Date(e.posted_at),true));
+          list.append(v);
+        }
+
+        $('ul#content').replaceWith(list);
+
+      });
+    </script>
+    <script type="text/javascript" src="../utils.js"></script>
+  
+  </body>
+</html>

@@ -483,6 +483,49 @@
     return true;
   };
 
+  String.prototype.parseURL = function(elementData) {
+    var str = this;
+    var elementUrls = [];
+    if(elementData) {
+      if (typeof elementData.urls !== 'undefined') elementUrls = elementUrls.concat(elementData.urls);
+      if (typeof elementData.media !== 'undefined') elementUrls = elementUrls.concat(elementData.media);
+    }
+
+    if (elementUrls.length > 0) {
+      for (var i=0; i < elementUrls.length; i++) {
+        var re = new RegExp(elementUrls[i].display_url + '|' + elementUrls[i].url + '|' + elementUrls[i].expanded_url);
+        str = str.replace(re, function (originalurl) {
+          return '<a href="' + elementUrls[i].url + '" target="_blank" rel="external nofollow" title="Open this link in a new window">' + elementUrls[i].display_url + '</a>';
+        })
+      }
+    }
+
+    return str;
+
+    // return this.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(originalurl) {
+    // 	var urlstr = originalurl.replace(/https?:\/\/(www.)?/i,'');
+    // 	if(urlstr.length>30) urlstr = urlstr.substr(0,27)+'...';
+    // 	return '<a href="'+originalurl+'" target="_blank">'+urlstr+'</a>';
+    // });
+  };
+
+  String.prototype.parseUsername = function() {
+    return this.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
+      var username = u.replace("@","")
+      return '<a href="http://twitter.com/'+username+'" target="_blank">@'+username+'</a>';
+    });
+  };
+
+  String.prototype.parseHashtag = function() {
+    return this.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
+      var tag = t.replace("#","")
+      return '<a href="http://twitter.com/search?q=%23'+tag+'" target="_blank">#'+tag+'</a>';
+    });
+  };
+
+  String.prototype.parseTweet = function(elementData) {
+    return this.parseURL(elementData).parseUsername().parseHashtag();
+  }
 
   function awesm_share(channel, url, title, content) {
             
