@@ -143,6 +143,15 @@
       metadata: metadata
       });
   } 
+
+  Storify.smart_truncate = function(str, n){
+      if(typeof str != 'string') return '';
+
+      var toLong = str.length>n,
+          s_ = toLong ? str.substr(0,n-1) : str;
+      s_ = toLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
+      return  toLong ? s_ +'...' : s_;
+   }
   
   Storify.getLinkToElement = function(elementPermalink) {
     if(!elementPermalink) return false;

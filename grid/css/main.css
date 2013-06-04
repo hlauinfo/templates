@@ -23,6 +23,11 @@ a:hover {
   text-decoration: none;
 }
 
+#header #description {
+  color: #555;
+  font-style: italic;
+}
+
 ul#content {
   margin: 0px;
   padding:0px;
@@ -79,6 +84,7 @@ ul#content {
 }
 
 .vignette .caption {
+  overflow: hidden;
   line-height: 1.4;
   color: #555;
   font-size: 12px;

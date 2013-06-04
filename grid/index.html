@@ -56,7 +56,7 @@
         var templateMapping = {
             '#title': story.title
           , '#description': story.description
-          , '#byline' : (story.author.name) ? 'Storify by <a href="//storify.com/'+story.author.username+'" target="_blank">'+story.author.name+'</a>' : ''
+          , '#byline' : (story.author.name) ? '<a href="'+story.permalink+'" target="_blank">Storify by '+story.author.name+'</a>' : ''
         };
 
         $.each(templateMapping, function(dom) {
@@ -87,14 +87,22 @@
             break;
 
             case 'video':
-              console.log("Video: ",e);
-              var videohtml = (e.data.video.src) ? '<iframe src="'+e.data.video.src+'" frameborder=0 />' : e.data.video.html;
+              if(e.data.video.src) {
+                if(e.data.video.src.match(/vine\.co\//))
+                  e.data.video.src += '/card';
+                var videohtml = '<iframe src="'+e.data.video.src+'" frameborder=0 />'; 
+              }
+              else {
+                var videohtml = e.data.video.html;
+              }
               v.find('.thumbnail').html(videohtml);
-              caption = '<b>'+e.data.video.title + '</b> ' + (e.data.video.description || '');
+              caption = Storify.smart_truncate(e.data.video.title,140);
+              if(e.data.video.description)
+                caption = '<b>' + caption + '</b> ' + Storify.smart_truncate(e.data.video.description,140);
             break;
           }
 
-          v.find('.caption').html(caption.parseTweet());
+          v.find('.caption').html(Storify.smart_truncate(caption,200).parseTweet());
           v.find('img.avatar').attr('src', e.attribution.thumbnail);
           v.find('.author a').attr('href',e.attribution.href).html(author);
           v.find('.timestamp a').attr('href',e.permalink).html(Storify.utils.displayDate(new Date(e.posted_at),true));
