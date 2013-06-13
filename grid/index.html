@@ -13,34 +13,40 @@
     <link href="//fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="//storify.com/public/embed.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
-  	<link rel="stylesheet" type="text/css" media="screen and (max-width: 900px)" href="css/900.css">
-  	<link rel="stylesheet" type="text/css" media="screen and (max-width: 600px)" href="css/600.css">
+  	<link rel="stylesheet" type="text/css" media="screen and (max-width: 960px)" href="css/900.css">
+  	<link rel="stylesheet" type="text/css" media="screen and (max-width: 630px)" href="css/600.css">
   </head>
-  <body>
-  
-    <div id="grid">
-      <div id="header">
-        <h1 id="title"></h1>
-        <span id="byline"></span>
-        <p id="description"></p>
-      </div>
-      <ul id="content">
-        <li class="vignette">
-          <div class="thumbnail" /><a target="_blank"></a></div>
-          <div class="attribution">
-            <img class="avatar" />
-            <div class="author_info">
-              <div class="author"><a target="_blank"></a></div>
-              <div class="timestamp"><a target="_blank"></a></div>
+  <body id="embed">
+    <div id="story"> 
+      <div id="grid">
+        <div class="s-minimal border">
+          <a href=":storyPermalink?utm_source=embed&amp;utm_medium=publisher&amp;utm_campaign=embed-header-slideshow" target="_blank" class="embed-header-date replacePermalink">View as slideshow</a>
+          <a href=":storyPermalink?utm_source=embed&amp;utm_medium=publisher&amp;utm_campaign=embed-header" target="_parent" class="embed-header-logo replacePermalink"></a>
+        </div>
+
+        <div id="header">
+          <h1 id="title"></h1>
+          <span id="byline"></span>
+          <p id="description"></p>
+        </div>
+        <div id="content">
+          <div class="vignette">
+            <div class="thumbnail" /><a target="_blank"></a></div>
+            <div class="attribution">
+              <img class="avatar" />
+              <div class="author_info">
+                <div class="author"><a target="_blank"></a></div>
+                <div class="timestamp"><a target="_blank"></a></div>
+              </div>
             </div>
+            <div class="caption"></div>
           </div>
-          <div class="caption"></div>
-        </li>
-      </ul>
-      <div id="footer">
-        <div id="poweredBy">powered by <a href="http://storify.com" target="_blank">Storify</a></div>
+        </div>
+        <div id="footer">
+          <div id="poweredBy">powered by <a href="http://storify.com" target="_blank">Storify</a></div>
+        </div>
       </div>
-  	</div>
+    </div>
 
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="../api.js"></script>
@@ -49,7 +55,7 @@
       
       var storify = new Storify();
       STORIFY_PERMALINK = storify.getPermalink() || "http://storify.com/search?q=tornado";
-
+      
       storify.loadStory(STORIFY_PERMALINK, {filter: 'image,video'}, function(data) {
         var story = data.content;
         
@@ -63,8 +69,26 @@
           $(dom).html(templateMapping[dom]);
         });
 
-        var list = $('<ul id="content">')
-          , vignette = $('li.vignette')
+        switch(storify.params.header) {
+          case "false":
+            $('.replacePermalink').each(function() {
+              var href = $(this).attr('href');
+              href = href.replace(":storyPermalink",story.permalink);
+              $(this).attr('href',href);
+            });
+            $('.s-minimal').show();
+            break;
+
+          case "none":
+            break;
+
+          default: 
+            $('#header').show();
+            break;
+        }
+
+        var list = $('<div id="content">')
+          , vignette = $('div.vignette')
           , caption = ''
           , thumbnailsrc = ''
           ;
@@ -109,8 +133,9 @@
           list.append(v);
         }
 
-        $('ul#content').replaceWith(list);
+        $('#content').replaceWith(list);
 
+        storify.resize();
       });
     </script>
     <script type="text/javascript" src="../utils.js"></script>

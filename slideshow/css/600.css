@@ -81,11 +81,14 @@
   padding: 5px;
 }
 .quote {
-	width: 300px;
+	width: 85%;
+  min-width: 300px;
+  max-height: 85%;
 }
 .quote p {
 	font-size: 1.5em;
-	height: 92px;
+	max-height: 92px;
+  height:auto;
 }
 .twitterElement .quote p {
 	background-position: 70px 30px;
@@ -113,6 +116,10 @@
 .quote aside .name {
 	display: none;
 }
+.quote aside .actions {
+  padding-top: 3px;
+}
+
 .quote aside .actions a span {
 	display: none;
 }

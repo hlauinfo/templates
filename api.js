@@ -1,14 +1,28 @@
-function Storify() {}
+function Storify() {
+}
+
+var API_ENDPOINT = '//api.storify.com/v1';
+
+if(window.location.href.match(/\/\/localhost/)) 
+  API_ENDPOINT = 'http://localhost:4430/v1';
 
 Storify.prototype = {
   getPermalink: function() {
-    var permalink = null;
-    
-    if (window.location.hash.match(/.{0,15}storify\.com/)) {
+    if(this.permalink) return this.permalink;
+
+    var permalink = null;    
+    this.params = this.utils.parseQueryString();
+    if(this.params.src) permalink = this.params.src;
+
+    if (!permalink && window.location.hash.match(/.{0,15}storify\.com/)) {
       permalink = window.location.hash.substr(1);
-      if(permalink.substr(0,2)=='//') permalink = 'http:'+permalink;
     }
     
+    permalink = decodeURIComponent(permalink);
+    permalink = permalink.replace('localhost.storify.com:3000','storify.com');
+    if(permalink.substr(0,2)=='//') permalink = 'http:'+permalink;
+
+    this.permalink = permalink;
     return permalink;
   },
   
@@ -22,7 +36,7 @@ Storify.prototype = {
     options.filter = options.filter || 'image,quote,video';
 
     jQuery.ajax({
-      url: '//api.storify.com/v1/elements/search?q='+query,
+      url: API_ENDPOINT+'/elements/search?q='+query,
       data: options,
       cache:true,
       success: function(res) { 
@@ -57,7 +71,7 @@ Storify.prototype = {
     var identifier = storyPermalink.substr(19);
     
     jQuery.ajax({
-      url: '//api.storify.com/v1/stories/'+identifier+'?per_page=1000&meta=true',
+      url: API_ENDPOINT+'/stories/'+identifier+'?per_page=1000&meta=true',
       data: options,
       cache:true,
       success: callback,
@@ -76,8 +90,49 @@ Storify.prototype = {
       _gaq.push(['_trackEvent', 'template', eventName, eventValue]);    
   },
   
+  ensureResize: function(count, delay) {
+    var self = this
+      , count = count || 10
+      , delay = delay || 100;
+
+    var i = setInterval(function() {
+      self.resize();
+      if (!count--) {
+        clearInterval(i);
+      }
+    }, delay);
+  },
+  
+  resize: function(height) {
+    var height = height || $('html').height();
+    if (height <= this.height) {
+      return;
+    }
+    this.height = height;
+    this.postMessage({ method: 'resize', value: this.height });
+  },
+  
+  postMessage: function(msg) {
+    msg.sourceName = this.permalink.replace('http://storify.com/','').replace('/','-')+"_grid";
+    window.parent.postMessage(JSON.stringify(msg), '*');
+  },
+  
   utils: {
-    
+      
+    parseQueryString: function() {
+
+        var str = window.location.search;
+        var objURL = {};
+
+        str.replace(
+          new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+          function( $0, $1, $2, $3 ){
+            objURL[ $1 ] = $3;
+          }
+        );
+        return objURL;
+    },
+  
     getImage: function(urlstr) {
       if(!urlstr) return false;
       domain = urlstr.replace(/^(https?:\/\/)(www\.)?/i,'');

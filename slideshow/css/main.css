@@ -280,7 +280,6 @@ a {color:#0074B7;text-decoration:none;}
 
 #bottom {
   border-top:1px solid #393939;
-  height: 66px;
   position: absolute;
   bottom: 0px;
   width: 100%;
@@ -414,6 +413,10 @@ a {color:#0074B7;text-decoration:none;}
   padding:35px 15px;
 }
 
+.slideWrapper:hover .actions {
+  display: inline-block;
+}
+
 .quote {
 	position: absolute;
 	background: #fff;
@@ -524,7 +527,7 @@ a {color:#0074B7;text-decoration:none;}
 }
 .actions {
 	font-size: 1.2em;
-	display: inline-block;
+	display: none;
 	float: right;
 }
 .actions a {
