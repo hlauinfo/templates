@@ -80,16 +80,22 @@
 .attribution p {
   padding: 5px;
 }
-.quote {
+.quote, .link {
 	width: 85%;
   min-width: 300px;
   max-height: 85%;
 }
-.quote p {
+.quote p, .link p {
 	font-size: 1.5em;
 	max-height: 92px;
   height:auto;
+  padding: 18px 24px;
 }
+
+.link img {
+  max-width: 100px;
+}
+
 .twitterElement .quote p {
 	background-position: 70px 30px;
 }
@@ -110,7 +116,7 @@
 .quote aside .username_container {
 	padding: 4px 0 0 8px;
 }
-.quote aside .username {
+.quote aside .username, .link aside .username {
 	font-size: 1.3em;
 }
 .quote aside .name {
@@ -126,7 +132,7 @@
 .quote aside .actions a i {
 	margin: 0;
 }
-.quote aside .date {
+.quote aside .date, .link .date {
 	padding: 0 0 2px 0;
 }
 .quoteElement .quote aside .website a, .linkElement .quote aside .website a {
@@ -136,8 +142,9 @@
 	font-size: 1.1em;
 	font-weight: bold;
 }
-.quoteElement .quote p, .linkElement .quote p {
+.quoteElement .quote p, .linkElement p {
 	background: none;
+  padding: 18px 24px;
 	font-size: 1.4em;
 }
 .lastElementInner {

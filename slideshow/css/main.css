@@ -619,13 +619,15 @@ a {color:#0074B7;text-decoration:none;}
 	font-family: "Georgia", serif;
 	font-size: 3em;
 	line-height: 1.2em;
-	height: 152px;
-	overflow: auto;
+  text-overflow: ellipsis;
+	overflow: hidden;
 	padding: 24px;
 }
 
-.link > img {
-	margin: 18px 0px 0px 24px;
+.link p img {
+	margin: 0px 15px 10px 0px;
+  max-width: 200px;
+  float: left;
 }
 .link aside {
 	padding: 18px 24px 0px 24px;

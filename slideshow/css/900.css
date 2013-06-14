@@ -28,12 +28,16 @@
 .attribution {
 	font-size: 1.7em;
 }
-.quote {
+.quote, .link {
 	width: 450px;
 }
-.quote p {
+.link p img {
+  max-width: 150px;
+}
+
+.quote p, .link p {
 	font-size: 2.2em;
-	height: 122px;
+	/* height: 122px; */
 }
 .twitterElement .quote p {
 	background-position: 220px 60px;
