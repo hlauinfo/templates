@@ -1,0 +1,41 @@
+/*
+ * Vignettes: width: [230px - 350px]
+ *   - 2 columns: 480px+
+ *   - 3 columns: 768px+
+ *   - 4 columns: 1024px+
+ * 
+ * iPhone: 
+ *  - portrait: 320px: 1 column
+ *  - landscape: 480px: 2 columns
+ * iPad:
+ *  - portrait: 768px: 3 columns
+ *  - landscape: 1024px: 4 columns
+ *
+ */
+
+@media all and (max-width: 1023px) {
+  .vignette {
+    width: 33%;
+    padding-top: 33%;
+  }
+  .vignette_bottom {
+  }
+}
+
+@media all and (max-width: 767px) {
+  .vignette {
+    width: 50%;
+    padding-top: 50%;
+  }
+  .vignette_bottom {
+  }
+}
+
+@media all and (max-width: 479px) {
+  .vignette {
+    width: 100%;
+    padding-top:100%;
+  }
+  .vignette_bottom {
+  }
+}

@@ -3,9 +3,6 @@ function Storify() {
 
 var API_ENDPOINT = '//api.storify.com/v1';
 
-if(window.location.href.match(/\/\/localhost/)) 
-  API_ENDPOINT = 'http://localhost:4430/v1';
-
 Storify.prototype = {
   getPermalink: function() {
     if(this.permalink) return this.permalink;
@@ -19,7 +16,12 @@ Storify.prototype = {
     }
     
     permalink = decodeURIComponent(permalink);
-    permalink = permalink.replace('localhost.storify.com:3000','storify.com');
+
+    if(permalink.match(/\/\/localhost/)) { 
+      API_ENDPOINT = 'http://localhost:4430/v1';
+      permalink = permalink.replace('localhost.storify.com:3000','storify.com');
+    }
+
     if(permalink.substr(0,2)=='//') permalink = 'http:'+permalink;
 
     this.permalink = permalink;

@@ -50,31 +50,42 @@ a:hover {
 #content {
   margin: 0px;
   padding:0px;
-  display: inline-block;
   overflow: hidden;
-  zoom: 1;
-  *display: inline;
 }
 
 .vignette {
-  width: 300px;
+  width: 25%;
+  padding-top: 25%;
   float: left;
-  margin: 10px 10px 0px 5px;
-  height: 420px;
   text-align: left;
+  position: relative;
 }
 
 .vignette .thumbnail {
-  width: 300px;
-  height: 300px;
+  padding-bottom: 100%;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
   overflow:hidden;
 }
 
 .vignette .thumbnail iframe, .vignette .thumbnail div {
-  width:300px;
-  height: 300px;
+  position:absolute;
+  width: 100%;
+  padding-bottom: 100%;
   background-size: cover;
   background-color: black !important;
+}
+
+.vignette .thumbnail iframe {
+  padding: 24% 0px;
+  position: relative;
+}
+
+.vignette_bottom {
+  padding: 0px 5px;
+  min-height:110px;
 }
 
 .vignette .attribution {
@@ -107,6 +118,8 @@ a:hover {
 
 .vignette .caption {
   overflow: hidden;
+  text-overflow: ellipsis;
+  height: 65px;
   line-height: 1.4;
   color: #555;
   font-size: 12px;

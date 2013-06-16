@@ -13,8 +13,7 @@
     <link href="//fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="//storify.com/public/embed.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
-  	<link rel="stylesheet" type="text/css" media="screen and (max-width: 960px)" href="css/900.css">
-  	<link rel="stylesheet" type="text/css" media="screen and (max-width: 630px)" href="css/600.css">
+  	<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="css/responsive.css">
   </head>
   <body id="embed">
     <div id="story"> 
@@ -32,14 +31,16 @@
         <div id="content">
           <div class="vignette">
             <div class="thumbnail" /><a target="_blank"></a></div>
-            <div class="attribution">
-              <img class="avatar" />
-              <div class="author_info">
-                <div class="author"><a target="_blank"></a></div>
-                <div class="timestamp"><a target="_blank"></a></div>
+            <div class="vignette_bottom">
+              <div class="attribution">
+                <img class="avatar" />
+                <div class="author_info">
+                  <div class="author"><a target="_blank"></a></div>
+                  <div class="timestamp"><a target="_blank"></a></div>
+                </div>
               </div>
+              <div class="caption"></div>
             </div>
-            <div class="caption"></div>
           </div>
         </div>
         <div id="footer">
@@ -107,7 +108,7 @@
             case 'image': 
               thumbnailsrc = e.data.image.src;
               caption = e.data.image.caption || '';
-              v.find('.thumbnail a').attr('href',e.permalink).html('<div style="background: url(\''+Storify.utils.proxy_image(thumbnailsrc, 300, 300)+'&bypassRefererCheck=1\') no-repeat center center"></div>');
+              v.find('.thumbnail a').attr('href',e.permalink).html('<div style="background: url(\''+Storify.utils.proxy_image(thumbnailsrc, 350, 350)+'\') no-repeat center center"></div>');
             break;
 
             case 'video':

@@ -403,7 +403,7 @@
     if(maxWidth || maxHeight) resize = true;
 
     // We only resize Twitter images if we need less than 320px wide
-    if(urlstr.match(/twimg\.com\//) && maxWidth > 320) 
+    if(urlstr.match(/twimg\.com\//) && maxWidth > 350) 
       resize = false;
 
     if(!resize && urlstr.substr(0,8)=='https://') return urlstr;
@@ -420,6 +420,9 @@
       if(maxWidth) proxy_url += '&w='+maxWidth;
       if(maxHeight) proxy_url += '&h='+maxHeight;
     }
+
+    if(window.location.href.match(/\/\/localhost/))
+      proxy_url+="&bypassRefererCheck=1";
 
     return proxy_url;
   };
