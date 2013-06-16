@@ -108,7 +108,7 @@
             case 'image': 
               thumbnailsrc = e.data.image.src;
               caption = e.data.image.caption || '';
-              v.find('.thumbnail a').attr('href',e.permalink).html('<div style="background: url(\''+Storify.utils.proxy_image(thumbnailsrc, 350, 350)+'\') no-repeat center center"></div>');
+              v.find('.thumbnail a').attr('href',e.permalink).html('<div style="background: url(\''+Storify.utils.proxy_image(thumbnailsrc, 360, 360)+'\') no-repeat center center"></div>');
             break;
 
             case 'video':

@@ -403,7 +403,7 @@
     if(maxWidth || maxHeight) resize = true;
 
     // We only resize Twitter images if we need less than 320px wide
-    if(urlstr.match(/twimg\.com\//) && maxWidth > 350) 
+    if(urlstr.match(/twimg\.com\//) && maxWidth > 360) 
       resize = false;
 
     if(!resize && urlstr.substr(0,8)=='https://') return urlstr;
