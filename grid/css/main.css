@@ -79,8 +79,8 @@ a:hover {
 }
 
 .vignette .thumbnail iframe {
-  padding: 24% 0px;
-  position: relative;
+  background-color: transparent !important;
+  height: 100%;
 }
 
 .vignette_bottom {
