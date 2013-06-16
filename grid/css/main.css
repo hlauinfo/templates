@@ -89,7 +89,7 @@ a:hover {
 }
 
 .vignette .attribution {
-  margin: 10px 0px;
+  margin: 5px 0px;
   height: 32px;
   line-height: 0.9;
 }
@@ -104,6 +104,12 @@ a:hover {
 .vignette .attribution a {
   text-decoration: none;
   color: black;
+}
+
+.vignette .attribution .author_info .author {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .vignette .attribution .author_info .author a {
