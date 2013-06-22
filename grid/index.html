@@ -33,10 +33,10 @@
             <div class="thumbnail" /><a target="_blank"></a></div>
             <div class="vignette_bottom">
               <div class="attribution">
-                <img class="avatar" />
+                <a target="_blank" href=":profileUrl" class="avatar"><img /></a>
                 <div class="author_info">
-                  <div class="author"><a target="_blank"></a></div>
-                  <div class="timestamp"><a target="_blank"></a></div>
+                  <div class="author"><a href=":profileUrl" target="_blank"></a></div>
+                  <div class="timestamp"><a href=":profileUrl" target="_blank"></a></div>
                 </div>
               </div>
               <div class="caption"></div>
@@ -44,7 +44,7 @@
           </div>
         </div>
         <div id="footer">
-          <div id="poweredBy">powered by <a href="http://storify.com" target="_blank">Storify</a></div>
+          <div id="poweredBy">powered by <a href=":storyPermalink" title="Open this story on Storify.com" target="_blank" class="replacePermalink">Storify</a></div>
         </div>
       </div>
     </div>
@@ -70,13 +70,14 @@
           $(dom).html(templateMapping[dom]);
         });
 
+        $('.replacePermalink').each(function() {
+          var href = $(this).attr('href');
+          href = href.replace(":storyPermalink",story.permalink);
+          $(this).attr('href',href);
+        });
+
         switch(storify.params.header) {
           case "false":
-            $('.replacePermalink').each(function() {
-              var href = $(this).attr('href');
-              href = href.replace(":storyPermalink",story.permalink);
-              $(this).attr('href',href);
-            });
             $('.s-minimal').show();
             break;
 
@@ -100,7 +101,7 @@
 
           var author = e.attribution.name;
           if(e.attribution.username && e.source.name == 'twitter') {
-            author += ' (@'+e.attribution.username+')';
+            author += ' (<span class="twitterUsername">@'+e.attribution.username+'</span>)';
           }
           var v = vignette.clone();
   
@@ -131,7 +132,7 @@
           }
 
           v.find('.caption').html(Storify.smart_truncate(caption,200).parseTweet());
-          v.find('img.avatar').attr('src', e.attribution.thumbnail);
+          v.find('a.avatar').attr('href', e.attribution.href).find('img').attr('src', e.attribution.thumbnail);
           v.find('.author a').attr('href',e.attribution.href).html(author);
           v.find('.timestamp a').attr('href',e.permalink).html(Storify.utils.displayDate(new Date(e.posted_at),true));
           list.append(v);

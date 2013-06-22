@@ -87,8 +87,7 @@ a:hover {
   padding: 0px 5px;
   min-height:110px;
   -webkit-filter: grayscale(100%);
-  opacity: 0.8;
-  transition: all 1.5s
+  transition: all 1s
 }
 
 .vignette .attribution {
@@ -97,7 +96,7 @@ a:hover {
   line-height: 0.9;
 }
 
-.vignette .attribution .avatar {
+.vignette .attribution .avatar img {
   width: 32px;
   height: 32px;
   float: left;
@@ -105,7 +104,6 @@ a:hover {
 }
 
 .vignette:hover .vignette_bottom {
-  opacity: 1;
   -webkit-filter: grayscale(0);
 }
 
@@ -141,9 +139,16 @@ a:hover {
 }
 
 .vignette .caption a {
-  color: #555;
+  color: #333;
   text-decoration: none;
-  border-bottom: 1px dotted;
+}
+
+.twitterUsername {
+  display: inline-block;
+  background: url('/img/twitter-logo-10px.png') no-repeat 1px 0;
+  padding-left: 15px;
+  line-height: 10px;
+  height:10px;
 }
 
 #footer {
@@ -152,4 +157,17 @@ a:hover {
   margin-top:25px;
   margin-bottom: 15px;
   font-size: 10px;
+}
+
+#poweredBy {
+  line-height: 14px;
+}
+
+#poweredBy a {
+  display: inline-block;
+  height: 15px;
+  width: 56px;
+  background: url('//storify.com/public/img/logo.blue.small.png') no-repeat 0 0;
+  overflow: hidden;
+  text-indent: 60px;
 }
