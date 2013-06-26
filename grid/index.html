@@ -19,7 +19,7 @@
     <div id="story"> 
       <div id="grid">
         <div class="s-minimal border">
-          <a href=":storyPermalink?utm_source=embed&amp;utm_medium=publisher&amp;utm_campaign=embed-header-slideshow" target="_blank" class="embed-header-date replacePermalink">View as slideshow</a>
+          <a href=":storyPermalink/slideshow?utm_source=embed&amp;utm_medium=publisher&amp;utm_campaign=embed-header-slideshow" target="_blank" class="embed-header-date replacePermalink">View as slideshow</a>
           <a href=":storyPermalink?utm_source=embed&amp;utm_medium=publisher&amp;utm_campaign=embed-header" target="_parent" class="embed-header-logo replacePermalink"></a>
         </div>
 
@@ -138,7 +138,8 @@
           list.append(v);
         }
 
-        $('#content').replaceWith(list);
+        var recordViewHTML = '<img src="//stats.storify.com/record/view.gif?sid='+story.sid+'&referer='+encodeURIComponent(window.document.referrer)+'" width="1" height="1" style="display:none;" />';
+        $('#content').replaceWith(list).append(recordViewHTML);;
 
         storify.resize();
       });
