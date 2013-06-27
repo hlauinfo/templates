@@ -50,6 +50,7 @@ a:hover {
 #content {
   margin: 0px;
   padding:0px;
+  padding-bottom: 0px !important
   overflow: hidden;
 }
 
