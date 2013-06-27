@@ -37,6 +37,7 @@
                 <div class="author_info">
                   <div class="author"><a href=":profileUrl" target="_blank"></a></div>
                   <div class="timestamp"><a href=":profileUrl" target="_blank"></a></div>
+                  <div class="actions"></div>
                 </div>
               </div>
               <div class="caption"></div>
@@ -96,12 +97,21 @@
           ;
 
         for(var i=0; i<story.elements.length; i++) {
-          var e = story.elements[i];
+          var e = story.elements[i]
+            , actions = '';
+
           if(['image','video'].indexOf(e.type) == -1) continue;
 
           var author = e.attribution.name;
-          if(e.attribution.username && e.source.name == 'twitter') {
-            author += ' (<span class="twitterUsername">@'+e.attribution.username+'</span>)';
+          if(e.source.name == 'twitter') {
+            var matches = e.permalink.match(/[0-9]+\/?$/);
+            var tweet_id = matches[0];
+            actions += '<a href="//twitter.com/intent/tweet?in_reply_to='+tweet_id+'" target="_blank" class="reply">Reply</a>';
+            actions += '<a href="//twitter.com/intent/retweet?tweet_id='+tweet_id+'" target="_blank" class="retweet">Retweet</a>';
+            actions += '<a href="//twitter.com/intent/favorite?tweet_id='+tweet_id+'" target="_blank" class="favorite">Favorite</a>';
+            if(e.attribution.username) {
+              author += ' (<span class="twitterUsername">@'+e.attribution.username+'</span>)';
+            }
           }
           var v = vignette.clone();
   
@@ -135,6 +145,10 @@
           v.find('a.avatar').attr('href', e.attribution.href).find('img').attr('src', e.attribution.thumbnail);
           v.find('.author a').attr('href',e.attribution.href).html(author);
           v.find('.timestamp a').attr('href',e.permalink).html(Storify.utils.displayDate(new Date(e.posted_at),true));
+
+          if(actions)
+            v.find('.actions').html(actions);
+
           list.append(v);
         }
 

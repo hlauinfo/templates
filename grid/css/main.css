@@ -107,6 +107,10 @@ a:hover {
   -webkit-filter: grayscale(0);
 }
 
+.vignette:hover .actions {
+  display: block;
+}
+
 .vignette .attribution a {
   text-decoration: none;
   color: black;
@@ -123,6 +127,10 @@ a:hover {
   font-size: 12px;
 }
 
+.vignette .attribution .author_info .timestamp {
+  float: left;
+  margin-right: 10px;
+}
 .vignette .attribution .author_info .timestamp a {
   color: #555;
   font-size: 10px;
@@ -170,4 +178,45 @@ a:hover {
   background: url('//storify.com/public/img/logo.blue.small.png') no-repeat 0 0;
   overflow: hidden;
   text-indent: 60px;
+}
+    
+.actions {
+  display: none;
+}
+
+.actions a {
+    display: block;
+    float: left;
+    line-height: 16px;
+    color: #555;
+    padding: 0px 0px 0px 18px;
+    background: url('/img/twitter-actions.png') no-repeat;
+    font-size: 7pt;
+    margin: 2px 8px 2px 0px;
+}
+
+.actions a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.actions .retweet {
+  background-position: 0px -82px;
+}
+
+.actions .retweet:hover {
+  background-position: 0px -98px;
+}
+
+.actions .favorite {
+  background-position: 0px -33px;
+}
+.actions .favorite:hover {
+  background-position: 0px -66px;
+}
+.actions .reply {
+  background-position: 0px -1px;
+}
+.actions .reply:hover {
+    background-position: 0px -17px;
 }
