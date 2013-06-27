@@ -186,6 +186,9 @@ a:hover {
 
 .actions a {
     display: block;
+    width: 0px;
+    text-indent: 30px;
+    overflow:hidden;
     float: left;
     line-height: 16px;
     color: #555;
