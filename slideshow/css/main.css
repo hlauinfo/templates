@@ -375,10 +375,18 @@ a {color:#0074B7;text-decoration:none;}
 	width: 82px;
 	height: 24px;
 	margin-left: 4px;
-	background: url(../img/logo.png) 0px 2px no-repeat;
+	background-image: url('/img/embed-header-logo@2x.png');
+  background-repeat: no-repeat;
+  background-position: 0px -25px;
+  background-size: 81px 50px;
 }
+
+#poweredBy a.free {
+	background-image: url('/img/embed-header-logo-free@2x.png');
+}
+
 #poweredBy a:hover {
-	background: url(../img/logo.png) 0px -22px no-repeat;
+	background-position: 0px 0px;
 }
 #loading {
 	display: block;

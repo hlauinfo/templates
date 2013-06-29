@@ -19,8 +19,8 @@
     <div id="story"> 
       <div id="grid">
         <div class="s-minimal border">
-          <a href=":storyPermalink/slideshow?utm_source=embed&amp;utm_medium=publisher&amp;utm_campaign=embed-header-slideshow" target="_blank" class="embed-header-date replacePermalink">View as slideshow</a>
-          <a href=":storyPermalink?utm_source=embed&amp;utm_medium=publisher&amp;utm_campaign=embed-header" target="_parent" class="embed-header-logo replacePermalink"></a>
+          <a href=":storyPermalink/slideshow?utm_source=embed&amp;utm_medium=publisher&amp;utm_campaign=embed-header-slideshow" target="_blank" class="embed-header-date replacePermalink" title="Open this story as a slideshow in a new window">View as slideshow</a>
+          <a href=":storyPermalink?utm_source=embed&amp;utm_medium=publisher&amp;utm_campaign=embed-header" target="_parent" class="embed-header-logo replacePermalink" title="Powered by Storify"></a>
         </div>
 
         <div id="header">
@@ -60,7 +60,12 @@
       
       storify.loadStory(STORIFY_PERMALINK, {filter: 'image,video'}, function(data) {
         var story = data.content;
+
+        if(storify.params.theme == 'black') $('body').addClass('black-theme');
         
+        if(story.author.paid_plan == 'free') 
+          $('a.embed-header-logo').addClass("free").attr("title","Free version of Storify");
+
         var templateMapping = {
             '#title': story.title
           , '#description': story.description

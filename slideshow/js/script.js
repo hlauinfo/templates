@@ -399,6 +399,8 @@ function init() {
 		loading('hide');
 		
     var story = data.content;
+    if(story.author.paid_plan=='free') $('#poweredBy a').addClass("free").attr('title','Free version of Storify');
+
     var recordViewHTML = '<img src="//stats.storify.com/record/view.gif?sid='+story.sid+'&referer='+encodeURIComponent(window.document.referrer)+'" width="1" height="1" style="display:none;" />';
 		$('#title').append(getTitle(story)).append(recordViewHTML);
 		total = Object.keys(story.elements).length+1;
