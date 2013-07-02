@@ -413,16 +413,12 @@
     if(!resize && typeof window != 'undefined' && window.location && window.location.href && window.location.href.substr(0,7)=='http://' && !urlstr.match(/resize=/))
       return urlstr;  
 
-    proxy_url = '//proxy.storify.com/?url='+encodeURIComponent(urlstr);
+    proxy_url = '//i.embed.ly/1/display/resize?key=1e6a1a1efdb011df84894040444cdc60&url='+encodeURIComponent(urlstr);
 
     if(resize) {
-      proxy_url += '&resize=1';
-      if(maxWidth) proxy_url += '&w='+maxWidth;
-      if(maxHeight) proxy_url += '&h='+maxHeight;
+      if(maxWidth) proxy_url += '&width='+maxWidth;
+      if(maxHeight) proxy_url += '&height='+maxHeight;
     }
-
-    if(window.location.href.match(/\/\/localhost/))
-      proxy_url+="&bypassRefererCheck=1";
 
     return proxy_url;
   };
