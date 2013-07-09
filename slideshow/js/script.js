@@ -498,7 +498,7 @@ function init() {
   				fit: 1,
   				before: onbefore,
   				after: onafter,
-          		onPrevNextEvent: onPrevNextEvent,
+          onPrevNextEvent: onPrevNextEvent,
   				startingSlide: start-1
   			});
         
