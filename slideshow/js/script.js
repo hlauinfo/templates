@@ -484,20 +484,27 @@ function init() {
 			});
 			
 			// Create the slideshow again using the new tweets, and fade it back in
-			$("#twitterShow").cycle({
-				fx: 'scrollHorz',
-				timeout: 5000,
-				speed: 300,
-				nowrap: 1,
-				fit: 1,
-				before: onbefore,
-				after: onafter,
-        		onPrevNextEvent: onPrevNextEvent,
-				startingSlide: start-1
-			});
+      // Hide the slides until everything is loaded, but using visiblity: hidden instead of display: none
+      // since Vine needs the width of its iframe which it can't get if display: none is set
+      $('.slideWrapper').css('visibility', 'hidden');
+      $(window).load(function() {
+        // show the slides again, and initialize the actual slideshow
+        $('.slideWrapper').css('visibility', 'visible');
+  			$("#twitterShow").cycle({
+  				fx: 'scrollHorz',
+  				timeout: 5000,
+  				speed: 300,
+  				nowrap: 1,
+  				fit: 1,
+  				before: onbefore,
+  				after: onafter,
+          onPrevNextEvent: onPrevNextEvent,
+  				startingSlide: start-1
+  			});
+        
+        $("#twitterShow").cycle("pause");
+      });
 		}
-		
-		$("#twitterShow").cycle("pause");
 
 		previous_id = data.content.elements[0].permalink;
 		previous_length = data.content.elements.length;
