@@ -131,7 +131,7 @@
               var videohtml=''
                 , src = e.data.video.src;
               if(src) {
-                if(src.match(/vine\.co\//)) src += '/embed/simple';
+                if(src.match(/vine\.co\//)) src += '/card';
                 if(e.source.name == 'instagram') src = "//api.embed.ly/1/video?width=360&height=360&mp4="+src+"&poster="+e.data.video.thumbnail+"&schema=instagram"; 
 
                 videohtml = '<iframe src="'+src+'" frameborder=0 />'; 
