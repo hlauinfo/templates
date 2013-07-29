@@ -176,10 +176,13 @@ function getStoryElementHTML(element) {
 	var layout;
   	
 	switch (element.type) {
-		
-		case "video":
+    case "video":
       if (element.data.video.src) {
-				layout = Templates.videoWithSource({type: type, videoSrc: element.data.video.src.replace('http://','//')});
+				var src = element.data.video.src;
+				if (element.source.name == 'instagram')
+					src = "//api.embed.ly/1/video?width=360&height=360&mp4=" + src + "&poster=" + element.data.video.thumbnail + "&schema=instagram";
+          
+				layout = Templates.videoWithSource({type: type, videoSrc: src.replace('http://','//')});
       }
       else {
 				layout = Templates.videoNoSource({type: type, videoHTML: element.data.html});
