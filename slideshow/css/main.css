@@ -704,18 +704,19 @@ a {color:#0074B7;text-decoration:none;}
 .attribution {		
 	background: rgba(0, 0, 0, 0.75);
 	position: absolute;
-	bottom: -130px;
+	top: -130px;
 	width: 100%;
 	z-index: 888;
 	color: #FFF;
 	font-size: 2em;
 	line-height: 1.2em;	
-  -webkit-transition:all 0.75s ease;
-  -moz-transition:all 0.75s ease;
+  -webkit-transition:all 0.5s ease;
+  -moz-transition:all 0.5s ease;
 }
 
-.imageElement:hover .attribution {
-  bottom:0px;
+.imageElement:hover .attribution,
+.videoElement:hover .attribution {
+  top: 0px;
 }
 
 .attribution p {
