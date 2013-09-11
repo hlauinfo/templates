@@ -182,7 +182,13 @@ function getStoryElementHTML(element) {
 				if (element.source.name == 'instagram')
 					src = "//api.embed.ly/1/video?width=360&height=360&mp4=" + src + "&poster=" + element.data.video.thumbnail + "&schema=instagram";
           
-				layout = Templates.videoWithSource({type: type, videoSrc: src.replace('http://','//')});
+				layout = Templates.videoWithSource({
+          type: type,
+          videoSrc: src.replace('http://','//'),
+          caption: element.data.video.title,
+          permalink: element.permalink,
+          attrName: element.attribution.name
+        });
       }
       else {
 				layout = Templates.videoNoSource({type: type, videoHTML: element.data.html});
