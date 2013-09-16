@@ -703,6 +703,9 @@ a {color:#0074B7;text-decoration:none;}
 
 .attribution {		
 	background: rgba(0, 0, 0, 0.75);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#BF000000,endColorstr=#BF000000)"; /* IE8 */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#BF000000,endColorstr=#BF000000);   /* IE6 & 7 */
+  zoom: 1;
 	position: absolute;
 	top: -130px;
 	width: 100%;
