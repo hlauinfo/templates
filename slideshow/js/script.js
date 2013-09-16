@@ -401,7 +401,7 @@ function init() {
 	resizeShow();
 	
 	loading('show');
-	storify.loadStory(storyurl,{metadata:1}, function(data) {		
+	storify.loadStory(storyurl,{metadata:1}, function(data) {
     var story = data.content;
     if(story.author.paid_plan=='free') $('#poweredBy a').addClass("free").attr('title','Free version of Storify');
 
