@@ -67,6 +67,10 @@ a:hover {
   overflow: hidden;
 }
 
+#content.loading {
+  visibility: hidden;
+}
+
 .vignette {
   width: 25%;
   padding-top: 25%;

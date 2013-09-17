@@ -13,7 +13,10 @@
     <link href="//fonts.googleapis.com/css?family=Droid+Sans:regular,bold" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="//storify.com/public/embed.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
-  	<link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="css/responsive.css">
+    <link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="css/responsive.css">
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.js"></script>
+    <![endif]-->
   </head>
   <body id="embed">
     <div id="story"> 
@@ -58,6 +61,7 @@
       var storify = new Storify();
       STORIFY_PERMALINK = storify.getPermalink() || "http://storify.com/search?q=tornado";
       
+      $('#content').addClass('loading');
       storify.loadStory(STORIFY_PERMALINK, {filter: 'image,video'}, function(data) {
         var story = data.content;
 
@@ -105,7 +109,7 @@
           var e = story.elements[i]
             , actions = '';
 
-          if(['image','video'].indexOf(e.type) == -1) continue;
+          if (e.type !== 'image' && e.type !== 'video') continue;
 
           var author = e.attribution.name;
           if(e.source.name == 'twitter') {
@@ -158,7 +162,7 @@
         }
 
         var recordViewHTML = '<img src="//stats.storify.com/record/view.gif?sid='+story.sid+'&referer='+encodeURIComponent(window.document.referrer)+'" width="1" height="1" style="display:none;" />';
-        $('#content').replaceWith(list).append(recordViewHTML);;
+        $('#content').replaceWith(list).append(recordViewHTML).removeClass('loading');
 
         storify.resize();
       });
