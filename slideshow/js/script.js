@@ -198,7 +198,6 @@ function getStoryElementHTML(element) {
 		case "image":
 			if (element.source.name == 'twitter')
 			{
-				var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
         var text = element.data.quote.text;
         var tweet_id = element.permalink.substr(element.permalink.lastIndexOf('/')+1);
 
@@ -216,7 +215,7 @@ function getStoryElementHTML(element) {
 					name: element.attribution.name,
 					thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
 					name: element.attribution.name,
-					timestamp: Storify.utils.displayDate(timestamp),
+					timestamp: moment(element.posted_at).fromNow(),
           tweet_id: tweet_id,
 					permalink: element.permalink
 				});
@@ -242,14 +241,13 @@ function getStoryElementHTML(element) {
 			break;
 		
 		case "link":
-			var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
 			layout = Templates.link({
 				type: type, 
 				linkDesc: element.data.link.description,
 				permalink: element.permalink,
 				linkThumb: Storify.utils.proxy_image(element.data.link.thumbnail),
 				attrName: element.attribution.name,
-				timestamp: Storify.utils.displayDate(timestamp)
+				timestamp: moment(element.posted_at).fromNow()
 			});
 			break;
 		
@@ -257,7 +255,6 @@ function getStoryElementHTML(element) {
 			var source = (element.source.name != null) ? element.source.name : 'other';
 			
 			switch (source) {
-					
 				case 'twitter':
 					element.metadata = element.metadata || {};
 					element.meta = element.meta || {};
@@ -294,7 +291,6 @@ function getStoryElementHTML(element) {
 						});
 					}
 					else {
-						var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
 						layout = Templates.quote.twitter({
 							type: type, 
 							background: background,
@@ -303,7 +299,7 @@ function getStoryElementHTML(element) {
 							thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
 							name: element.attribution.name,
 							permalink: element.permalink,
-							timestamp: Storify.utils.displayDate(timestamp),
+							timestamp: moment(element.posted_at).fromNow(),
 							tweet_id: tweet_id
 						});
 					}
@@ -311,16 +307,14 @@ function getStoryElementHTML(element) {
 				
 				case 'facebook':
 				case 'other':
-					var timestamp = Math.floor(Date.parse(element.posted_at)/1000);
 					layout = Templates.quote.other({
 						type: type, 
 						text: element.data.quote.text,
 						permalink: element.permalink,
 						name: element.attribution.name,
-						timestamp: Storify.utils.displayDate(timestamp),
+						timestamp: moment(element.posted_at).fromNow()
 					});
 					break;
-					
 			} 
 			
 			break;
@@ -401,7 +395,7 @@ function init() {
 	resizeShow();
 	
 	loading('show');
-	storify.loadStory(storyurl,{metadata:1}, function(data) {		
+	storify.loadStory(storyurl,{metadata:1}, function(data) {
     var story = data.content;
     if(story.author.paid_plan=='free') $('#poweredBy a').addClass("free").attr('title','Free version of Storify');
 
@@ -566,3 +560,12 @@ $('#toolbar .loop').click(function() {
 	hideLoop();
 	return false;
 });
+
+// fixes :hover pseudoclass over iframes in IE < 8
+if ($.browser.msie && $.browser.version < 9) {
+  $('.videoElement').live('mouseenter', function() {
+    $(this).addClass('hover');
+  }).live('mouseleave', function() {
+    $(this).removeClass('hover');
+  });
+}

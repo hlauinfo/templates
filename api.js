@@ -18,7 +18,7 @@ Storify.prototype = {
     permalink = decodeURIComponent(permalink);
 
     if(permalink.match(/\/\/localhost/)) { 
-      API_ENDPOINT = 'http://localhost:4430/v1';
+      API_ENDPOINT = 'http://localhost.storify.com:4430/v1';
       permalink = permalink.replace('localhost.storify.com:3000','storify.com');
     }
 
