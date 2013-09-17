@@ -61,6 +61,7 @@
       var storify = new Storify();
       STORIFY_PERMALINK = storify.getPermalink() || "http://storify.com/search?q=tornado";
       
+      $('#content').addClass('loading');
       storify.loadStory(STORIFY_PERMALINK, {filter: 'image,video'}, function(data) {
         var story = data.content;
 
@@ -161,7 +162,7 @@
         }
 
         var recordViewHTML = '<img src="//stats.storify.com/record/view.gif?sid='+story.sid+'&referer='+encodeURIComponent(window.document.referrer)+'" width="1" height="1" style="display:none;" />';
-        $('#content').replaceWith(list).append(recordViewHTML);;
+        $('#content').replaceWith(list).append(recordViewHTML).removeClass('loading');
 
         storify.resize();
       });
