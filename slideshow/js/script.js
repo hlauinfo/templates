@@ -560,3 +560,12 @@ $('#toolbar .loop').click(function() {
 	hideLoop();
 	return false;
 });
+
+// fixes :hover pseudoclass over iframes in IE < 8
+if ($.browser.msie && $.browser.version < 9) {
+  $('.videoElement').live('mouseenter', function() {
+    $(this).addClass('hover');
+  }).live('mouseleave', function() {
+    $(this).removeClass('hover');
+  });
+}

@@ -730,7 +730,8 @@ a {color:#0074B7;text-decoration:none;}
 }
 
 .imageElement:hover .attribution,
-.videoElement:hover .attribution {
+.videoElement:hover .attribution,
+.videoElement.hover .attribution { /* needed for IE 8 */
   top: 0px;
 }
 
