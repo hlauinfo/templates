@@ -229,66 +229,6 @@
     return false;
   };
   
-  Storify.utils.displayDate = function(date, relative, showTime) {
-    if (typeof showTime == 'undefined') var showTime = true;
-    
-    if(typeof date == 'undefined' || date == 'NaN' || isNaN(date))
-      return '';
-
-    var date = ''+date;
-
-    if(parseInt(date,10) > 0) {
-      if(date.length==10) {
-        date = parseInt(date,10)*1000;
-      }
-    } else {
-      // Date string are not as flexible on Webkit than Gecko...
-      if(date.substr(10,1)=='T') {
-        if(date.substr(date.length-1,1)=='Z') {
-          date = Date.UTC(parseInt(date.substr(0,4),10),parseInt(date.substr(5,2),10)-1,parseInt(date.substr(8,2),10),parseInt(date.substr(11,2),10),parseInt(date.substr(14,2),10),parseInt(date.substr(17,2),10));
-        } else {
-          date = (date.substr(16,1)==':') ? date.substr(0,19) : date.substr(0,16);
-          date = date.replace('T',' ').replace(/\-/g,'/');
-        }
-      }
-    }
-        
-    var j=new Date();
-    var f=new Date(date);
-
-    //if(B.ie) { f = Date.parse(h.replace(/( \+)/," UTC$1")) }
-
-    if(relative) {
-      var i=j-f;
-      var c=1000,d=c*60,e=d*60,g=e*24,b=g*7;
-
-      if(isNaN(i)||i<0){return"";}
-      if(i<c*7){return"right now";}
-      if(i<d){return Math.floor(i/c)+" seconds ago";}
-      if(i<d*2){return"about 1 minute ago";}
-      if(i<e){return Math.floor(i/d)+" minutes ago";}
-      if(i<e*2){return"about 1 hour ago";}
-      if(i<g){return Math.floor(i/e)+" hours ago";}
-      //if(i>g&&i<g*2){return"yesterday"}
-      //if(i<g*365){return Math.floor(i/g)+" days ago"}
-    }
-  
-    var m_names = new Array("January", "February", "March", 
-    "April", "May", "June", "July", "August", "September", 
-    "October", "November", "December");
-
-    var curr_date = f.getDate();
-    var curr_month = f.getMonth();
-    var curr_year = f.getFullYear();
-    var curr_minutes = f.getMinutes();
-    if(curr_minutes<10) curr_minutes = '0'+curr_minutes;
-
-    var result = m_names[curr_month] + " "+curr_date+", " + curr_year;
-    if (showTime) result += ' at '+f.getHours()+':'+curr_minutes;
-
-    return result;
-  };
-
   Storify.utils.getDomain = function(url) {
   
     var domain        = url.replace(/^(https?:\/\/)(www\.)?/i,'');
