@@ -105,7 +105,7 @@
           var e = story.elements[i]
             , actions = '';
 
-          if(['image','video'].indexOf(e.type) == -1) continue;
+          if (e.type !== 'image' && e.type !== 'video') continue;
 
           var author = e.attribution.name;
           if(e.source.name == 'twitter') {
