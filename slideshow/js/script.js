@@ -477,7 +477,10 @@ function init() {
 					shareurl = storyurl + '/slideshow';
 				}
 				shareurl = shareurl || storyurl + '/slideshow';
-				shareOnTwitter(shareurl, story.title+', the @storify slideshow by @'+story.author.username);
+
+				var username = story.author.username;
+				if (story.author.twitter_username && story.author.twitter_username !== '') username = '@' + story.author.twitter_username;
+				shareOnTwitter(shareurl, story.title+', the @storify slideshow by ' + username);
 				return false;
 			});
 			$('.slideWrapper.textElement p span a').click(function() {
