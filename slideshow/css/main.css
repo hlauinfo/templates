@@ -373,26 +373,20 @@ a {color:#0074B7;text-decoration:none;}
 #poweredBy a {
 	display: block;
 	float: right;
-	width: 79px;
-	height: 26px;
+	width: 132px;
+	height: 19px;
 	margin-left: 4px;
-  margin-top: 2px;
-	background: url('/img/embed-header-logo.png') no-repeat;
+  margin-top: 7px;
+  background: url('/img/livefyre-embed-footer.png') no-repeat;
+  background-position: 0 -20px;
 }
 #poweredBy a:hover {
-	background-position: 0 -26px;
-}
-#poweredBy a.free {
-	background-position: -79px 0;
-  margin-top: 1px;
-}
-#poweredBy a.free:hover {
-  background-position: -79px -26px;
+	background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) {
   #poweredBy a {
-    background-image: url('/img/embed-header-logo@2x.png');
-    background-size: auto 54px;
+    background-image: url('/img/livefyre-embed-footer@2x.png');
+    background-size: 134px auto;
   }
 }
 
