@@ -48,7 +48,7 @@
           </div>
         </div>
         <div id="footer">
-          <div id="poweredBy">powered by <a href=":storyPermalink" title="Open this story on Storify.com" target="_blank" class="replacePermalink">Storify</a></div>
+          <div id="poweredBy"><a href=":storyPermalink" title="Open this story on Storify.com" target="_blank" class="replacePermalink">Storify by Livefyre</a></div>
         </div>
       </div>
     </div>
@@ -66,9 +66,6 @@
         var story = data.content;
 
         if(storify.params.theme == 'black') $('body').addClass('black-theme');
-        
-        if(story.author.paid_plan == 'free') 
-          $('a.embed-header-logo').addClass("free").attr("title","Free version of Storify");
 
         var templateMapping = {
             '#title': story.title
