@@ -151,7 +151,7 @@
           }
 
           v.find('.caption').html(Storify.smart_truncate(caption,200).parseTweet());
-          v.find('a.avatar').attr('href', e.attribution.href).find('img').attr('src', e.attribution.thumbnail);
+          v.find('a.avatar').attr('href', e.attribution.href).find('img').attr('src', Storify.utils.proxy_image(e.attribution.thumbnail, 32, 32));
           v.find('.author a').attr('href',e.attribution.href).html(author);
           v.find('.timestamp a').attr('href',e.permalink).html(moment(e.posted_at).fromNow());
 
