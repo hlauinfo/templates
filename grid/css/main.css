@@ -207,11 +207,11 @@ a:hover {
 
 #poweredBy a {
   display: inline-block;
-  height: 15px;
-  width: 56px;
-  background: url('//storify.com/public/img/logo.blue.small.png') no-repeat 0 0;
+	width: 132px;
+	height: 19px;
+  background: url('/img/livefyre-embed-footer.png') no-repeat;
   overflow: hidden;
-  text-indent: 60px;
+  text-indent: -10000px;
 }
     
 .actions {
