@@ -17,7 +17,7 @@
       '</aside>',
       elementEnd].join('')),
     
-    videoNoSource : _.template(elementStart + '<%= videoHTML =>' + elementEnd),
+    videoNoSource : _.template(elementStart + '<%= videoHTML %>' + elementEnd),
 
     image: _.template([elementStart,
       '<img class="photoSlide" src="<%= imgUrl %>" />',
