@@ -191,7 +191,10 @@ function getStoryElementHTML(element) {
         });
       }
       else {
-				layout = Templates.videoNoSource({type: type, videoHTML: element.data.html});
+        layout = Templates.videoNoSource({
+          type: type,
+          videoHTML: element.data.video.html
+        });
       }
 			break;
 			
