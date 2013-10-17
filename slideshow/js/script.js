@@ -398,7 +398,7 @@ function init() {
 	resizeShow();
 	
 	loading('show');
-	storify.loadStory(storyurl,{metadata:1}, function(data) {
+	storify.loadStory(storyurl,{metadata:1, twitter_username: true}, function(data) {
     var story = data.content;
 
     var recordViewHTML = '<img src="//stats.storify.com/record/view.gif?sid='+story.sid+'&referer='+encodeURIComponent(window.document.referrer)+'" width="1" height="1" style="display:none;" />';
