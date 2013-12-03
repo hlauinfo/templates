@@ -125,7 +125,7 @@
           switch(e.type) {
             case 'image': 
               thumbnailsrc = e.data.image.src;
-              caption = e.data.image.caption || '';
+              caption = Storify.smart_truncate(e.data.image.caption || '', 200);
               v.find('.thumbnail a').attr('href',e.permalink).html('<div style="background: url(\''+Storify.utils.proxy_image(thumbnailsrc, 360, 360)+'\') no-repeat center center"></div>');
             break;
 
@@ -147,8 +147,10 @@
                 caption = '<b>' + caption + '</b> ' + Storify.smart_truncate(e.data.video.description,140);
             break;
           }
+          
+          var entities = e.data.quote && e.data.quote.entities;
 
-          v.find('.caption').html(Storify.smart_truncate(caption,200).parseTweet(e.data));
+          v.find('.caption').html(Storify.utils.linkify(caption, e.source.name, entities));
           v.find('a.avatar').attr('href', e.attribution.href || '').find('img').attr('src', Storify.utils.proxy_image(e.attribution.thumbnail, 32, 32));
 
           if(authorhtml) 
@@ -170,6 +172,7 @@
         storify.resize();
       });
     </script>
+    <script type="text/javascript" src="//storify.com/public/js/support/twitter-text.js"></script>
     <script type="text/javascript" src="../utils.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>
   </body>

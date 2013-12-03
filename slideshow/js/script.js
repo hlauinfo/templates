@@ -173,6 +173,7 @@ var previous_length = 0;
 
 function getStoryElementHTML(element) {
 	var type = (element.type == 'quote' && element.source.name != null) ? element.source.name : element.type;
+  var entities = element.data.quote && element.data.quote.entities;
 	var layout;
   	
 	switch (element.type) {
@@ -185,7 +186,7 @@ function getStoryElementHTML(element) {
 				layout = Templates.videoWithSource({
           type: type,
           videoSrc: src.replace('http://','//'),
-          caption: element.data.video.title,
+          caption: Storify.utils.linkify(element.data.video.title, element.source.name, entities),
           permalink: element.permalink,
           attrName: element.attribution.name
         });
@@ -201,19 +202,13 @@ function getStoryElementHTML(element) {
 		case "image":
 			if (element.source.name == 'twitter')
 			{
-        var text = element.data.quote.text;
         var tweet_id = element.permalink.substr(element.permalink.lastIndexOf('/')+1);
-
-        if(element.meta && element.meta.entities) 
-          text = text.parseTweet(element.data);
-        else 
-          element.meta = {};
           
 				layout = Templates.quote.twitterImage({
 					type: type, 
 					background: background,
 					imageUrl: Storify.utils.proxy_image(element.data.image.src),
-					text: text, 
+					text: Storify.utils.linkify(element.data.quote.text, element.source.name, entities),
 					username: element.attribution.username,
 					name: element.attribution.name,
 					thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
@@ -229,7 +224,7 @@ function getStoryElementHTML(element) {
 					type: type, 
           imgUrl: Storify.utils.proxy_image(element.data.image.src),
 					srcName: element.source.name,
-					caption: (element.data.image.caption || ''),
+					caption: Storify.utils.linkify(element.data.image.caption || '', element.source.name, entities),
 				 	permalink: element.permalink,
 				 	attrName: element.attribution.name
 				};
@@ -240,13 +235,16 @@ function getStoryElementHTML(element) {
 			break;
 			
 		case "text":
-			layout = Templates.text({type: type, text: element.data.text.sanitizeTags('<a>')});
+      layout = Templates.text({
+        type: type,
+        text: Storify.utils.linkifyHTML(element.data.text).sanitizeTags('<a>')
+      });
 			break;
 		
 		case "link":
 			layout = Templates.link({
 				type: type, 
-				linkDesc: element.data.link.description,
+				linkDesc: Storify.utils.linkify(element.data.link.description, element.source.name, entities),
 				permalink: element.permalink,
 				linkThumb: Storify.utils.proxy_image(element.data.link.thumbnail),
 				attrName: element.attribution.name,
@@ -286,7 +284,7 @@ function getStoryElementHTML(element) {
 							type: type, 
 							background: background,
 							imageUrl: Storify.utils.proxy_image(image_url),
-							text: element.data.quote.text.parseTweet(element.data),
+							text: Storify.utils.linkify(element.data.quote.text, source, entities),
 							username: element.attribution.username,
 							thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
 							name: element.source.name,
@@ -297,7 +295,7 @@ function getStoryElementHTML(element) {
 						layout = Templates.quote.twitter({
 							type: type, 
 							background: background,
-							text: element.data.quote.text.parseTweet(element.data),
+							text: Storify.utils.linkify(element.data.quote.text, source, entities),
 							username: element.attribution.username,
 							thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
 							name: element.attribution.name,
@@ -310,9 +308,10 @@ function getStoryElementHTML(element) {
 				
 				case 'facebook':
 				case 'other':
+        default:
 					layout = Templates.quote.other({
 						type: type, 
-						text: element.data.quote.text,
+						text: Storify.utils.linkify(element.data.quote.text, source, entities),
 						permalink: element.permalink,
 						name: element.attribution.name,
 						timestamp: moment(element.posted_at).fromNow()
