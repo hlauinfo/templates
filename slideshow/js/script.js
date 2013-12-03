@@ -235,7 +235,10 @@ function getStoryElementHTML(element) {
 			break;
 			
 		case "text":
-			layout = Templates.text({type: type, text: element.data.text.sanitizeTags('<a>')});
+      layout = Templates.text({
+        type: type,
+        text: Storify.utils.linkifyHTML(element.data.text).sanitizeTags('<a>')
+      });
 			break;
 		
 		case "link":

@@ -420,6 +420,26 @@
     return true;
   };
   
+  // Uses the DOM to linkify HTML content in text nodes
+  Storify.utils.linkifyHTML = function(string) {
+    string = string || '';
+    
+    var div = $('<div>')
+    div.html(string)
+       .find('*')
+       .andSelf()
+       .contents()
+       .each(function() {
+         if (this.nodeType == 3) {
+           var text = twttr.txt.htmlEscape(this.nodeValue);
+           var tmp = $('<div>').html(Storify.utils.linkify(text));
+           $(this).replaceWith(tmp.contents());
+         }
+       });
+       
+    return div.html();
+  };
+  
   // Makes inline URLs, #hashtags, @mentions, $CASHtags, etc. into 
   // clickable links using the twitter-text module
   Storify.utils.linkify = function(string, source, elementData) {
