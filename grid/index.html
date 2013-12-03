@@ -125,7 +125,7 @@
           switch(e.type) {
             case 'image': 
               thumbnailsrc = e.data.image.src;
-              caption = e.data.image.caption || '';
+              caption = Storify.smart_truncate(e.data.image.caption || '', 200);
               v.find('.thumbnail a').attr('href',e.permalink).html('<div style="background: url(\''+Storify.utils.proxy_image(thumbnailsrc, 360, 360)+'\') no-repeat center center"></div>');
             break;
 
@@ -150,7 +150,7 @@
           
           var entities = e.data.quote && e.data.quote.entities;
 
-          v.find('.caption').html(Storify.utils.linkify(Storify.smart_truncate(caption, 200), e.source.name, entities));
+          v.find('.caption').html(Storify.utils.linkify(caption, e.source.name, entities));
           v.find('a.avatar').attr('href', e.attribution.href || '').find('img').attr('src', Storify.utils.proxy_image(e.attribution.thumbnail, 32, 32));
 
           if(authorhtml) 
