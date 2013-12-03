@@ -310,6 +310,7 @@ function getStoryElementHTML(element) {
 				
 				case 'facebook':
 				case 'other':
+        default:
 					layout = Templates.quote.other({
 						type: type, 
 						text: element.data.quote.text,
