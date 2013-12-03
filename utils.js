@@ -427,17 +427,18 @@
 
   String.prototype.parseURL = function(elementData) {
     var str = this;
-    var elementUrls = [];
-    if(elementData) {
-      if (typeof elementData.urls !== 'undefined') elementUrls = elementUrls.concat(elementData.urls);
-      if (typeof elementData.media !== 'undefined') elementUrls = elementUrls.concat(elementData.media);
+    var urls = [];
+    if(elementData && elementData.quote && elementData.quote.entities) {
+      var entities = elementData.quote.entities;
+      if (typeof entities.urls !== 'undefined') urls = urls.concat(entities.urls);
+      if (typeof entities.media !== 'undefined') urls = urls.concat(entities.media);
     }
 
-    if (elementUrls.length > 0) {
-      for (var i=0; i < elementUrls.length; i++) {
-        var re = new RegExp(elementUrls[i].display_url + '|' + elementUrls[i].url + '|' + elementUrls[i].expanded_url);
+    if (urls.length > 0) {
+      for (var i=0; i < urls.length; i++) {
+        var re = new RegExp(urls[i].display_url + '|' + urls[i].url + '|' + urls[i].expanded_url);
         str = str.replace(re, function (originalurl) {
-          return '<a href="' + elementUrls[i].url + '" target="_blank" rel="external nofollow" title="Open this link in a new window">' + elementUrls[i].display_url + '</a>';
+          return '<a href="' + urls[i].url + '" target="_blank" rel="external nofollow" title="Open this link in a new window">' + urls[i].display_url + '</a>';
         })
       }
     }
