@@ -72,11 +72,6 @@
     return false;
   };
   
-  String.prototype.linkify = function() {
-    var exp = /[^(href=")](\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-    return this.replace(exp," <a href='$1' target='_blank' rel='external'>$1</a>");
-  }
-  
   String.prototype.sanitizeTags = function(allowed) {
     // Strips HTML and PHP tags from a string
     allowed = (((allowed || "") + "")
@@ -424,50 +419,50 @@
     }
     return true;
   };
-
-  String.prototype.parseURL = function(elementData) {
-    var str = this;
-    var elementUrls = [];
-    if(elementData) {
-      if (typeof elementData.urls !== 'undefined') elementUrls = elementUrls.concat(elementData.urls);
-      if (typeof elementData.media !== 'undefined') elementUrls = elementUrls.concat(elementData.media);
+  
+  // Makes inline URLs, #hashtags, @mentions, $CASHtags, etc. into 
+  // clickable links using the twitter-text module
+  Storify.utils.linkify = function(string, source, elementData) {
+    string = string || '';
+    
+    var options = {
+      target: '_blank',
+      usernameIncludeSymbol: true
+    };
+    
+    if (source == 'appdotnet') {
+      options.hashtagUrlBase = 'https://alpha.app.net/hashtags/';
+      options.usernameUrlBase = 'https://alpha.app.net/';
+    } else if (source == 'facebook') {
+      options.hashtagUrlBase = 'https://www.facebook.com/hashtag/';
     }
-
-    if (elementUrls.length > 0) {
-      for (var i=0; i < elementUrls.length; i++) {
-        var re = new RegExp(elementUrls[i].display_url + '|' + elementUrls[i].url + '|' + elementUrls[i].expanded_url);
-        str = str.replace(re, function (originalurl) {
-          return '<a href="' + elementUrls[i].url + '" target="_blank" rel="external nofollow" title="Open this link in a new window">' + elementUrls[i].display_url + '</a>';
-        })
+    
+    // use entities from twitter API if possible
+    if (source == 'twitter' && elementData) {
+      try {
+        return twttr.txt.autoLinkWithJSON(string, elementData, options);
+      } catch(e) {};
+    }
+    
+    // otherwise, parse the text for links, #hashtags, @mentions, etc. using twitter-text
+    var entities = twttr.txt.extractEntitiesWithIndices(string);
+    
+    // truncate long links
+    for (var i = 0; i < entities.length; i++) {
+      var entity = entities[i];
+      if (entity.url) {
+        entity.display_url = entity.url.replace(/^(https?:\/\/)?(www\.)?/, '');
+        entity.expanded_url = ''; // no truncation by default
+        
+        if (entity.display_url.length > 28) {
+          entity.display_url = entity.display_url.substr(0, 27) + '…';
+          entity.expanded_url = entity.url;
+        }
       }
     }
-
-    return str;
-
-    // return this.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(originalurl) {
-    // 	var urlstr = originalurl.replace(/https?:\/\/(www.)?/i,'');
-    // 	if(urlstr.length>30) urlstr = urlstr.substr(0,27)+'...';
-    // 	return '<a href="'+originalurl+'" target="_blank">'+urlstr+'</a>';
-    // });
+    
+    return twttr.txt.autoLinkEntities(string, entities, options);
   };
-
-  String.prototype.parseUsername = function() {
-    return this.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
-      var username = u.replace("@","")
-      return '<a href="http://twitter.com/'+username+'" target="_blank">@'+username+'</a>';
-    });
-  };
-
-  String.prototype.parseHashtag = function() {
-    return this.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
-      var tag = t.replace("#","")
-      return '<a href="http://twitter.com/search?q=%23'+tag+'" target="_blank">#'+tag+'</a>';
-    });
-  };
-
-  String.prototype.parseTweet = function(elementData) {
-    return this.parseURL(elementData).parseUsername().parseHashtag();
-  }
 
   function awesm_share(channel, url, title, content) {
             
