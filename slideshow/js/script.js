@@ -397,7 +397,7 @@ function init() {
 	resizeShow();
 	
 	loading('show');
-	storify.loadStory(storyurl,{metadata:1}, function(data) {
+	storify.loadStory(storyurl,{metadata:1, identities: true}, function(data) {
     var story = data.content;
 
     var recordViewHTML = '<img src="//stats.storify.com/record/view.gif?sid='+story.sid+'&referer='+encodeURIComponent(window.document.referrer)+'" width="1" height="1" style="display:none;" />';
@@ -480,7 +480,17 @@ function init() {
 				shareurl = shareurl || storyurl + '/slideshow';
 
 				var username = story.author.username;
-				if (story.author.twitter_username && story.author.twitter_username !== '') username = '@' + story.author.twitter_username;
+				var identities = story.author.identities;
+        
+				if (identities) {
+				  for (var i = 0; i < identities.length; i++) {
+				    if (identities[i].service === 'twitter' && identities[i].username) {
+				      username = '@' + identities[i].username;
+				      break;
+				    }
+				  }
+				}
+        
 				shareOnTwitter(shareurl, story.title+', the @storify slideshow by ' + username);
 				return false;
 			});

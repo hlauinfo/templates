@@ -99,6 +99,7 @@
         var list = $('<div id="content">')
           , vignette = $('div.vignette')
           , caption = ''
+          , authorhtml
           , thumbnailsrc = ''
           ;
 
@@ -108,15 +109,15 @@
 
           if (e.type !== 'image' && e.type !== 'video') continue;
 
-          var author = e.attribution.name;
           if(e.source.name == 'twitter') {
             var matches = e.permalink.match(/[0-9]+\/?$/);
+            if(!matches || matches.length < 1) break;
             var tweet_id = matches[0];
             actions += '<a href="//twitter.com/intent/tweet?in_reply_to='+tweet_id+'" target="_blank" title="Reply" class="reply">Reply</a>';
             actions += '<a href="//twitter.com/intent/retweet?tweet_id='+tweet_id+'" target="_blank" title="Retweet" class="retweet">Retweet</a>';
             actions += '<a href="//twitter.com/intent/favorite?tweet_id='+tweet_id+'" target="_blank" title="Favorite" class="favorite">Favorite</a>';
             if(e.attribution.username) {
-              author += ' (<span class="twitterUsername">@'+e.attribution.username+'</span>)';
+              authorhtml = '<a href="'+e.attribution.href+'" target="_blank">'+e.attribution.name+'</a> (<span class="twitterUsername"><a href="http://twitter.com" target="_blank" title="Go to Twitter.com in a new window"><img src="/img/twitter-logo-10px.png" alt="Twitter logo" /></a> <a href="'+e.attribution.href+'">@'+e.attribution.username+'</a></span>)';
             }
           }
           var v = vignette.clone();
@@ -147,9 +148,14 @@
             break;
           }
 
-          v.find('.caption').html(Storify.smart_truncate(caption,200).parseTweet());
-          v.find('a.avatar').attr('href', e.attribution.href).find('img').attr('src', Storify.utils.proxy_image(e.attribution.thumbnail, 32, 32));
-          v.find('.author a').attr('href',e.attribution.href).html(author);
+          v.find('.caption').html(Storify.smart_truncate(caption,200).parseTweet(e.data));
+          v.find('a.avatar').attr('href', e.attribution.href || '').find('img').attr('src', Storify.utils.proxy_image(e.attribution.thumbnail, 32, 32));
+
+          if(authorhtml) 
+            v.find('.author').html(authorhtml);
+          else
+            v.find('.author a').attr('href',e.attribution.href || '').html(author);
+
           v.find('.timestamp a').attr('href',e.permalink).html(moment(e.posted_at).fromNow());
 
           if(actions)

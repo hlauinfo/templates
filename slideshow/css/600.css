@@ -12,6 +12,10 @@
 	line-height: 30px;
 	font-size: 1.4em;
 }
+#title .title a {
+  font-size: 10pt;
+  padding: 0 4px;
+}
 #title .title span {
 	padding-left: 7px;
 }
@@ -98,6 +102,28 @@
 .twitterElement .quote p {
 	background-position: 70px 30px;
 }
+
+.twitter-image .content {
+  font-size: 10pt;
+  margin: 0px 20px 5px 5px;
+}
+
+.twitter-image .user-block {
+  margin: 0px 0px 0px 0px;
+}
+
+.attribution .avatar {
+  left: 0px;
+  top: 6px;
+}
+
+.twitter-image aside .full-name {
+  margin: 10px 0px 0px 45px;
+}
+.twitter-image aside .handle {
+  margin: 0px 0px 0px 45px;
+}
+
 .facebookElement .quote p {
 	background-position: 70px 30px;
 }
