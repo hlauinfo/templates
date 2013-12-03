@@ -205,7 +205,7 @@ function getStoryElementHTML(element) {
         var tweet_id = element.permalink.substr(element.permalink.lastIndexOf('/')+1);
 
         if(element.meta && element.meta.entities) 
-          text = text.parseTweet(element.meta.entities);
+          text = text.parseTweet(element.data);
         else 
           element.meta = {};
           
@@ -286,7 +286,7 @@ function getStoryElementHTML(element) {
 							type: type, 
 							background: background,
 							imageUrl: Storify.utils.proxy_image(image_url),
-							text: element.data.quote.text.parseTweet(element.meta.entities),
+							text: element.data.quote.text.parseTweet(element.data),
 							username: element.attribution.username,
 							thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
 							name: element.source.name,
@@ -297,7 +297,7 @@ function getStoryElementHTML(element) {
 						layout = Templates.quote.twitter({
 							type: type, 
 							background: background,
-							text: element.data.quote.text.parseTweet(element.meta.entities),
+							text: element.data.quote.text.parseTweet(element.data),
 							username: element.attribution.username,
 							thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
 							name: element.attribution.name,
