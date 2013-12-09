@@ -208,7 +208,7 @@ function getStoryElementHTML(element) {
 					type: type, 
 					background: background,
 					imageUrl: Storify.utils.proxy_image(element.data.image.src),
-					text: Storify.utils.linkify(element.data.quote.text, element.source.name, entities),
+					text: Storify.utils.linkify(element.data.image.caption, element.source.name, entities),
 					username: element.attribution.username,
 					name: element.attribution.name,
 					thumbnail: Storify.utils.proxy_image(element.attribution.thumbnail),
