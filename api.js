@@ -1,14 +1,14 @@
-function Storify() {
-}
+function Storify() { };
 
 var API_ENDPOINT = '//api.storify.com/v1';
 
 Storify.prototype = {
+
   getPermalink: function() {
     if(this.permalink) return this.permalink;
 
     var permalink = null;    
-    this.params = this.utils.parseQueryString();
+    this.params = Storify.utils.parseQueryString();
     if(this.params.src) permalink = this.params.src;
 
     if (!permalink && window.location.hash.match(/.{0,15}storify\.com/)) {
@@ -117,9 +117,11 @@ Storify.prototype = {
   postMessage: function(msg) {
     msg.sourceName = this.permalink.replace('http://storify.com/','').replace('/','-')+"_grid";
     window.parent.postMessage(JSON.stringify(msg), '*');
-  },
+  }
   
-  utils: {
+};
+
+Storify.utils = {
       
     parseQueryString: function() {
 
@@ -178,18 +180,17 @@ Storify.prototype = {
 
       return thumbnail_url;
     },
-
-		linkify: function(string) {
-			var exp = /[^(href=")](\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-			return string.replace(exp,function(originalurl) {
-				var urlstr = originalurl.replace(/https?:\/\/(www.)?/i,'');
-				if(urlstr.length>30) urlstr = urlstr.substr(0,27)+'...';
-				return " <a href='"+originalurl+"' target='_blank' rel='external'>"+urlstr+"</a>";
-			});
-		}
     
-  }
-  
+    smart_truncate: function(str, n){
+      if(typeof str != 'string') return '';
+
+      var toLong = str.length>n,
+          s_ = toLong ? str.substr(0,n-1) : str;
+      s_ = toLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
+      return  toLong ? s_ +'...' : s_;
+    }
+
+
 };
 
 // Google Analytics

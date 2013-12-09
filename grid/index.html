@@ -55,9 +55,9 @@
 
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="../api.js"></script>
-    <script type="text/javascript">
-      STORIFY_JQUERY = jQuery;
-      
+    <script type="text/javascript" src="../utils.js"></script>
+
+    <script type="text/javascript">      
       var storify = new Storify();
       STORIFY_PERMALINK = storify.getPermalink() || "http://storify.com/search?q=tornado";
       
@@ -125,7 +125,7 @@
           switch(e.type) {
             case 'image': 
               thumbnailsrc = e.data.image.src;
-              caption = Storify.smart_truncate(e.data.image.caption || '', 200);
+              caption = Storify.utils.smart_truncate(e.data.image.caption || '', 200);
               v.find('.thumbnail a').attr('href',e.permalink).html('<div style="background: url(\''+Storify.utils.proxy_image(thumbnailsrc, 360, 360)+'\') no-repeat center center"></div>');
             break;
 
@@ -142,21 +142,26 @@
                 var videohtml = e.data.video.html;
               }
               v.find('.thumbnail').html(videohtml);
-              caption = Storify.smart_truncate(e.data.video.title,140);
+              caption = Storify.utils.smart_truncate(e.data.video.title,140);
               if(e.data.video.description)
-                caption = '<b>' + caption + '</b> ' + Storify.smart_truncate(e.data.video.description,140);
+                caption = '<b>' + caption + '</b> ' + Storify.utils.smart_truncate(e.data.video.description,140);
             break;
           }
           
           var entities = e.data.quote && e.data.quote.entities;
 
           v.find('.caption').html(Storify.utils.linkify(caption, e.source.name, entities));
-          v.find('a.avatar').attr('href', e.attribution.href || '').find('img').attr('src', Storify.utils.proxy_image(e.attribution.thumbnail, 32, 32));
+          if(e.attribution.thumbnail) {
+            v.find('a.avatar').attr('href', e.attribution.href || '').find('img').attr('src', Storify.utils.proxy_image(e.attribution.thumbnail, 32, 32));
+          }
+          else {
+            v.find('a.avatar').hide();
+          }
 
           if(authorhtml) 
             v.find('.author').html(authorhtml);
           else
-            v.find('.author a').attr('href',e.attribution.href || '').html(author);
+            v.find('.author a').attr('href',e.attribution.href || '').html(e.attribution.name);
 
           v.find('.timestamp a').attr('href',e.permalink).html(moment(e.posted_at).fromNow());
 
@@ -173,7 +178,6 @@
       });
     </script>
     <script type="text/javascript" src="//storify.com/public/js/support/twitter-text.js"></script>
-    <script type="text/javascript" src="../utils.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>
   </body>
 </html>

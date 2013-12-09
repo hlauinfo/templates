@@ -101,7 +101,7 @@
     return result;
   };
 
-  if(typeof Storify!='object') {
+  if(typeof Storify=='undefined') {
     Storify = {};
   }
   if(typeof Storify.utils!='object') {
@@ -720,4 +720,4 @@
       }
      });
   })(jQuery);
-})(STORIFY_JQUERY);
+})($);
