@@ -862,6 +862,12 @@ a {color:#0074B7;text-decoration:none;}
   height: 100%;
 }
 
+.videoElement iframe[src*="vine.co"] + .attribution {
+  left: 70px;
+  right: 0;
+  width: auto;
+}
+
 .image {
 	border:1px solid #fff;
 	margin:2px;
