@@ -182,6 +182,9 @@ function getStoryElementHTML(element) {
 				var src = element.data.video.src;
 				if (element.source.name == 'instagram')
 					src = "//api.embed.ly/1/video?width=360&height=360&mp4=" + src + "&poster=" + element.data.video.thumbnail + "&schema=instagram";
+        
+        if (/vine\.co\//.test(src))
+          src += '/embed/simple';
           
 				layout = Templates.videoWithSource({
           type: type,
