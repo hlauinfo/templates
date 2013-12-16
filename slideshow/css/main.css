@@ -777,16 +777,15 @@ a {color:#0074B7;text-decoration:none;}
 	top:5px;
 	left:8px;
 }
-.twitter-image aside .full-name {
-	display: block;
-	margin: 14px 0px 0px 55px;
-	color: #999;
-}
 .twitter-image aside .handle {
 	display: block;
 	margin: 0px 0px 0px 55px;
 	font-size: 0.88em;
 	color: #0094ff;
+}
+.twitter-image aside .full-name .handle {
+  font-size: 1em;
+  margin: 14px 0px 0px 55px;
 }
 .twitter-image .content {
 	margin: 0px 20px 5px 20px;
@@ -794,6 +793,10 @@ a {color:#0074B7;text-decoration:none;}
 }
 .twitter-image .content a {
 	color: #0094ff;
+}
+
+.twitter-image a:hover {
+  text-decoration: underline;
 }
 
 .twitter-image .attribution {
